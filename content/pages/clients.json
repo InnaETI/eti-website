@@ -1,0 +1,26 @@
+{
+  "title": "Clients",
+  "subheading": "Our valued partners",
+  "bannerImage": "/wp-content/uploads/2015/11/contactus_135280127.jpg",
+  "intro": "Our valued clients epitomize determination, motivation, and an unwavering drive towards achievement. They possess a crystal-clear vision of the elements essential for their business prosperity. In collaboration with ETI, they entrust us to bring this vision to fruition.",
+  "testimonials": [
+    {
+      "quote": "ETI delivered exceptional results and became a true extension of our team.",
+      "image": "/wp-content/uploads/2017/11/ipg-small.jpg",
+      "name": "",
+      "role": ""
+    },
+    {
+      "quote": "Their expertise and commitment enabled us to achieve our technology goals.",
+      "image": "/wp-content/uploads/2017/11/Oak20Street20Health20-202445015771.jpg",
+      "name": "",
+      "role": ""
+    },
+    {
+      "quote": "A reliable partner for complex technology transformation.",
+      "image": "/wp-content/uploads/2017/11/trainerly-white-logo-1024x1024.png",
+      "name": "",
+      "role": ""
+    }
+  ]
+}

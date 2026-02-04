@@ -1,0 +1,34 @@
+{
+  "siteName": "Emerging Technologies",
+  "legalName": "Emerging Technologies, Inc.",
+  "shortName": "ETI",
+  "tagline": "Executive IT and AI Advisory",
+  "description": "ETI delivers strategy, methodology, and execution for technology transformation. We partner with leadership to align technology with business goals.",
+  "contactEmail": "",
+  "contactPhone": "",
+  "social": {
+    "facebook": "https://www.facebook.com/EmergingTI/",
+    "linkedin": "https://www.linkedin.com/company/323460/"
+  },
+  "nav": [
+    { "href": "/about-us", "label": "About Us" },
+    { "href": "/services", "label": "Services" },
+    { "href": "/clients", "label": "Clients" },
+    { "href": "/team", "label": "Team" },
+    { "href": "/careers", "label": "Careers" },
+    { "href": "/blog", "label": "Blog" },
+    { "href": "/contact-us", "label": "Contact Us" }
+  ],
+  "footerLinks": [
+    { "href": "/about-us", "label": "About Us" },
+    { "href": "/services", "label": "Services" },
+    { "href": "/clients", "label": "Clients" },
+    { "href": "/team", "label": "Team" },
+    { "href": "/careers", "label": "Careers" },
+    { "href": "/contact-us", "label": "Contact Us" },
+    { "href": "/privacy-policy", "label": "Privacy" }
+  ],
+  "copyrightText": "Copyright © 2026 Emerging Technologies, Inc. All rights reserved.",
+  "logoUrl": "/wp-content/uploads/2017/08/eti__identity__logo_.svg",
+  "footerLogoUrl": "/wp-content/uploads/2017/08/logo-transparent-horizontal-80-237-dark.png"
+}

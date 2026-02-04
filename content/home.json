@@ -1,23 +1,23 @@
 {
-  "heroBanner": "https://www.emergingti.com/wp-content/uploads/2020/05/shutterstock-banner_1692360436.jpg",
+  "heroBanner": "/wp-content/uploads/2020/05/shutterstock-banner_1692360436.jpg",
   "pillars": [
     {
       "title": "Strategy",
-      "image": "https://www.emergingti.com/wp-content/uploads/2020/05/shutterstock-banner_1692360436.jpg",
+      "image": "/wp-content/uploads/2020/05/shutterstock-banner_1692360436.jpg",
       "copy": "In today's rapidly evolving business landscape, the imperative for strategic transformation is underscored by our commitment to four pivotal pillars of success.",
       "linkText": "READ MORE",
       "href": "/strategy"
     },
     {
       "title": "Methodology",
-      "image": "https://www.emergingti.com/wp-content/uploads/2017/08/methodology-1.jpg",
+      "image": "/wp-content/uploads/2017/08/methodology-1.jpg",
       "copy": "To leverage technical advantages while maintaining vigilant cost control we collaborate with leadership, management, and technical teams to create strategy and allocate budget for the best technical solutions.",
       "linkText": "READ MORE",
       "href": "/methodology"
     },
     {
       "title": "Execution",
-      "image": "https://www.emergingti.com/wp-content/uploads/2017/08/execution.jpg",
+      "image": "/wp-content/uploads/2017/08/execution.jpg",
       "copy": "Think of ETI as a strategic partner dedicated to helping you achieve your organizational goals. Our approach centers on aligning with your objectives, delivering excellence, and fostering a culture of continuous improvement.",
       "linkText": "READ MORE",
       "href": "/execution"
@@ -28,10 +28,10 @@
     "viewMoreHref": "/services",
     "viewMoreText": "View More",
     "items": [
-      { "icon": "https://www.emergingti.com/wp-content/uploads/2015/11/clock.svg", "title": "Agile" },
-      { "icon": "https://www.emergingti.com/wp-content/uploads/2015/11/man.svg", "title": "Digital Transformation" },
-      { "icon": "https://www.emergingti.com/wp-content/uploads/2015/12/rocket.svg", "title": "Healthcare" },
-      { "icon": "https://www.emergingti.com/wp-content/uploads/2015/11/target.svg", "title": "AI Transformation" }
+      { "icon": "/wp-content/uploads/2015/11/clock.svg", "title": "Agile" },
+      { "icon": "/wp-content/uploads/2015/11/man.svg", "title": "Digital Transformation" },
+      { "icon": "/wp-content/uploads/2015/12/rocket.svg", "title": "Healthcare" },
+      { "icon": "/wp-content/uploads/2015/11/target.svg", "title": "AI Transformation" }
     ]
   },
   "clients": {

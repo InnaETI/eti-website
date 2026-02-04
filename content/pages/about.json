@@ -1,0 +1,12 @@
+{
+  "title": "About Us",
+  "subheading": "Who we are",
+  "bannerImage": "/wp-content/uploads/2020/05/shutterstock_1047275755-banner.jpg",
+  "body": "Emerging Technologies, Inc. (ETI) consulting services offer a holistic approach to transforming organizations, from fostering user collaboration and Agile practices to implementing DevOps methodologies, ensuring quality assurance, and delivering accurate project estimates. We specialize in aligning project goals with budgets, optimizing resource management, and enhancing team efficiency through proactive project management. Our tailored change management strategies facilitate seamless transitions and maximize adoption. With our comprehensive solutions, we empower businesses to overcome challenges, achieve user-centric development, streamline operations, and achieve successful project outcomes.\n\nWe welcome your inquiries and will be happy to work with you on the right solution and at the right price.",
+  "secondaryImage": "/wp-content/uploads/2015/12/chicago-bean-about-us-1140X400.jpg",
+  "mission": {
+    "title": "Mission",
+    "image": "/wp-content/uploads/2015/12/eti-misson-263X176.jpg",
+    "text": "To utilize our profound IT and Business expertise to drive tangible business outcomes for clients through advanced technology. Our goal is to cultivate strong relationships based on mutual respect and trust, creating lasting value."
+  }
+}

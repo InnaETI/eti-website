@@ -1,0 +1,35 @@
+{
+  "title": "Our Services",
+  "bannerImage": "/wp-content/uploads/2017/08/methodology-2.jpg",
+  "intro": "As your business evolves and expands, the demand for both technical and business proficiency becomes increasingly paramount. At ETI, we offer a diverse spectrum of professional services, from technical prowess to business acumen and resources, enabling your organization to navigate the intricate landscape of growth seamlessly. Our services are tailored to cater to your evolving technology needs, ensuring that your systems and IT talent elevate their performance, efficiency, and expertise in lockstep with your ambitions. With ETI as your steadfast partner, you gain access to a reliable and knowledgeable ally, equipped with robust capabilities, to propel your business to the next level of excellence. We bring a wealth of expertise and knowledge to empower our clients on their journey to success.",
+  "services": [
+    {
+      "title": "Agile",
+      "iconUrl": "/wp-content/uploads/2015/11/clock.svg",
+      "items": ["Agile Transformations", "Lean Agile Management", "Cross-Functional Team Leadership"],
+      "linkText": "Distributed Workforce Solutions",
+      "linkHref": "/distributed-workforce-solutions"
+    },
+    {
+      "title": "Digital Transformation",
+      "iconUrl": "/wp-content/uploads/2015/11/man.svg",
+      "items": ["Business Process Reengineering", "Lean Product Development", "Accelerated Business Performance"]
+    },
+    {
+      "title": "Healthcare",
+      "iconUrl": "/wp-content/uploads/2015/12/rocket.svg",
+      "items": ["Patient-Centric Solutions", "Regulatory Compliance", "Data-Driven Decision Support", "Clinical Workflow Automation", "Predictive Healthcare Analytics", "Revenue Cycle Optimization", "Interoperability with EMRs and EHRs", "Clinical Quality Improvement", "Chronic Disease Management"]
+    },
+    {
+      "title": "AI Transformation",
+      "iconUrl": "/wp-content/uploads/2015/11/target.svg",
+      "items": ["AI BOT Services", "Azure Healthcare BOT Integration", "Skills BOT Development", "AI Document Intelligence", "MLOps (Full ML Model LifeCycle)"]
+    }
+  ],
+  "cta": {
+    "title": "Let's Talk about your project",
+    "subtitle": "Please inquire how ETI can provide you with the expertise you desire.",
+    "buttonText": "Brainstorm with our Experts",
+    "href": "/rfp-wizard"
+  }
+}

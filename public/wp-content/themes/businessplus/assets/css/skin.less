@@ -1,0 +1,343 @@
+/*!
+ * Theme v1.0.0 
+ * Copyright 2015-2016 theemon.com
+ */
+@skinColor: #ef4926; //Change here your theme Color
+@fontFamily: 'Open Sans', sans-serif; //Change here your theme Font family
+@headingFont: 'Raleway', sans-serif;
+@subHeadingFont: 'Lora', serif;
+
+h1, h2, h3, h4, h5, h6,
+button.btn-submit,
+.more-btn, a.more-btn,
+.trans-btn, button.trans-btn {
+  font-family: @headingFont;
+}
+
+body, button, input, optgroup, select, textarea {
+  font-family: @fontFamily;
+}
+
+.heading-wrap span,
+.name-label span,
+.homepage-one-banner .banner-text p,
+.publishing-inner-content p {
+  font-family: @subHeadingFont;
+}
+
+.transition_effect {
+  -webkit-transition: all 0.4s ease-in-out;
+  -moz-transition: all 0.4s ease-in-out;
+  -ms-transition: all 0.4s ease-in-out;
+  -o-transition: all 0.4s ease-in-out;
+  transition: all 0.4s ease-in-out;
+}
+
+//===============================================
+//====================TEXT COLOR==================
+.header-three .icon-call-out, .header-three .calling:hover, .header-three .navbar-default .navbar-nav > li.active > a,
+.navbar-default .navbar-nav > li.active > a, .header-three .navbar-default .navbar-nav > li > a:hover, .header-three .calling:hover, .foot-contact-form .btn-submit, .footer-two .foot-nav li i, .trans-btn, button.trans-btn, a.blog-read-btn, .blog-paging-list li.active a, .blog-paging-list li:hover a, .commenter-info-1 span, a.comm-back-btn i, .blog-list-sidebar li i, .blog-list-sidebar li .news-recent-content strong, a.blog-sidebar-read-btn, .widget_tag_cloud .tagcloud a, .blog-sidebar-paging-list li.active a, .contact-call .icon-call-out, .canada-wrap strong, .home-header-one .read-more, .home-header-one .blog-caption span, .home-header-one .read-more, .homepage3 .social-lead li a span, .header-one .call-us .mega, .header-one .mail-to .mega, .testimonial-page button.btn-submit, .blog-list-sidebar li a:hover, .blog-list-sidebar li .news-recent-content a:hover span, .blog-sidebar-admin-content a:hover, .blog-sidebar-paging-list li a:hover, .blog-side-admin-content a:hover, .blog-admin-content a:hover, .header-two .contact-wrap-header a span {
+  color: @skinColor;
+  .transition_effect;
+}
+
+//============================================================
+//==========================BACKGROUND COLOR==================
+.owl-page.active, .content-not_found span, .triangle-date, button.sub-search-blog, a.apply-btn, .label-count, .homepage-one-banner .more-btn, .homepage-one-banner .tp-bullet.selected, .home-header-one .owl-page.active, .banner-one .contact-form, .homepage3 .social-lead li a, .tp-mask-wrap .tp-caption.first-label, .btn:hover, .footer-two .footer-social-links li a:hover, .blog-read-btn:hover, .testimonial-page button.btn-submit:hover, .blog-sidebar-read-btn:hover, .widget_tag_cloud .tagcloud a:hover {
+  background: @skinColor !important;
+}
+
+.banner-one .form-control {
+  background-color: @skinColor;
+}
+
+.more-info-link, .media-wrap {
+  background: fade(@skinColor, 80%);
+}
+
+//============================================================
+//==========================BORDER COLOR==================
+.foot-contact-form .btn-submit, .trans-btn, button.trans-btn, a.blog-read-btn, .blog-paging-list li.active a, .blog-paging-list li:hover a, .publishing-inner-content p, a.comm-back-btn, a.blog-sidebar-read-btn, .tags .tag-list li, .blog-sidebar-paging-list li.active a, .publishing-side-inner-content p, a.contact-btn, .home-header-one .read-more, .home-header-one .blog-comment-info ul li, .home-header-one .read-more, .blog-comment-info ul li, .testimonial-page button.btn-submit, .blog-sidebar-paging-list li a:hover {
+  border-color: @skinColor;
+  .transition_effect;
+}
+
+.banner-one .form-control {
+  border-color: darken(@skinColor, 10%);
+}
+
+//============================================================
+//==========================SVG COLOR==================
+.service-page-wrap:hover .svg.replaced-svg * {
+  fill: @skinColor;
+  .transition_effect;
+}
+
+.triangle-fill {
+  fill: @skinColor;
+}
+
+/*wp integration*/
+.widget_tag_cloud .tagcloud a, .under-construction .social-icons li {
+  border-color: @skinColor;
+}
+
+.audioplayer-volume-adjust > div {
+  background-color: @skinColor;
+}
+
+.audioplayer > div.audioplayer-volume {
+  background-color: darken(@skinColor, 5%);
+}
+
+.audioplayer-volume:hover .audioplayer-volume-adjust {
+  background: darken(@skinColor, 10%);
+}
+
+.audioplayer-bar-played:before {
+  background: darken(@skinColor, 10%);
+}
+
+.audioplayer, .under-construction .progress-view span, .hesperiden .tp-bullet.selected {
+  background: @skinColor !important;
+}
+
+.audioplayer:not(.audioplayer-mini) .audioplayer-playpause {
+  border-right: 1px solid darken(@skinColor, 15%);
+}
+
+.audioplayer-playpause:hover, .audioplayer-playpause:focus {
+  background-color: darken(@skinColor, 5%);
+}
+
+.audioplayer-bar-loaded {
+  background-color: darken(@skinColor, -25%);
+}
+
+.audioplayer-bar-played {
+  background-color: darken(@skinColor, -10%);
+}
+
+.audioplayer-bar {
+  background-color: darken(@skinColor, -40%);
+}
+
+.stick-pin {
+  border-color: @skinColor @skinColor transparent;
+}
+
+blockquote {
+  border-color: @skinColor;
+  background-color: darken(@skinColor, -30%);
+}
+
+input[type="submit"] {
+  .transition_effect;
+}
+
+input[type="submit"]:hover {
+  color: #ffffff;
+  background-color: @skinColor;
+}
+
+.widget_archive li a i.fa, .business_plus_home_four_slider_slide .businessplus-slider-calling span, .business_plus_home_four_slider_slide .businessplus-slider-mail span {
+  color: @skinColor;
+}
+
+.widget_categories li a i.fa {
+  color: @skinColor;
+}
+
+.widget_pages li a i.fa {
+  color: @skinColor;
+}
+
+.widget_meta li a i.fa {
+  color: @skinColor;
+}
+
+.widget_recent_comments li i.fa {
+  color: @skinColor;
+}
+
+.widget_recent_entries li a i.fa {
+  color: @skinColor;
+}
+
+.widget_rss li a i.fa, .btn:hover, .btn:focus, .btn.focus, .tp-mask-wrap .tp-caption.read_more_banner a:hover {
+  color: @skinColor;
+}
+
+.widget_nav_menu li a i.fa {
+  color: @skinColor;
+}
+
+.comment-respond input[type="submit"] {
+  border-color: @skinColor;
+  color: @skinColor;
+}
+
+a.comment-reply-link i {
+  color: @skinColor;
+}
+
+.row.services:hover .svg.replaced-svg * {
+  fill: @skinColor;
+  .transition_effect;
+}
+
+.home-header-one .services-info strong::before, a.comment-reply-link, .tp-caption.Fashion-BigDisplay.tp-resizeme a {
+  background-color: @skinColor !important;
+}
+
+.vc_tta-accordion .vc_tta-panel-title .vc_tta-controls-icon:before,
+.vc_tta-accordion .vc_tta-panel-title .vc_tta-controls-icon:after {
+  border-color: @skinColor !important;
+}
+
+.vc_tta-tabs .vc_tta-tab.vc_active a {
+  border-bottom: 2px solid @skinColor !important;
+}
+
+.businessplus-job-sections .job_application .application_button,
+#theme_panel .theme-setting i {
+  background-color: @skinColor;
+  .transition_effect;
+}
+
+.single_job_listing .meta .date-posted::before,
+.single_job_listing .meta .location::before,
+.single_job_listing .company .company_twitter::before,
+.single_job_listing .company .website::before,
+.job-manager-form fieldset .account-sign-in .button::before {
+  color: @skinColor;
+}
+
+ul .current-menu-item > a,
+ul .current-menu-parent > a {
+  color: @skinColor !important;
+}
+
+.businessplus-testimonial-layout.testimonial-page .comment input[type="submit"],
+.businessplus-testimonial-layout-two.testimonial-page .comment input[type="submit"],
+.businessplus-contact-layout input[type="submit"],
+.businessplus-contact-layout-one input[type="submit"] {
+  color: @skinColor;
+  border-color: @skinColor;
+  background-color: transparent;
+}
+
+/**
+ * Plugin Support
+ */
+.woocommerce ul.products li.product .button,
+.woocommerce #respond input#submit,
+.woocommerce a.button,
+.woocommerce button.button,
+.woocommerce input.button,
+.woocommerce #respond input#submit.alt,
+.woocommerce a.button.alt,
+.woocommerce button.button.alt,
+.woocommerce input.button.alt,
+#buddypress .comment-reply-link,
+#buddypress .generic-button a,
+#buddypress a.button,
+#buddypress button,
+#buddypress input[type="button"],
+#buddypress input[type="reset"],
+#buddypress input[type="submit"],
+#buddypress ul.button-nav li a,
+a.bp-title-button,
+#buddypress div.item-list-tabs ul li.current a,
+#buddypress div.item-list-tabs ul li.selected a,
+#buddypress div.item-list-tabs ul li a,
+#buddypress div.item-list-tabs ul li span,
+#bbp_topic_submit,
+#bbp_user_edit_submit,
+#bbp_reply_submit {
+  border-color: @skinColor !important;
+  color: @skinColor !important;
+  .transition_effect;
+}
+
+.woocommerce ul.products li.product .button:hover,
+.woocommerce #respond input#submit:hover,
+.woocommerce a.button:hover,
+.woocommerce button.button:hover,
+.woocommerce input.button:hover,
+.woocommerce #respond input#submit.alt:hover,
+.woocommerce a.button.alt:hover,
+.woocommerce button.button.alt:hover,
+.woocommerce input.button.alt:hover,
+#buddypress .comment-reply-link:hover,
+#buddypress .generic-button a:hover,
+#buddypress a.button:hover,
+#buddypress button:hover,
+#buddypress input[type="button"]:hover,
+#buddypress input[type="reset"]:hover,
+#buddypress input[type="submit"]:hover,
+#buddypress ul.button-nav li a:hover,
+a.bp-title-button:hover,
+#buddypress div.item-list-tabs ul li.current a:hover,
+#buddypress div.item-list-tabs ul li.selected a:hover,
+#buddypress div.item-list-tabs ul li a:hover,
+#buddypress div.item-list-tabs ul li span:hover,
+#bbp_topic_submit:hover,
+#bbp_user_edit_submit:hover,
+#bbp_reply_submit:hover {
+  background-color: @skinColor !important;
+}
+
+#buddypress .comment-reply-link:hover,
+#buddypress .generic-button a:hover,
+#buddypress a.button:hover,
+#buddypress button:hover,
+#buddypress input[type="button"]:hover,
+#buddypress input[type="reset"]:hover,
+#buddypress input[type="submit"]:hover,
+#buddypress ul.button-nav li a:hover,
+a.bp-title-button:hover,
+#bbp_topic_submit:hover,
+#bbp_user_edit_submit:hover,
+#bbp_reply_submit:hover {
+  border: 2px solid @skinColor !important;
+}
+
+.woocommerce a.added_to_cart, .woocommerce .star-rating span:before {
+  color: @skinColor;
+}
+
+.woocommerce .widget_price_filter .ui-slider .ui-slider-handle {
+  background-color: @skinColor;
+}
+
+.woocommerce .widget_price_filter .ui-slider .ui-slider-range {
+  background-color: darken(@skinColor, 15%);
+}
+
+.woocommerce .widget_price_filter .price_slider_wrapper .ui-widget-content {
+  background-color: darken(@skinColor, -15%);
+}
+
+#buddypress #reply-title small a span, #buddypress a.bp-primary-action span,
+#buddypress #reply-title small a:hover span, #buddypress a.bp-primary-action:hover span,
+#buddypress div.item-list-tabs ul li a span,
+#buddypress div.item-list-tabs ul li a:hover span,
+#buddypress div.item-list-tabs ul li.current a span,
+#buddypress div.item-list-tabs ul li.selected a span,
+#buddypress div.item-list-tabs ul li.current a:hover span,
+#buddypress div.item-list-tabs ul li.selected a:hover span,
+#buddypress div.item-list-tabs ul li a span {
+  background-color: darken(@skinColor, -15%) !important;
+}
+
+#buddypress div.pagination .pagination-links .current,
+#buddypress div.pagination .pagination-links a:hover {
+  color: @skinColor;
+  border: 2px solid @skinColor;
+}
+
+html #buddypress a.acomment-reply span,
+html #buddypress a.acomment-reply:hover span {
+  background-color: @skinColor !important;
+}

@@ -4,6 +4,3 @@ Allow: /
 
 # Host
 Host: https://www.emergingti.com
-
-# Sitemaps
-Sitemap: https://www.emergingti.com/sitemap.xml
