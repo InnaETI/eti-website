@@ -216,6 +216,14 @@ async function fetchPageByPath(fullPath) {
 async function main() {
   await ensureDir(WP_CONTENT_PUBLIC);
   await ensureDir(WORDPRESS_PAGES_DIR);
+  const args = process.argv.slice(2).filter(Boolean);
+  if (args.length) {
+    for (const arg of args) {
+      await fetchPageByPath(arg);
+    }
+    console.log('Done. HTML in wordpress-pages/, assets in public/wp-content/');
+    return;
+  }
   for (const segment of PAGES) {
     await fetchPage(segment);
   }

@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ETI Admin</title>
+    <link rel="stylesheet" href="/admin/admin.css" />
+  </head>
+  <body>
+    <div class="app">
+      <aside class="sidebar">
+        <h1>ETI Admin</h1>
+        <div class="section">
+          <label for="page-select">Pages</label>
+          <select id="page-select"></select>
+          <div class="helper">Select a page to edit.</div>
+        </div>
+        <div class="section">
+          <label for="custom-path">Open by path</label>
+          <div class="row">
+            <input id="custom-path" type="text" placeholder="e.g. blog/page/2.html" />
+            <button id="open-path" type="button">Open</button>
+          </div>
+          <div class="helper">Paths are relative to the wordpress-pages folder.</div>
+        </div>
+        <div class="section">
+          <label for="upload-input">Upload asset</label>
+          <input id="upload-input" type="file" />
+          <div class="upload-result">
+            <span id="upload-url"></span>
+            <button id="copy-upload" type="button">Copy</button>
+          </div>
+          <div class="helper">Uploads are saved to /public/uploads.</div>
+        </div>
+        <div class="section">
+          <label>Backups</label>
+          <div id="backup-list" class="backup-list"></div>
+          <div class="helper">Each save creates a rollback copy.</div>
+        </div>
+      </aside>
+      <main class="editor">
+        <div class="toolbar">
+          <div class="path-display" id="path-display">No page loaded.</div>
+          <div class="actions">
+            <button id="preview" type="button">Preview</button>
+            <button id="save" type="button">Save</button>
+          </div>
+        </div>
+        <div id="status" class="status"></div>
+        <textarea id="editor" spellcheck="false" placeholder="Page HTML will appear here..."></textarea>
+        <div class="footer-note">
+          Editing raw HTML. Use backups to roll back if needed.
+        </div>
+      </main>
+    </div>
+    <script src="/admin/admin.js"></script>
+  </body>
+</html>

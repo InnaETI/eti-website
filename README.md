@@ -16,7 +16,7 @@ npm install
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000).
+Open [http://localhost:3010](http://localhost:3010).
 
 ## Build and production
 
@@ -42,6 +42,34 @@ npm start
 - `lib/` — `nav.ts`, `site.ts`, `blog.ts`
 - `docs/` — `content-map.md`, `design-system.md`
 - `public/` — `logo.png`, `robots.txt` (sitemap/robots generated on build)
+- `public/admin/` - local admin UI for editing HTML
+- `content-backups/` - auto-generated backups for admin edits
+
+## Admin app (local)
+
+The local editor is available at:
+
+- [http://localhost:3010/admin](http://localhost:3010/admin)
+
+It edits HTML in `wordpress-pages/` and creates backups in
+`content-backups/wordpress-pages`. Each save creates a rollback file you can
+restore from the admin UI.
+
+Uploads are saved to `public/uploads/` and return a URL you can paste into HTML.
+
+## Contact form delivery
+
+The WordPress contact form is rewritten to POST to `/api/contact`. Configure SMTP
+env vars to deliver email:
+
+- `SMTP_HOST`
+- `SMTP_PORT`
+- `SMTP_USER`
+- `SMTP_PASS`
+- `SMTP_SECURE` (optional, `true` for 465)
+- `CONTACT_TO`
+- `CONTACT_FROM`
+- `CONTACT_SUBJECT` (optional)
 
 ## SEO and accessibility
 
@@ -52,4 +80,4 @@ npm start
 ## Logo and contact
 
 - Logo: place ETI logo at `public/logo.png` (PNG or SVG). Current build uses the provided ETI logo.
-- Contact form: form UI only in MVP; wire to your API or form service (e.g. Formspree, Vercel server action) for production.
+- Contact form: handled by `/api/contact` using SMTP credentials above.
