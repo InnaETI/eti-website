@@ -39,7 +39,11 @@ npm run build && npm run start
 ## Pages included
 
 The script fetches: `/`, `/about-us/`, `/services/`, `/clients/`, `/team/`, `/careers/`, `/blog/`, `/contact-us/`, `/privacy-policy/`, `/rfp-wizard/`, `/strategy/`, `/methodology/`, `/execution/`, `/career/`.  
-Individual blog post URLs (e.g. `/blog/some-post/`) can be added to the script and to the route handler’s `PAGE_FILES` / file lookup if needed.
+After fetching `blog.html`, it discovers all blog post links (e.g. `/2024/02/24/slug/`) and fetches each, saving to `wordpress-pages/YYYY/MM/DD/slug.html`. The route handler serves these by path (e.g. `/2024/02/24/slug/` → `wordpress-pages/2024/02/24/slug.html`).
+
+## Trailing slashes
+
+`next.config.ts` has `trailingSlash: true` so WordPress-style links (`/about-us/`, `/blog/`) work. Internal links in the HTML use trailing slashes; the route handler normalizes path segments and serves the correct file.
 
 ## Credentials
 

@@ -3,6 +3,7 @@ import fs from 'fs';
 import path from 'path';
 
 const WORDPRESS_PAGES_DIR = path.join(process.cwd(), 'wordpress-pages');
+const WP_BASE = 'https://www.emergingti.com';
 
 const PAGE_FILES: Record<string, string> = {
   '': 'index.html',
@@ -21,13 +22,50 @@ const PAGE_FILES: Record<string, string> = {
   'career': 'career.html',
 };
 
+const LAZYLOAD_FALLBACK =
+  '<script>(function(){function l(){document.querySelectorAll(".lazyload[data-src]").forEach(function(e){e.src=e.getAttribute("data-src")||"";e.removeAttribute("data-src")});document.querySelectorAll(".lazyload[data-srcset]").forEach(function(e){e.srcset=e.getAttribute("data-srcset")||"";e.removeAttribute("data-srcset")})}if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",l);else l();setTimeout(l,500);setTimeout(l,1500);})();</script>';
+
+function rewriteWpHtml(html: string): string {
+  let out = html
+    .replaceAll('https://www.emergingti.com/wp-content/', '/wp-content/')
+    .replaceAll('https://www.emergingti.com/wp-includes/', '/wp-includes/')
+    .replaceAll('https://www.emergingti.com/', '/')
+    .replaceAll('http://www.emergingti.com/', '/');
+  out = out.replace(/action="\/wp-comments-post\.php"/g, 'action="#"');
+  if (out.includes('class="') && out.includes('lazyload') && !out.includes('data-src to src')) {
+    out = out.replace('</body>', LAZYLOAD_FALLBACK + '\n</body>');
+  }
+  return out;
+}
+
 export async function GET(request: NextRequest, { params }: { params: Promise<{ path?: string[] }> }) {
-  const pathSegments = (await params).path ?? [];
+  let pathSegments = (await params).path ?? [];
+  pathSegments = pathSegments.filter((p) => p !== '');
   const pathKey = pathSegments.join('/');
+  const searchQuery = request.nextUrl.searchParams.get('s');
 
   // Don't serve WordPress HTML for asset-like or reserved paths
   if (pathSegments[0] === '_next' || pathSegments[0] === 'api' || pathSegments[0] === 'wp-content') {
     return new Response(null, { status: 404 });
+  }
+
+  // Search: fetch WordPress search results and serve rewritten HTML
+  if (pathKey === '' && searchQuery != null && searchQuery.trim() !== '') {
+    try {
+      const wpSearchUrl = `${WP_BASE}/?s=${encodeURIComponent(searchQuery.trim())}`;
+      const res = await fetch(wpSearchUrl, {
+        redirect: 'follow',
+        headers: { 'User-Agent': 'Mozilla/5.0 (compatible; ETI/1.0)' },
+      });
+      if (res.ok) {
+        const html = await res.text();
+        return new Response(rewriteWpHtml(html), {
+          headers: { 'Content-Type': 'text/html; charset=utf-8' },
+        });
+      }
+    } catch {
+      // fall through to index
+    }
   }
 
   const fileName = PAGE_FILES[pathKey] ?? (pathKey ? `${pathKey}.html` : 'index.html');
@@ -37,7 +75,8 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
     return new Response(null, { status: 404 });
   }
 
-  const html = fs.readFileSync(toTry, 'utf-8');
+  let html = fs.readFileSync(toTry, 'utf-8');
+  html = rewriteWpHtml(html);
   return new Response(html, {
     headers: {
       'Content-Type': 'text/html; charset=utf-8',
