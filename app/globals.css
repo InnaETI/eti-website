@@ -1,0 +1,62 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 
+  Colors extracted from reference.html:
+  Orange: #ffaf36
+  Blue (Buttons): #066aab
+  Blue (CTA BG): #254fbb
+  Grey (Join Team BG): #eaeff1
+*/
+
+:root {
+  /* Fonts */
+  --font-open-sans: 'Open Sans', sans-serif;
+  --font-raleway: 'Raleway', sans-serif;
+  --font-lora: 'Lora', serif;
+
+  /* Colors */
+  --color-brand-orange: #ffaf36;
+  --color-brand-blue: #254fbb; /* Used in CTA section */
+  --color-button-blue: #066aab; /* Used in wpforms css */
+  
+  /* Text */
+  --color-ink: #333333;
+  --color-ink-muted: #666666;
+  
+  /* Layout */
+  --color-header-bg: #FFFFFF;
+  --color-border: #E2E4E8;
+  
+  /* Derived */
+  --color-brand: var(--color-brand-blue);
+  --color-accent: var(--color-brand-orange);
+}
+
+@layer base {
+  html {
+    @apply antialiased;
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    font-family: var(--font-open-sans);
+    color: var(--color-ink);
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-raleway);
+  }
+
+  /* Specific classes from reference */
+  .font-lora {
+    font-family: var(--font-lora);
+  }
+}
+
+@layer components {
+  .container-content {
+    @apply mx-auto w-full max-w-[1170px] px-4; /* Bootstrap typical container width */
+  }
+}

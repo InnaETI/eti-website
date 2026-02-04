@@ -1,0 +1,95 @@
+{
+  "heroBanner": "https://www.emergingti.com/wp-content/uploads/2020/05/shutterstock-banner_1692360436.jpg",
+  "pillars": [
+    {
+      "title": "Strategy",
+      "image": "https://www.emergingti.com/wp-content/uploads/2020/05/shutterstock-banner_1692360436.jpg",
+      "copy": "In today's rapidly evolving business landscape, the imperative for strategic transformation is underscored by our commitment to four pivotal pillars of success.",
+      "linkText": "READ MORE",
+      "href": "/strategy"
+    },
+    {
+      "title": "Methodology",
+      "image": "https://www.emergingti.com/wp-content/uploads/2017/08/methodology-1.jpg",
+      "copy": "To leverage technical advantages while maintaining vigilant cost control we collaborate with leadership, management, and technical teams to create strategy and allocate budget for the best technical solutions.",
+      "linkText": "READ MORE",
+      "href": "/methodology"
+    },
+    {
+      "title": "Execution",
+      "image": "https://www.emergingti.com/wp-content/uploads/2017/08/execution.jpg",
+      "copy": "Think of ETI as a strategic partner dedicated to helping you achieve your organizational goals. Our approach centers on aligning with your objectives, delivering excellence, and fostering a culture of continuous improvement.",
+      "linkText": "READ MORE",
+      "href": "/execution"
+    }
+  ],
+  "services": {
+    "intro": "ETI offers a wide variety of professional services ranging from technical to business expertise and resources. As your business grows and scales, your technology needs expand at a rapid pace. Your systems and your IT talent needs to increase in performance, efficiency and expertise. You need a strong, dependable and knowledgeable partner with strong and varied capabilities in order to excel to the next level. Emerging Technologies, Inc. brings such expertise and knowledge to its clients.",
+    "viewMoreHref": "/services",
+    "viewMoreText": "View More",
+    "items": [
+      { "icon": "https://www.emergingti.com/wp-content/uploads/2015/11/clock.svg", "title": "Agile" },
+      { "icon": "https://www.emergingti.com/wp-content/uploads/2015/11/man.svg", "title": "Digital Transformation" },
+      { "icon": "https://www.emergingti.com/wp-content/uploads/2015/12/rocket.svg", "title": "Healthcare" },
+      { "icon": "https://www.emergingti.com/wp-content/uploads/2015/11/target.svg", "title": "AI Transformation" }
+    ]
+  },
+  "clients": {
+    "intro": "Our valued clients epitomize determination, motivation, and an unwavering drive towards achievement. They possess a crystal-clear vision of the elements essential for their business prosperity. In collaboration with ETI, they entrust us to bring this vision to fruition. Acting as an integral part of their team, we wholeheartedly share in their enthusiasm, passion, and innovative spirit. Our close partnerships extend across diverse industries and regions within the United States.",
+    "viewMoreHref": "/clients",
+    "viewMoreText": "view more"
+  },
+  "cta": {
+    "title": "Schedule a call with ETI Leader",
+    "subtitle": "to discuss your business situation and desired horizons",
+    "buttonText": "Brainstorm with an Expert",
+    "href": "/rfp-wizard"
+  },
+  "about": {
+    "title": "About Emerging Technologies",
+    "copy": "Emerging Technologies, Inc. (ETI) consulting services offer a holistic approach to transforming organizations, from fostering user collaboration and Agile practices to implementing DevOps methodologies, ensuring quality assurance, and delivering accurate project estimates. We specialize in aligning project goals with budgets, optimizing resource management, and enhancing team efficiency through proactive project management. Our tailored change management strategies facilitate seamless transitions and maximize adoption. With our comprehensive solutions, we empower businesses to overcome challenges, achieve user-centric development, streamline operations, and achieve successful project outcomes."
+  },
+  "joinTeam": {
+    "title": "Join Our Team",
+    "copy": "Our Team of experts represents the spirit and vision of the company. We are self-motivated, committed and dedicated to limitless growth of our clients. Our resources have determination to succeed and enable our clients to grow and expand their business. We strive to build workforce that is team-oriented, talented, well-rounded, and always ready to go extra mile for our clients. If you share our vision and see technology as a means to mutual success we encourage you to reach and see you and ETI is a great match.",
+    "buttonText": "Join our Team",
+    "href": "/career"
+  },
+  "news": {
+    "title": "News",
+    "sections": [
+      {
+        "heading": "Healthcare IT News",
+        "links": [
+          { "title": "Tips to shorten healthcare's cybersecurity learning curve", "url": "https://www.healthcareitnews.com/news/tips-shorten-healthcares-cybersecurity-learning-curve" },
+          { "title": "CPT Editorial Panel suspends changes to RPM coding – what's next?", "url": "https://www.healthcareitnews.com/news/cpt-editorial-panel-suspends-changes-rpm-coding-whats-next" },
+          { "title": "VA stays the course with Oracle EHR contract renewal", "url": "https://www.healthcareitnews.com/news/va-stays-course-oracle-ehr-contract-renewal" }
+        ]
+      },
+      {
+        "heading": "The Wall Street Journal",
+        "links": [
+          { "title": "ChatGPT and the New College Education", "url": "https://www.wsj.com/articles/chatgpt-and-the-new-college-education-cheating-academics-80aae935" },
+          { "title": "Taylor Swift's Carbon Allowance", "url": "https://www.wsj.com/articles/taylor-swift-co2-offsets-private-jet-emissions-climate-82bb7d61" },
+          { "title": "Iran and the Houthis Don't Get Biden's Message", "url": "https://www.wsj.com/articles/iran-houthi-missile-attacks-ships-navy-seals-biden-administration-88b9e98a" }
+        ]
+      },
+      {
+        "heading": "CNBC",
+        "links": [
+          { "title": "From $40 billion fraud to $4.5 billion settlement: Inside the latest crypto firm paying big bucks to end legal trouble", "url": "https://www.cnbc.com/2024/06/16/inside-latest-crypto-firm-paying-billions-to-end-legal-troubles-.html" },
+          { "title": "Advisors 'wary' of bitcoin ETFs are on a slow adoption journey, says BlackRock exec", "url": "https://www.cnbc.com/2024/06/16/advisors-wary-of-bitcoin-etfs-are-on-slow-adoption-journey-says-blackrock-exec.html" },
+          { "title": "Adobe shares surge 15% for sharpest rally since 2020", "url": "https://www.cnbc.com/2024/06/14/adobe-shares-surge-and-head-for-sharpest-rally-since-2020-.html" }
+        ]
+      },
+      {
+        "heading": "CNN",
+        "links": [
+          { "title": "Nearly 1 in 7 US kids has a mental health condition, and half go untreated, study says", "url": "https://www.cnn.com/2019/02/11/health/children-teens-mental-health-untreated-study/index.html" },
+          { "title": "With climate change, what will your city's weather feel like in 60 years?", "url": "https://www.cnn.com/2019/02/12/health/climate-change-cities-projected-temperatures-study/index.html" },
+          { "title": "Cli-fi (climate fiction) on the big screen changes minds about real climate change", "url": "https://www.cnn.com/2019/02/08/world/climate-change-movies-eprise/index.html" }
+        ]
+      }
+    ]
+  }
+}
