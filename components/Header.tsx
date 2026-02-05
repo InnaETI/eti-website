@@ -19,12 +19,12 @@ export function Header() {
           <div className="flex-shrink-0 relative z-20 py-3 pr-8 border-r border-[#dde4ea]">
             <Link href="/" className="block">
               <Image
-                src="/logo.png"
+                src="/wp-content/uploads/2017/08/eti__identity__logo_.svg"
                 alt="ETI"
-                width={90}
-                height={36}
+                width={140}
+                height={44}
                 priority
-                className="h-[36px] w-auto"
+                className="h-[44px] w-auto"
               />
             </Link>
           </div>
@@ -52,13 +52,13 @@ export function Header() {
             </nav>
             
             {/* Desktop CTA */}
-            <div className="flex-shrink-0 bg-[#254fbb] h-[70px] flex items-center justify-center -mr-4 px-8 w-[180px] relative">
+            <div className="flex-shrink-0 bg-[#254fbb] h-[70px] flex items-center justify-center -mr-4 px-6 min-w-[200px] relative">
                {/* Extend blue to the right edge of the screen */}
                <div className="absolute top-0 bottom-0 left-full w-[100vw] bg-[#254fbb]" />
                
-               <Link 
+              <Link 
                  href="/rfp-wizard/" 
-                 className="flex items-center text-white text-[14px] font-semibold uppercase tracking-wide group"
+                className="flex items-center text-white text-[14px] font-semibold uppercase tracking-wide group whitespace-nowrap"
                >
                  <span className="mr-3 bg-[url('/wp-content/themes/businessplus/assets/images/key-icon.png')] w-[20px] h-[20px] bg-no-repeat bg-center inline-block" />
                  Get Started

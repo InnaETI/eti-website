@@ -7,6 +7,7 @@ export type BlogPost = {
   excerpt: string;
   date: string;
   author?: string;
+  image?: string;
   /** Present for WordPress HTML posts; use for rendering body. */
   bodyHtml?: string;
 };
@@ -16,6 +17,31 @@ const WP_PAGES_DIR = path.join(process.cwd(), 'wordpress-pages');
 
 // WordPress blog posts live under wordpress-pages/YYYY/MM/DD/slug.html
 const WP_POST_YEARS = ['2020', '2022', '2023', '2024'];
+
+function normalizeImageUrl(url: string | undefined): string | undefined {
+  if (!url) return undefined;
+  if (url.startsWith('data:')) return undefined;
+  return url
+    .replace('https://www.emergingti.com/wp-content/', '/wp-content/')
+    .replace('http://www.emergingti.com/wp-content/', '/wp-content/');
+}
+
+function extractFirstImageFromMarkdown(content: string): string | undefined {
+  const mdMatch = content.match(/!\[[^\]]*]\(([^)\s]+)(?:\s+"[^"]*")?\)/);
+  if (mdMatch?.[1]) return normalizeImageUrl(mdMatch[1]);
+  const htmlMatch = content.match(/<img[^>]+src=["']([^"']+)["']/i);
+  if (htmlMatch?.[1]) return normalizeImageUrl(htmlMatch[1]);
+  return undefined;
+}
+
+function extractFirstImageFromHtml(html: string): string | undefined {
+  if (!html) return undefined;
+  const ogMatch = html.match(/<meta\s+property="og:image"\s+content="([^"]+)"/i);
+  if (ogMatch?.[1]) return normalizeImageUrl(ogMatch[1]);
+  const imgMatch = html.match(/<img[^>]+src=["']([^"']+)["']/i);
+  if (imgMatch?.[1]) return normalizeImageUrl(imgMatch[1]);
+  return undefined;
+}
 
 function getSlugs(): string[] {
   if (!fs.existsSync(CONTENT_DIR)) return [];
@@ -29,12 +55,14 @@ function getPostBySlugMdx(slug: string): BlogPost | null {
   const raw = fs.readFileSync(filePath, 'utf-8');
   const match = raw.match(/^---\s*\n([\s\S]*?)\n---\s*\n([\s\S]*)$/);
   const frontmatter = match ? match[1] : '';
+  const body = match ? match[2] : raw;
   const title = frontmatter.match(/title:\s*["']?([^"'\n]+)/)?.[1] ?? base;
   const excerpt =
     frontmatter.match(/excerpt:\s*["']?([^"'\n]+)/)?.[1] ?? raw.slice(0, 160).replace(/\n/g, ' ');
   const date = frontmatter.match(/date:\s*(\S+)/)?.[1] ?? '';
   const author = frontmatter.match(/author:\s*["']?([^"'\n]+)/)?.[1];
-  return { slug: base, title, excerpt, date, author };
+  const image = extractFirstImageFromMarkdown(body);
+  return { slug: base, title, excerpt, date, author, image };
 }
 
 export function getPostContent(slug: string): string | null {
@@ -112,7 +140,9 @@ function parseWpPostHtml(filePath: string): BlogPost | null {
         .replace(/src="data:image\/gif[^"]*"/g, '');
     }
 
-    return { slug, title, excerpt: excerpt || title, date, author, bodyHtml };
+    const image = extractFirstImageFromHtml(bodyHtml) ?? extractFirstImageFromHtml(raw);
+
+    return { slug, title, excerpt: excerpt || title, date, author, image, bodyHtml };
   } catch {
     return null;
   }

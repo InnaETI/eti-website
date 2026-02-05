@@ -35,7 +35,10 @@ export default async function BlogIndexPage({
     <>
       <section
         className="banner-blog-sidebar"
-        style={{ backgroundImage: "url('/wp-content/uploads/2017/08/methodology-2.jpg')" }}
+        style={{
+          backgroundImage: "url('/wp-content/uploads/2024/02/blog-banner.png')",
+          backgroundPosition: 'top center',
+        }}
       />
       <div className="container service-page-wrap">
         <div className="heading-wrap top-one">
@@ -94,9 +97,9 @@ export default async function BlogIndexPage({
             </div>
             <div className="blog-widget">
               <h3 className="blog-widget-title">Recent Posts</h3>
-              <ul className="blog-widget-list">
+              <ul className="blog-widget-list list-disc pl-5 space-y-2">
                 {recentPosts.map((post) => (
-                  <li key={post.slug}>
+                  <li key={post.slug} className="border-b border-gray-200 pb-2 last:border-b-0">
                     <Link href={`/blog/${post.slug}`} className="blog-widget-link">
                       {post.title || post.slug}
                     </Link>
