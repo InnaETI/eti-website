@@ -22,7 +22,7 @@ const INTERNAL_PATHS = [
   '/methodology/',
   '/execution/',
   '/career/',
-  '/services/distributed-workforce-solutions',
+  '/distributed-workforce-solutions',
 ];
 
 function rewriteReferenceLinks(html: string): string {
