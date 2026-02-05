@@ -16,7 +16,7 @@ npm install
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000).
+Open [http://localhost:3010](http://localhost:3010). Admin: [http://localhost:3010/admin](http://localhost:3010/admin).
 
 ## Build and production
 
@@ -28,11 +28,21 @@ npm run build
 npm start
 ```
 
+## Admin (content management)
+
+A custom admin app at **`/admin`** lets you edit React-site content without touching files directly.
+
+- **Routes:** `/admin` (dashboard), `/admin/global`, `/admin/home`, `/admin/pages`, `/admin/blog`
+- **Auth:** Set **`ADMIN_PASSWORD`** in `.env` (min 8 characters). Then open `/admin`, log in with that password, and edit.
+- **Visual:** Image picker (upload or URL) for banners and icons; Markdown preview for body text; “View on site” links for preview.
+- **Scope:** Edits only the file-based content used by the React app (`content/global.json`, `content/home.json`, `content/pages/*.json`, `content/blog/*`). WordPress pages are not managed here.
+
 ## Deploy (Vercel)
 
 1. Connect the repo to Vercel.
 2. Set **SITE_URL** (or `NEXT_PUBLIC_SITE_URL`) to your production URL (e.g. `https://www.emergingti.com`) for sitemap and OG URLs.
-3. Deploy. No other env vars required for the MVP.
+3. Set **ADMIN_PASSWORD** if you want to use the admin in production (min 8 characters).
+4. Deploy. No other env vars required for the MVP.
 
 ## Project structure
 

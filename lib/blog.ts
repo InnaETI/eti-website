@@ -148,7 +148,16 @@ export function getAllPosts(): BlogPost[] {
   const bySlug = new Map<string, BlogPost>();
   for (const p of wpPosts) bySlug.set(p.slug, p);
   for (const p of mdxPosts) bySlug.set(p.slug, p); // MDX overrides WP if same slug
-  return Array.from(bySlug.values()).sort((a, b) => (b.date > a.date ? 1 : -1));
+  return Array.from(bySlug.values()).sort((a, b) => {
+    const aTime = Date.parse(a.date || '');
+    const bTime = Date.parse(b.date || '');
+    if (!Number.isNaN(aTime) && !Number.isNaN(bTime)) {
+      return bTime - aTime;
+    }
+    if (!Number.isNaN(bTime)) return 1;
+    if (!Number.isNaN(aTime)) return -1;
+    return a.slug.localeCompare(b.slug);
+  });
 }
 
 export function getLatestPosts(limit: number): BlogPost[] {
