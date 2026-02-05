@@ -34,7 +34,7 @@ export function Header() {
             <nav className="flex-1 px-6">
               <ul className="flex items-center h-full space-x-0">
                 {NAV_LINKS.map(({ href, label }) => {
-                  const isActive = pathname === href || (href !== '/' && pathname.startsWith(href));
+                  const isActive = pathname === href || pathname.startsWith(`${href}/`);
                   return (
                     <li key={href} className="h-full">
                       <Link
@@ -89,7 +89,7 @@ export function Header() {
         <div className="lg:hidden bg-white border-t border-gray-200">
           <nav className="flex flex-col py-2">
             {NAV_LINKS.map(({ href, label }) => {
-              const isActive = pathname === href || (href !== '/' && pathname.startsWith(href));
+              const isActive = pathname === href || pathname.startsWith(`${href}/`);
               return (
                 <Link
                   key={href}
