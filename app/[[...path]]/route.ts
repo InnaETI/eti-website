@@ -55,6 +55,12 @@ function rewriteWpHtml(html: string): string {
   // Remove display:none from slider to make it visible immediately
   out = out.replace(/(<div id="rev_slider_13_1"[^>]*style=")display:none;/g, '$1');
   
+  // Add height to slider wrapper so it's visible even if JavaScript fails
+  out = out.replace(
+    /(id="rev_slider_13_1_wrapper"[^>]*style="[^"]*)/,
+    '$1height:675px;'
+  );
+  
   out = out.replace(/action="\/wp-comments-post\.php"/g, 'action="#"');
   if (out.includes('class="') && out.includes('lazyload') && !out.includes('data-src to src')) {
     out = out.replace('</body>', LAZYLOAD_FALLBACK + '\n</body>');
