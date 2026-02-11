@@ -27,41 +27,13 @@ const LAZYLOAD_FALLBACK =
 
 function rewriteWpHtml(html: string): string {
   let out = html
-    // Protocol-relative URLs first (most specific)
     .replaceAll('//www.emergingti.com/wp-content/', '/wp-content/')
     .replaceAll('//www.emergingti.com/wp-includes/', '/wp-includes/')
     .replaceAll('//www.emergingti.com/', '/')
-    .replaceAll('//emergingti.com/wp-content/', '/wp-content/')
-    .replaceAll('//emergingti.com/wp-includes/', '/wp-includes/')
-    .replaceAll('//emergingti.com/', '/')
-    // HTTPS URLs
     .replaceAll('https://www.emergingti.com/wp-content/', '/wp-content/')
     .replaceAll('https://www.emergingti.com/wp-includes/', '/wp-includes/')
     .replaceAll('https://www.emergingti.com/', '/')
-    .replaceAll('https://emergingti.com/wp-content/', '/wp-content/')
-    .replaceAll('https://emergingti.com/wp-includes/', '/wp-includes/')
-    .replaceAll('https://emergingti.com/', '/')
-    // HTTP URLs
-    .replaceAll('http://www.emergingti.com/wp-content/', '/wp-content/')
-    .replaceAll('http://www.emergingti.com/wp-includes/', '/wp-includes/')
-    .replaceAll('http://www.emergingti.com/', '/')
-    .replaceAll('http://emergingti.com/wp-content/', '/wp-content/')
-    .replaceAll('http://emergingti.com/wp-includes/', '/wp-includes/')
-    .replaceAll('http://emergingti.com/', '/');
-  
-  // Completely remove jsFileLocation parameter to prevent dynamic loading of extensions
-  // Extensions are optional - the basic slider should work without them
-  out = out.replace(/jsFileLocation:"[^"]*",?\s*/g, '');
-  
-  // Remove display:none from slider to make it visible immediately
-  out = out.replace(/(<div id="rev_slider_13_1"[^>]*style=")display:none;/g, '$1');
-  
-  // Add height to slider wrapper so it's visible even if JavaScript fails
-  out = out.replace(
-    /(id="rev_slider_13_1_wrapper"[^>]*style="[^"]*)/,
-    '$1height:675px;'
-  );
-  
+    .replaceAll('http://www.emergingti.com/', '/');
   out = out.replace(/action="\/wp-comments-post\.php"/g, 'action="#"');
   if (out.includes('class="') && out.includes('lazyload') && !out.includes('data-src to src')) {
     out = out.replace('</body>', LAZYLOAD_FALLBACK + '\n</body>');
