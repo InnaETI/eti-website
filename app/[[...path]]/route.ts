@@ -50,43 +50,12 @@ function rewriteWpHtml(html: string): string {
     .replaceAll('http://emergingti.com/', '/');
   out = out.replace(/action="\/wp-comments-post\.php"/g, 'action="#"');
 
-  // Inject Revolution Slider extensions manually to bypass dynamic loading issues
-  // This fixes "Failure at Loading" errors caused by strict browser environments or path issues
-  const EXTENSIONS = [
-    'actions', 'carousel', 'kenburn', 'layeranimation', 'migration',
-    'navigation', 'parallax', 'slideanims', 'video'
-  ];
-  
-  // Polyfill for missing Revolution Slider 5.4.x methods in 5.0.x core (is_mobile, is_android)
-  const POLYFILL_SCRIPT = `<script>
-    (function() {
-      if (window.jQuery && window.jQuery.fn && window.jQuery.fn.revolution) {
-        var _R = window.jQuery.fn.revolution;
-        if (!_R.is_mobile) {
-          _R.is_mobile = function() { 
-            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent); 
-          };
-        }
-        if (!_R.is_android) {
-          _R.is_android = function() { 
-            return /Android/i.test(navigator.userAgent); 
-          };
-        }
-      }
-    })();
-  </script>`;
-
-  const EXTENSION_SCRIPTS = EXTENSIONS
-    .map(ext => `<script src="/wp-content/plugins/revslider/public/assets/js/extensions/revolution.extension.${ext}.min.js"></script>`)
-    .join('');
-  
+  // Keep the original cached bundle (72e57.js) - don't replace it
+  // Just ensure jsFileLocation points to local assets with relative path
   out = out.replace(
-    /(<script\s+src="\/wp-content\/cache\/minify\/72e57\.js"><\/script>)/,
-    '$1' + POLYFILL_SCRIPT + EXTENSION_SCRIPTS
+    /jsFileLocation:"[^"]*"/g,
+    'jsFileLocation:"/wp-content/plugins/revslider/public/assets/js/"'
   );
-  
-  // Disable dynamic loading since we injected scripts manually
-  out = out.replace(/jsFileLocation:"[^"]*",?\s*/g, 'jsFileLocation:"",');
 
   if (out.includes('class="') && out.includes('lazyload') && !out.includes('data-src to src')) {
     out = out.replace('</body>', LAZYLOAD_FALLBACK + '\n</body>');
@@ -100,8 +69,9 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
   const pathKey = pathSegments.join('/');
   const searchQuery = request.nextUrl.searchParams.get('s');
 
-  // Don't serve WordPress HTML for asset-like or reserved paths
-  if (pathSegments[0] === '_next' || pathSegments[0] === 'api' || pathSegments[0] === 'wp-content') {
+  // Don't serve WordPress HTML for Next.js internal paths
+  // Note: wp-content is NOT blocked here - it's served as static files from public/
+  if (pathSegments[0] === '_next' || pathSegments[0] === 'api') {
     return new Response(null, { status: 404 });
   }
 
