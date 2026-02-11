@@ -49,6 +49,25 @@ function rewriteWpHtml(html: string): string {
     .replaceAll('http://emergingti.com/wp-includes/', '/wp-includes/')
     .replaceAll('http://emergingti.com/', '/');
   out = out.replace(/action="\/wp-comments-post\.php"/g, 'action="#"');
+
+  // Inject Revolution Slider extensions manually to bypass dynamic loading issues
+  // This fixes "Failure at Loading" errors caused by strict browser environments or path issues
+  const EXTENSIONS = [
+    'actions', 'carousel', 'kenburn', 'layeranimation', 'migration',
+    'navigation', 'parallax', 'slideanims', 'video'
+  ];
+  const EXTENSION_SCRIPTS = EXTENSIONS
+    .map(ext => `<script src="/wp-content/plugins/revslider/public/assets/js/extensions/revolution.extension.${ext}.min.js"></script>`)
+    .join('');
+  
+  out = out.replace(
+    /(<script\s+src="\/wp-content\/cache\/minify\/72e57\.js"><\/script>)/,
+    '$1' + EXTENSION_SCRIPTS
+  );
+  
+  // Disable dynamic loading since we injected scripts manually
+  out = out.replace(/jsFileLocation:"[^"]*",?\s*/g, 'jsFileLocation:"",');
+
   if (out.includes('class="') && out.includes('lazyload') && !out.includes('data-src to src')) {
     out = out.replace('</body>', LAZYLOAD_FALLBACK + '\n</body>');
   }
