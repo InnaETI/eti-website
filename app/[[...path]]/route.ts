@@ -49,22 +49,8 @@ function rewriteWpHtml(html: string): string {
     .replaceAll('http://emergingti.com/wp-includes/', '/wp-includes/')
     .replaceAll('http://emergingti.com/', '/');
   
-  // Load Revolution Slider extensions AFTER the main slider script (72e57.js)
-  const extensionScripts = `
-<script src="/extensions/revolution.extension.actions.min.js"></script>
-<script src="/extensions/revolution.extension.carousel.min.js"></script>
-<script src="/extensions/revolution.extension.kenburn.min.js"></script>
-<script src="/extensions/revolution.extension.layeranimation.min.js"></script>
-<script src="/extensions/revolution.extension.migration.min.js"></script>
-<script src="/extensions/revolution.extension.navigation.min.js"></script>
-<script src="/extensions/revolution.extension.parallax.min.js"></script>
-<script src="/extensions/revolution.extension.slideanims.min.js"></script>
-<script src="/extensions/revolution.extension.video.min.js"></script>`;
-  
-  // Inject extensions right after the main slider script loads
-  out = out.replace(/(<script\s+src="\/wp-content\/cache\/minify\/72e57\.js"><\/script>)/i, '$1' + extensionScripts);
-  
-  // Completely remove jsFileLocation parameter to prevent dynamic loading
+  // Completely remove jsFileLocation parameter to prevent dynamic loading of extensions
+  // Extensions are optional - the basic slider should work without them
   out = out.replace(/jsFileLocation:"[^"]*",?\s*/g, '');
   
   // Remove display:none from slider to make it visible immediately
