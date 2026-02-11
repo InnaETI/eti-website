@@ -49,7 +49,7 @@ function rewriteWpHtml(html: string): string {
     .replaceAll('http://emergingti.com/wp-includes/', '/wp-includes/')
     .replaceAll('http://emergingti.com/', '/');
   
-  // Preload Revolution Slider extensions in the head so they're available before slider initializes
+  // Load Revolution Slider extensions AFTER the main slider script (72e57.js)
   const extensionScripts = `
 <script src="/extensions/revolution.extension.actions.min.js"></script>
 <script src="/extensions/revolution.extension.carousel.min.js"></script>
@@ -61,7 +61,8 @@ function rewriteWpHtml(html: string): string {
 <script src="/extensions/revolution.extension.slideanims.min.js"></script>
 <script src="/extensions/revolution.extension.video.min.js"></script>`;
   
-  out = out.replace('</head>', extensionScripts + '\n</head>');
+  // Inject extensions right after the main slider script loads
+  out = out.replace(/(<script\s+src="\/wp-content\/cache\/minify\/72e57\.js"><\/script>)/i, '$1' + extensionScripts);
   
   // Completely remove jsFileLocation parameter to prevent dynamic loading
   out = out.replace(/jsFileLocation:"[^"]*",?\s*/g, '');
