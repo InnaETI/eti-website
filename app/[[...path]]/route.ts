@@ -27,10 +27,27 @@ const LAZYLOAD_FALLBACK =
 
 function rewriteWpHtml(html: string): string {
   let out = html
+    // Protocol-relative URLs first (most specific)
+    .replaceAll('//www.emergingti.com/wp-content/', '/wp-content/')
+    .replaceAll('//www.emergingti.com/wp-includes/', '/wp-includes/')
+    .replaceAll('//www.emergingti.com/', '/')
+    .replaceAll('//emergingti.com/wp-content/', '/wp-content/')
+    .replaceAll('//emergingti.com/wp-includes/', '/wp-includes/')
+    .replaceAll('//emergingti.com/', '/')
+    // HTTPS URLs
     .replaceAll('https://www.emergingti.com/wp-content/', '/wp-content/')
     .replaceAll('https://www.emergingti.com/wp-includes/', '/wp-includes/')
     .replaceAll('https://www.emergingti.com/', '/')
-    .replaceAll('http://www.emergingti.com/', '/');
+    .replaceAll('https://emergingti.com/wp-content/', '/wp-content/')
+    .replaceAll('https://emergingti.com/wp-includes/', '/wp-includes/')
+    .replaceAll('https://emergingti.com/', '/')
+    // HTTP URLs
+    .replaceAll('http://www.emergingti.com/wp-content/', '/wp-content/')
+    .replaceAll('http://www.emergingti.com/wp-includes/', '/wp-includes/')
+    .replaceAll('http://www.emergingti.com/', '/')
+    .replaceAll('http://emergingti.com/wp-content/', '/wp-content/')
+    .replaceAll('http://emergingti.com/wp-includes/', '/wp-includes/')
+    .replaceAll('http://emergingti.com/', '/');
   out = out.replace(/action="\/wp-comments-post\.php"/g, 'action="#"');
   if (out.includes('class="') && out.includes('lazyload') && !out.includes('data-src to src')) {
     out = out.replace('</body>', LAZYLOAD_FALLBACK + '\n</body>');
