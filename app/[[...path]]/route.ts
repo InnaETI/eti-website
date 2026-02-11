@@ -77,7 +77,12 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
       if (res.ok) {
         const html = await res.text();
         return new Response(rewriteWpHtml(html), {
-          headers: { 'Content-Type': 'text/html; charset=utf-8' },
+          headers: {
+            'Content-Type': 'text/html; charset=utf-8',
+            'Cache-Control': 'no-cache, no-store, must-revalidate',
+            'Pragma': 'no-cache',
+            'Expires': '0',
+          },
         });
       }
     } catch {
@@ -97,6 +102,9 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
   return new Response(html, {
     headers: {
       'Content-Type': 'text/html; charset=utf-8',
+      'Cache-Control': 'no-cache, no-store, must-revalidate',
+      'Pragma': 'no-cache',
+      'Expires': '0',
     },
   });
 }
