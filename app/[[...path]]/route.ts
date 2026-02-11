@@ -50,12 +50,39 @@ function rewriteWpHtml(html: string): string {
     .replaceAll('http://emergingti.com/', '/');
   out = out.replace(/action="\/wp-comments-post\.php"/g, 'action="#"');
 
-  // Keep the original cached bundle (72e57.js) - don't replace it
-  // Just ensure jsFileLocation points to local assets with relative path
+  // Pre-load ALL RevSlider extensions as regular scripts to bypass dynamic loading
+  const EXTENSION_SCRIPTS = [
+    'slideanims', 'layeranimation', 'navigation', 'parallax', 'kenburn', 'video'
+  ].map(ext => 
+    `<script src="/wp-content/plugins/revslider/public/assets/js/extensions/revolution.extension.${ext}.min.js"></script>`
+  ).join('');
+  
+  // Inject extensions right after the main slider script (72e57.js)
+  out = out.replace(
+    /(<script\s+src="\/wp-content\/cache\/minify\/72e57\.js"><\/script>)/,
+    '$1' + EXTENSION_SCRIPTS
+  );
+  
+  // Disable dynamic loading by setting jsFileLocation to empty
   out = out.replace(
     /jsFileLocation:"[^"]*"/g,
-    'jsFileLocation:"/wp-content/plugins/revslider/public/assets/js/"'
+    'jsFileLocation:""'
   );
+  
+  // Force slider wrapper to have visible height
+  out = out.replace(
+    /(<div id="rev_slider_13_1_wrapper"[^>]*style="[^"]*)/,
+    '$1min-height:675px;'
+  );
+  
+  // Remove display:none from slider
+  out = out.replace(
+    /(<div id="rev_slider_13_1"[^>]*)(style="display:none;")/,
+    '$1style=""'
+  );
+  
+  // Add debug scripts
+  out = out.replace('</head>', '<script src="/debug-revslider.js"></script><script src="/check-slider-state.js"></script></head>');
 
   if (out.includes('class="') && out.includes('lazyload') && !out.includes('data-src to src')) {
     out = out.replace('</body>', LAZYLOAD_FALLBACK + '\n</body>');

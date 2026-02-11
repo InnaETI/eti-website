@@ -1,0 +1,15 @@
+# Run Node.js app via Passenger (app root = this directory)
+Options -Indexes
+
+# Prevent browsers from caching HTML (avoids serving stale "Index of /" after deploy issues)
+<IfModule mod_headers.c>
+  <FilesMatch "\.(html|htm)$">
+    Header set Cache-Control "no-cache, no-store, must-revalidate"
+  </FilesMatch>
+</IfModule>
+PassengerEnabled on
+PassengerAppType node
+PassengerStartupFile server.js
+PassengerNodejs /home/emergi27/nodevenv/public_html/eti-app/18/bin/node
+SetEnv NODE_ENV production
+SetEnv PORT 3000
