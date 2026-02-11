@@ -49,8 +49,9 @@ function rewriteWpHtml(html: string): string {
     .replaceAll('http://emergingti.com/wp-includes/', '/wp-includes/')
     .replaceAll('http://emergingti.com/', '/');
   
-  // Remove jsFileLocation to prevent Revolution Slider from trying to dynamically load extensions
-  out = out.replace(/jsFileLocation:"[^"]*",\s*/g, '');
+  // Set jsFileLocation to empty string to prevent Revolution Slider from trying to load extensions
+  // The extensions are already bundled in the minified file
+  out = out.replace(/jsFileLocation:"[^"]*"/g, 'jsFileLocation:""');
   
   out = out.replace(/action="\/wp-comments-post\.php"/g, 'action="#"');
   if (out.includes('class="') && out.includes('lazyload') && !out.includes('data-src to src')) {
