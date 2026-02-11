@@ -56,13 +56,33 @@ function rewriteWpHtml(html: string): string {
     'actions', 'carousel', 'kenburn', 'layeranimation', 'migration',
     'navigation', 'parallax', 'slideanims', 'video'
   ];
+  
+  // Polyfill for missing Revolution Slider 5.4.x methods in 5.0.x core (is_mobile, is_android)
+  const POLYFILL_SCRIPT = `<script>
+    (function() {
+      if (window.jQuery && window.jQuery.fn && window.jQuery.fn.revolution) {
+        var _R = window.jQuery.fn.revolution;
+        if (!_R.is_mobile) {
+          _R.is_mobile = function() { 
+            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent); 
+          };
+        }
+        if (!_R.is_android) {
+          _R.is_android = function() { 
+            return /Android/i.test(navigator.userAgent); 
+          };
+        }
+      }
+    })();
+  </script>`;
+
   const EXTENSION_SCRIPTS = EXTENSIONS
     .map(ext => `<script src="/wp-content/plugins/revslider/public/assets/js/extensions/revolution.extension.${ext}.min.js"></script>`)
     .join('');
   
   out = out.replace(
     /(<script\s+src="\/wp-content\/cache\/minify\/72e57\.js"><\/script>)/,
-    '$1' + EXTENSION_SCRIPTS
+    '$1' + POLYFILL_SCRIPT + EXTENSION_SCRIPTS
   );
   
   // Disable dynamic loading since we injected scripts manually
