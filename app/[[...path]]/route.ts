@@ -52,20 +52,6 @@ function rewriteWpHtml(html: string): string {
   // Remove jsFileLocation to prevent Revolution Slider from trying to dynamically load extensions
   out = out.replace(/jsFileLocation:"[^"]*",\s*/g, '');
   
-  // Inject Revolution Slider extension scripts right after the main slider script loads
-  const extensionScripts = `
-<script src="/wp-content/plugins/revslider/public/assets/js/extensions/revolution.extension.actions.min.js"></script>
-<script src="/wp-content/plugins/revslider/public/assets/js/extensions/revolution.extension.carousel.min.js"></script>
-<script src="/wp-content/plugins/revslider/public/assets/js/extensions/revolution.extension.kenburn.min.js"></script>
-<script src="/wp-content/plugins/revslider/public/assets/js/extensions/revolution.extension.layeranimation.min.js"></script>
-<script src="/wp-content/plugins/revslider/public/assets/js/extensions/revolution.extension.migration.min.js"></script>
-<script src="/wp-content/plugins/revslider/public/assets/js/extensions/revolution.extension.navigation.min.js"></script>
-<script src="/wp-content/plugins/revslider/public/assets/js/extensions/revolution.extension.parallax.min.js"></script>
-<script src="/wp-content/plugins/revslider/public/assets/js/extensions/revolution.extension.slideanims.min.js"></script>
-<script src="/wp-content/plugins/revslider/public/assets/js/extensions/revolution.extension.video.min.js"></script>`;
-  
-  out = out.replace(/(<script\s+src="\/wp-content\/cache\/minify\/72e57\.js"><\/script>)/i, '$1' + extensionScripts);
-  
   out = out.replace(/action="\/wp-comments-post\.php"/g, 'action="#"');
   if (out.includes('class="') && out.includes('lazyload') && !out.includes('data-src to src')) {
     out = out.replace('</body>', LAZYLOAD_FALLBACK + '\n</body>');
