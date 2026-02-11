@@ -7,7 +7,7 @@ set -e
 HOST="ecngx285.inmotionhosting.com"
 USER="emergi27"
 PORT="2222"
-REMOTE_DIR="/home/emergi27/public_html/eti-app"
+REMOTE_DIR="/home/emergi27/eti-app"
 LOCAL_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 KEY="$LOCAL_DIR/keys/deploy-inmotion"
 BUILD_LOCALLY="${BUILD_LOCALLY:-0}"
@@ -27,24 +27,22 @@ else
   RSYNC_EXCLUDE_NEXT="--exclude .next"
 fi
 
-echo "Syncing files to public_html/eti-app (replaces existing content)..."
+echo "Syncing files to /home/emergi27/eti-app (replaces existing content)..."
 rsync -avz --delete \
   -e "ssh ${SSH_OPTS[*]}" \
   --exclude node_modules \
   $RSYNC_EXCLUDE_NEXT \
   --exclude .git \
   --exclude keys \
-  --exclude wordpress-pages \
   --exclude reference \
   --exclude reference.html \
-  --exclude '*.html' \
   "$LOCAL_DIR/" "$USER@$HOST:$REMOTE_DIR/"
 
 if [[ "$BUILD_LOCALLY" == "1" ]]; then
   echo "Skipping server npm install (use Run NPM Install in cPanel with Node 18 if needed)."
 else
   NODE_SETUP='
-    export PATH="/opt/cpanel/ea-nodejs18/bin:/opt/cpanel/ea-nodejs20/bin:$HOME/nodevenv/public_html/eti-app/18/bin:$HOME/nodevenv/public_html/eti-app/20/bin:$PATH"
+    export PATH="/opt/cpanel/ea-nodejs18/bin:/opt/cpanel/ea-nodejs20/bin:$HOME/nodevenv/eti-app/18/bin:$HOME/nodevenv/eti-app/20/bin:$PATH"
     NODE_VER=$(node -v 2>/dev/null | sed "s/v//" | cut -d. -f1)
     if [ -z "$NODE_VER" ] || [ "$NODE_VER" -lt 18 ] 2>/dev/null; then
       echo "ERROR: Need Node 18+. Current: $(node -v 2>/dev/null || echo none)."
@@ -61,4 +59,4 @@ echo "Creating start script..."
 ssh "${SSH_OPTS[@]}" "$USER@$HOST" "cd $REMOTE_DIR && echo '#!/bin/bash
 cd $REMOTE_DIR && npm run start' > start.sh && chmod +x start.sh"
 
-echo "Deploy done. In cPanel → Setup Node.js App: set Application root to $REMOTE_DIR, Start command: npm run start (or ./start.sh), then Start App."
+echo "Deploy done. In cPanel → Setup Node.js App: Application root = eti-app, startup file = server.js, then Run NPM Install and Restart."
