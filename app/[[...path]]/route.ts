@@ -61,38 +61,55 @@ function replaceRevolutionSliderWithSwiper(html: string): string {
 
   const swiperCarousel = `
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-<div class="swiper-carousel-wrapper" style="width:100%;height:675px;position:relative;">
+<div class="swiper-carousel-wrapper eti-hero-carousel" style="width:100%;height:675px;position:relative;">
 <div class="swiper"><div class="swiper-wrapper">
 <div class="swiper-slide">
-<div style="position:relative;width:100%;height:675px;overflow:hidden;">
-<img src="/wp-content/uploads/2020/05/shutterstock-banner_1692360436.jpg" alt="Strategy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center">
-<div style="position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;padding:0 15px;z-index:2">
-<div style="background:#ff6b35;color:#fff;padding:18px 30px;font-size:14px;display:inline-block;max-width:296px;margin-bottom:10px">Strategy</div>
-<div class="slider-blue-box" style="background:rgba(0,40,85,.9);color:#fff!important;padding:40px 30px;font-size:16px;line-height:1.6;max-width:700px;margin-bottom:20px"><p style="margin:0;color:#fff!important">In today's rapidly evolving business landscape, the imperative for strategic transformation is underscored by our commitment to four pivotal pillars of success.</p></div>
-<div style="align-self:flex-start"><a href="/strategy/" class="slider-read-more" style="display:inline-block;background:#000;color:#fff;padding:15px 30px;font-size:12px;font-weight:600;text-decoration:none;text-transform:uppercase;width:fit-content">READ MORE</a></div>
-</div></div></div>
+<section class="eti-hero"><img src="/wp-content/uploads/2020/05/shutterstock-banner_1692360436.jpg" alt="Strategy" />
+<div class="eti-hero-overlay">
+<div class="eti-hero-tag">Strategy</div>
+<div class="eti-hero-card"><p>In today's rapidly evolving business landscape, the imperative for strategic transformation is underscored by our commitment to four pivotal pillars of success.</p></div>
+<a class="eti-hero-cta" href="/strategy/">Read more</a>
+</div>
+</section>
+</div>
 <div class="swiper-slide">
-<div style="position:relative;width:100%;height:675px;overflow:hidden;">
-<img src="/wp-content/uploads/2017/08/methodology-1.jpg" alt="Methodology" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center">
-<div style="position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;padding:0 15px;z-index:2">
-<div style="background:#ff6b35;color:#fff;padding:18px 30px;font-size:14px;display:inline-block;max-width:296px;margin-bottom:10px">Methodology</div>
-<div class="slider-blue-box" style="background:rgba(0,40,85,.9);color:#fff!important;padding:40px 30px;font-size:16px;line-height:1.6;max-width:700px;margin-bottom:20px"><p style="margin:0;color:#fff!important">To leverage technical advantages while maintaining vigilant cost control we collaborate with leadership, management, and technical teams to create strategy and allocate budget for the best technical solutions.</p></div>
-<div style="align-self:flex-start"><a href="/methodology/" class="slider-read-more" style="display:inline-block;background:#000;color:#fff;padding:15px 30px;font-size:12px;font-weight:600;text-decoration:none;text-transform:uppercase;width:fit-content">READ MORE</a></div>
-</div></div></div>
+<section class="eti-hero"><img src="/wp-content/uploads/2017/08/methodology-1.jpg" alt="Methodology" />
+<div class="eti-hero-overlay">
+<div class="eti-hero-tag">Methodology</div>
+<div class="eti-hero-card"><p>To leverage technical advantages while maintaining vigilant cost control we collaborate with leadership, management, and technical teams to create strategy and allocate budget for the best technical solutions.</p></div>
+<a class="eti-hero-cta" href="/methodology/">Read more</a>
+</div>
+</section>
+</div>
 <div class="swiper-slide">
-<div style="position:relative;width:100%;height:675px;overflow:hidden;">
-<img src="/wp-content/uploads/2017/08/execution.jpg" alt="Execution" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center">
-<div style="position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;padding:0 15px;z-index:2">
-<div style="background:#ff6b35;color:#fff;padding:18px 30px;font-size:14px;display:inline-block;max-width:296px;margin-bottom:10px">Execution</div>
-<div class="slider-blue-box" style="background:rgba(0,40,85,.9);color:#fff!important;padding:40px 30px;font-size:16px;line-height:1.6;max-width:700px;margin-bottom:20px"><p style="margin:0;color:#fff!important">Think of ETI as a strategic partner dedicated to helping you achieve your organizational goals. Our approach centers on aligning with your objectives, delivering excellence, and fostering a culture of continuous improvement.</p></div>
-<div style="align-self:flex-start"><a href="/execution/" class="slider-read-more" style="display:inline-block;background:#000;color:#fff;padding:15px 30px;font-size:12px;font-weight:600;text-decoration:none;text-transform:uppercase;width:fit-content">READ MORE</a></div>
-</div></div></div>
+<section class="eti-hero"><img src="/wp-content/uploads/2017/08/execution.jpg" alt="Execution" />
+<div class="eti-hero-overlay">
+<div class="eti-hero-tag">Execution</div>
+<div class="eti-hero-card"><p>Think of ETI as a strategic partner dedicated to helping you achieve your organizational goals. Our approach centers on aligning with your objectives, delivering excellence, and fostering a culture of continuous improvement.</p></div>
+<a class="eti-hero-cta" href="/execution/">Read more</a>
+</div>
+</section>
+</div>
 </div></div>
 <div class="swiper-button-next"></div><div class="swiper-button-prev"></div>
 </div></div>
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script>document.addEventListener("DOMContentLoaded",function(){new Swiper(".swiper",{slidesPerView:1,spaceBetween:0,loop:!0,autoplay:{delay:9000,disableOnInteraction:!1},speed:1e3,navigation:{nextEl:".swiper-button-next",prevEl:".swiper-button-prev"}})});</script>
-<style>.swiper-carousel-wrapper .swiper-button-next,.swiper-carousel-wrapper .swiper-button-prev{color:#fff;background:rgba(0,0,0,.5);width:44px;height:44px;border-radius:50%}.swiper-carousel-wrapper .swiper-button-next:hover,.swiper-carousel-wrapper .swiper-button-prev:hover{background:rgba(255,107,53,.9)}.swiper-carousel-wrapper .swiper-button-next::after,.swiper-carousel-wrapper .swiper-button-prev::after{font-size:20px}.slider-blue-box,.slider-blue-box p{color:#fff!important}.slider-read-more:hover{background:#ff6b35!important}</style>`;
+<style>
+.eti-hero{position:relative;height:675px;width:100%;overflow:hidden}
+.eti-hero img{position:absolute;inset:0;height:100%;width:100%;object-fit:cover;object-position:center}
+.eti-hero-overlay{position:absolute;left:48px;top:50%;transform:translateY(-50%);width:520px;max-width:calc(100% - 96px);z-index:20}
+.eti-hero-tag{display:inline-block;transform:translateX(-20px);border-radius:2px;background:#f57c2a;color:#fff!important;padding:12px 24px;font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:12px}
+.eti-hero-card{border-radius:2px;background:rgba(14,44,90,0.85);color:#fff!important;padding:24px 28px;margin-top:12px}
+.eti-hero-card p{margin:0;font-size:14px;line-height:1.5;color:#fff!important}
+.eti-hero-cta{display:inline-block;margin-top:16px;border-radius:2px;background:#111;color:#fff!important;padding:12px 20px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;text-decoration:none}
+.eti-hero-cta:hover{background:#ff6b35!important;color:#fff!important}
+.swiper-carousel-wrapper .swiper-button-next,.swiper-carousel-wrapper .swiper-button-prev{color:#fff;background:rgba(0,0,0,.5);width:44px;height:44px;border-radius:50%}
+.swiper-carousel-wrapper .swiper-button-next:hover,.swiper-carousel-wrapper .swiper-button-prev:hover{background:rgba(255,107,53,.9)}
+.swiper-carousel-wrapper .swiper-button-next::after,.swiper-carousel-wrapper .swiper-button-prev::after{font-size:20px}
+@media(max-width:639px){.eti-hero-overlay{left:20px;max-width:calc(100% - 40px)}.eti-hero-card{padding:20px}}
+section.service-wrap.businessplus-page-setting-one{margin-top:0!important;padding-top:24px!important}
+</style>`;
 
   return html.substring(0, sliderStartIndex) + swiperCarousel + html.substring(sliderEndIndex + sliderEndMarker.length);
 }
