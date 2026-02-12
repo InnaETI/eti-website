@@ -39,7 +39,7 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
 
   let html = fs.readFileSync(toTry, 'utf-8');
 
-  // Homepage: Replace broken Revolution Slider with Swiper (works on Railway)
+  // Homepage: Replace broken Revolution Slider with Swiper (works on Railway) v2
   if (pathKey === '') {
     html = replaceRevolutionSliderWithSwiper(html);
   }
