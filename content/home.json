@@ -1,5 +1,38 @@
 {
   "heroBanner": "/wp-content/uploads/2020/05/shutterstock-banner_1692360436.jpg",
+  "hero": {
+    "eyebrow": "Emerging Technologies, Inc.",
+    "title": "Technology transformation when the decision surface is messy.",
+    "subtitle": "ETI partners with leadership teams that need strategy, operating clarity, and execution discipline across healthcare, AI, and digital transformation work.",
+    "primaryLabel": "Schedule a call",
+    "primaryHref": "/rfp-wizard",
+    "secondaryLabel": "Review capabilities",
+    "secondaryHref": "/services",
+    "badgeTitle": "Where ETI fits",
+    "badgeBody": "We work where leadership intent, delivery pressure, budget reality, and technology complexity all collide at once.",
+    "badgePoints": [
+      "Executive alignment before delivery chaos compounds",
+      "Technology strategy tied directly to operational priorities",
+      "Hands-on guidance from planning through execution"
+    ]
+  },
+  "metrics": [
+    {
+      "value": "Strategy",
+      "label": "Set the direction",
+      "detail": "Clarify priorities, budget logic, platform options, and the real decision surface."
+    },
+    {
+      "value": "Methodology",
+      "label": "Build the operating model",
+      "detail": "Create a practical path for teams, governance, and delivery rather than a slide-deck plan."
+    },
+    {
+      "value": "Execution",
+      "label": "Carry the work through",
+      "detail": "Stay close to delivery so the original business intent survives implementation pressure."
+    }
+  ],
   "pillars": [
     {
       "title": "Strategy",
@@ -39,6 +72,23 @@
     "viewMoreHref": "/clients",
     "viewMoreText": "view more"
   },
+  "featuredClients": [
+    {
+      "name": "Oak Street Health",
+      "outcome": "Custom outreach and supplemental coverage platform built for scale.",
+      "summary": "ETI supported the technology ecosystem behind multi-market growth and a business trajectory that culminated in a $10.6B acquisition by CVS Health."
+    },
+    {
+      "name": "Integrated Surgical Solutions",
+      "outcome": "Technology-enabled growth from a niche model to national scale.",
+      "summary": "ETI helped align systems and execution as the business expanded revenue dramatically and advanced toward a major strategic exit."
+    },
+    {
+      "name": "Healthcare Payment Specialists",
+      "outcome": "Platform assessment and improvement work tied to reimbursement operations.",
+      "summary": "ETI focused on real process, compliance, and product improvement rather than abstract transformation language."
+    }
+  ],
   "cta": {
     "title": "Schedule a call with ETI Leader",
     "subtitle": "to discuss your business situation and desired horizons",
@@ -55,6 +105,14 @@
     "buttonText": "Join our Team",
     "href": "/career"
   },
+  "sections": [
+    {
+      "type": "quote",
+      "eyebrow": "Operating principle",
+      "quote": "Transformation work fails when strategy, team realities, and execution sequencing are treated as separate problems.",
+      "attribution": "ETI point of view"
+    }
+  ],
   "news": {
     "title": "News",
     "sections": [

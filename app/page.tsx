@@ -1,11 +1,11 @@
 import Link from 'next/link';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
-import { PageHero } from '@/components/PageHero';
 import { RichText } from '@/components/RichText';
 import { PrimaryButton, SecondaryButton } from '@/components/Button';
 import { getGlobalContent, getHomeContent, getPageContent } from '@/lib/content';
 import { getLatestPosts } from '@/lib/blog';
+import { ContentBlocks, type ContentBlock } from '@/components/ContentBlocks';
 
 type HomePillar = {
   title?: string;
@@ -18,6 +18,29 @@ type HomeService = {
 };
 
 type HomeData = {
+  hero?: {
+    eyebrow?: string;
+    title?: string;
+    subtitle?: string;
+    primaryLabel?: string;
+    primaryHref?: string;
+    secondaryLabel?: string;
+    secondaryHref?: string;
+    badgeTitle?: string;
+    badgeBody?: string;
+    badgePoints?: string[];
+  };
+  metrics?: Array<{
+    value: string;
+    label: string;
+    detail?: string;
+  }>;
+  featuredClients?: Array<{
+    name: string;
+    outcome: string;
+    summary: string;
+  }>;
+  sections?: ContentBlock[];
   pillars?: HomePillar[];
   services?: {
     intro?: string;
@@ -66,7 +89,11 @@ export default function HomePage() {
   const clientsPage = getPageContent('clients');
   const clientTestimonials = Array.isArray(clientsPage?.testimonials) ? clientsPage?.testimonials : [];
 
+  const hero = homeContent.hero ?? {};
   const pillars = homeContent.pillars ?? [];
+  const metrics = homeContent.metrics ?? [];
+  const featuredClients = homeContent.featuredClients ?? [];
+  const supplementalSections = homeContent.sections ?? [];
   const services = homeContent.services ?? {};
   const cta = homeContent.cta ?? {};
   const about = homeContent.about ?? {};
@@ -76,38 +103,100 @@ export default function HomePage() {
     <div className="site-shell">
       <Header />
       <main>
-        <PageHero
-          eyebrow={globalContent?.legalName || 'Emerging Technologies, Inc.'}
-          title={globalContent?.tagline || 'Executive IT and AI Advisory'}
-          description={globalContent?.description}
-        >
-          <div className="content-card rounded-[2rem] p-6 text-[var(--color-ink)]">
-            <p className="mb-2 text-xs font-semibold uppercase tracking-[0.22em] text-[var(--color-brand-blue)]">
-              Focus areas
-            </p>
-            <div className="space-y-4">
-              {pillars.slice(0, 3).map((pillar) => (
-                <div key={pillar.title} className="rounded-3xl border border-[var(--color-border)] bg-white/70 p-4">
-                  <div className="flex items-start justify-between gap-4">
-                    <div>
-                      <h2 className="font-display text-xl font-semibold tracking-[-0.03em] text-[var(--color-brand-blue-deep)]">
-                        {pillar.title}
-                      </h2>
-                      {pillar.copy ? (
-                        <p className="mt-2 text-sm leading-6 text-[var(--color-ink-muted)]">{pillar.copy}</p>
-                      ) : null}
-                    </div>
-                    {pillar.href ? (
-                      <Link href={pillar.href} className="text-sm font-semibold text-[var(--color-brand-orange)]">
-                        Explore
-                      </Link>
-                    ) : null}
+        <section className="mx-auto w-full max-w-[1240px] px-5 pb-8 pt-8 lg:px-8 lg:pb-10 lg:pt-12">
+          <div className="overflow-hidden rounded-[2.25rem] border border-white/65 bg-[radial-gradient(circle_at_top_left,_rgba(54,107,200,0.28),_transparent_28%),radial-gradient(circle_at_85%_18%,_rgba(226,121,66,0.16),_transparent_18%),linear-gradient(145deg,#f8fbff_0%,#edf3fa_46%,#fbf6f1_100%)] shadow-[0_30px_100px_rgba(17,39,77,0.14)]">
+            <div className="grid gap-10 px-6 py-10 lg:grid-cols-[minmax(0,1.12fr)_400px] lg:px-8 lg:py-12">
+              <div className="flex flex-col justify-between">
+                <div>
+                  <span className="eyebrow">{hero.eyebrow || globalContent?.legalName || 'Emerging Technologies, Inc.'}</span>
+                  <h1 className="mt-6 max-w-4xl font-display text-[clamp(2.9rem,7vw,5.9rem)] font-semibold leading-[0.95] tracking-[-0.07em] text-[var(--color-brand-blue-deep)]">
+                    {hero.title || 'Technology transformation when the decision surface is messy.'}
+                  </h1>
+                  <p className="mt-6 max-w-2xl text-lg leading-8 text-[var(--color-ink-muted)]">
+                    {hero.subtitle || globalContent?.description}
+                  </p>
+                  <div className="mt-8 flex flex-wrap gap-3">
+                    <PrimaryButton as="link" href={hero.primaryHref || '/rfp-wizard'}>
+                      {hero.primaryLabel || 'Schedule a call'}
+                    </PrimaryButton>
+                    <SecondaryButton as="link" href={hero.secondaryHref || '/services'}>
+                      {hero.secondaryLabel || 'Review capabilities'}
+                    </SecondaryButton>
                   </div>
                 </div>
-              ))}
+
+                <div className="mt-10 grid gap-4 md:grid-cols-3">
+                  {metrics.map((metric) => (
+                    <article
+                      key={`${metric.value}-${metric.label}`}
+                      className="rounded-[1.75rem] border border-white/75 bg-white/84 p-5 shadow-[0_16px_45px_rgba(17,39,77,0.08)]"
+                    >
+                      <p className="font-display text-4xl font-semibold tracking-[-0.05em] text-[var(--color-brand-blue-deep)]">
+                        {metric.value}
+                      </p>
+                      <p className="mt-2 text-xs font-semibold uppercase tracking-[0.18em] text-[var(--color-brand-orange)]">
+                        {metric.label}
+                      </p>
+                      {metric.detail ? (
+                        <p className="mt-3 text-sm leading-6 text-[var(--color-ink-muted)]">{metric.detail}</p>
+                      ) : null}
+                    </article>
+                  ))}
+                </div>
+              </div>
+
+              <div className="space-y-4">
+                <div className="rounded-[2rem] border border-white/80 bg-white/86 p-6 shadow-[0_20px_60px_rgba(17,39,77,0.1)]">
+                  <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[var(--color-brand-blue)]">
+                    {hero.badgeTitle || 'Where ETI fits'}
+                  </p>
+                  <p className="mt-4 text-sm leading-7 text-[var(--color-ink-muted)]">
+                    {hero.badgeBody ||
+                      'We work where leadership intent, delivery pressure, budget reality, and technology complexity are all colliding at once.'}
+                  </p>
+                  <div className="mt-5 grid gap-3">
+                    {(hero.badgePoints ?? []).map((point) => (
+                      <div
+                        key={point}
+                        className="rounded-[1.25rem] border border-[var(--color-border)] bg-white px-4 py-3 text-sm font-medium text-[var(--color-ink)]"
+                      >
+                        {point}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="grid gap-4">
+                  {pillars.slice(0, 3).map((pillar, index) => (
+                    <article
+                      key={pillar.title}
+                      className="rounded-[1.75rem] border border-[var(--color-border)] bg-white/78 p-5"
+                    >
+                      <div className="flex items-start justify-between gap-4">
+                        <div>
+                          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--color-brand-orange)]">
+                            {String(index + 1).padStart(2, '0')}
+                          </p>
+                          <h2 className="mt-2 font-display text-2xl font-semibold tracking-[-0.03em] text-[var(--color-brand-blue-deep)]">
+                            {pillar.title}
+                          </h2>
+                        </div>
+                        {pillar.href ? (
+                          <Link href={pillar.href} className="text-sm font-semibold text-[var(--color-brand-blue)]">
+                            Explore
+                          </Link>
+                        ) : null}
+                      </div>
+                      {pillar.copy ? (
+                        <p className="mt-3 text-sm leading-7 text-[var(--color-ink-muted)]">{pillar.copy}</p>
+                      ) : null}
+                    </article>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
-        </PageHero>
+        </section>
 
         <section className="mx-auto mt-8 w-full max-w-[1240px] px-5 lg:px-8">
           <div className="content-card rounded-[2rem] p-6 sm:p-8">
@@ -148,7 +237,57 @@ export default function HomePage() {
         </section>
 
         <section className="mx-auto mt-8 w-full max-w-[1240px] px-5 lg:px-8">
-          <div className="grid gap-6 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)]">
+          <div className="content-card rounded-[2rem] p-6 sm:p-8">
+            <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+              <div>
+                <span className="eyebrow">Client trajectories</span>
+                <h2 className="section-title mt-5 text-[var(--color-brand-blue-deep)]">
+                  Business outcomes, not only system deliverables.
+                </h2>
+              </div>
+              <Link
+                href={homeContent.clients?.viewMoreHref || '/clients'}
+                className="text-sm font-semibold uppercase tracking-[0.18em] text-[var(--color-brand-blue)]"
+              >
+                {homeContent.clients?.viewMoreText || 'View client work'}
+              </Link>
+            </div>
+            <p className="mt-5 max-w-3xl text-base leading-8 text-[var(--color-ink-muted)]">
+              {homeContent.clients?.intro}
+            </p>
+            <div className="mt-8 grid gap-4 lg:grid-cols-3">
+              {featuredClients.map((client) => (
+                <article
+                  key={client.name}
+                  className="rounded-[1.75rem] border border-[var(--color-border)] bg-white/84 p-5"
+                >
+                  <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--color-brand-orange)]">
+                    {client.name}
+                  </p>
+                  <h3 className="mt-3 font-display text-2xl font-semibold tracking-[-0.03em] text-[var(--color-brand-blue-deep)]">
+                    {client.outcome}
+                  </h3>
+                  <p className="mt-3 text-sm leading-7 text-[var(--color-ink-muted)]">{client.summary}</p>
+                </article>
+              ))}
+            </div>
+            <div className="mt-6 grid gap-4 lg:grid-cols-2">
+              {clientTestimonials.slice(0, 2).map((testimonial, index) => (
+                <blockquote
+                  key={`${testimonial.quote}-${index}`}
+                  className="rounded-[1.5rem] border border-[var(--color-border)] bg-white/82 p-5 text-sm leading-7 text-[var(--color-ink)]"
+                >
+                  <p className="font-accent text-xl leading-8 text-[var(--color-brand-blue-deep)]">
+                    “{testimonial.quote}”
+                  </p>
+                </blockquote>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="mx-auto mt-8 w-full max-w-[1240px] px-5 lg:px-8">
+          <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_360px]">
             <div className="content-card rounded-[2rem] p-6 sm:p-8">
               <span className="eyebrow">Perspective</span>
               <h2 className="section-title mt-5 text-[var(--color-brand-blue-deep)]">
@@ -159,28 +298,28 @@ export default function HomePage() {
 
             <div className="grid gap-6">
               <div className="content-card rounded-[2rem] p-6 sm:p-8">
-                <span className="eyebrow">Client signal</span>
+                <span className="eyebrow">How ETI works</span>
                 <h2 className="mt-5 font-display text-3xl font-semibold tracking-[-0.04em] text-[var(--color-brand-blue-deep)]">
-                  Partnerships built around decisive change.
+                  Strategy, methodology, and execution without handoff gaps.
                 </h2>
-                <p className="mt-4 text-base leading-8 text-[var(--color-ink-muted)]">
-                  {homeContent.clients?.intro}
-                </p>
-                <div className="mt-6 grid gap-4">
-                  {clientTestimonials.slice(0, 2).map((testimonial, index) => (
-                    <blockquote
-                      key={`${testimonial.quote}-${index}`}
-                      className="rounded-[1.5rem] border border-[var(--color-border)] bg-white/82 p-5 text-sm leading-7 text-[var(--color-ink)]"
+                <div className="mt-6 space-y-4">
+                  {pillars.map((pillar, index) => (
+                    <div
+                      key={pillar.title}
+                      className="rounded-[1.5rem] border border-[var(--color-border)] bg-white/80 p-4"
                     >
-                      <p className="font-accent text-xl leading-8 text-[var(--color-brand-blue-deep)]">
-                        “{testimonial.quote}”
+                      <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--color-brand-orange)]">
+                        Step {index + 1}
                       </p>
-                    </blockquote>
+                      <h3 className="mt-2 font-display text-xl font-semibold tracking-[-0.03em] text-[var(--color-brand-blue-deep)]">
+                        {pillar.title}
+                      </h3>
+                      {pillar.copy ? (
+                        <p className="mt-2 text-sm leading-7 text-[var(--color-ink-muted)]">{pillar.copy}</p>
+                      ) : null}
+                    </div>
                   ))}
                 </div>
-                <Link href={homeContent.clients?.viewMoreHref || '/clients'} className="mt-6 inline-flex text-sm font-semibold text-[var(--color-brand-orange)]">
-                  {homeContent.clients?.viewMoreText || 'View client work'}
-                </Link>
               </div>
 
               <div className="content-card rounded-[2rem] p-6 sm:p-8">
@@ -198,6 +337,8 @@ export default function HomePage() {
             </div>
           </div>
         </section>
+
+        {supplementalSections.length ? <ContentBlocks blocks={supplementalSections} /> : null}
 
         <section className="mx-auto mt-8 w-full max-w-[1240px] px-5 lg:px-8">
           <div className="content-card rounded-[2rem] p-6 sm:p-8">

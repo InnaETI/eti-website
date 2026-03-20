@@ -11,6 +11,21 @@ type NewsSection = { heading: string; links: NewsLink[] };
 
 type HomeData = {
   heroBanner?: string;
+  hero?: {
+    eyebrow?: string;
+    title?: string;
+    subtitle?: string;
+    primaryLabel?: string;
+    primaryHref?: string;
+    secondaryLabel?: string;
+    secondaryHref?: string;
+    badgeTitle?: string;
+    badgeBody?: string;
+    badgePoints?: string[];
+  };
+  metrics?: Array<{ value: string; label: string; detail?: string }>;
+  featuredClients?: Array<{ name: string; outcome: string; summary: string }>;
+  sections?: unknown[];
   pillars?: Pillar[];
   services?: { intro: string; viewMoreHref: string; viewMoreText: string; items: ServiceItem[] };
   clients?: { intro: string; viewMoreHref: string; viewMoreText: string };
@@ -29,6 +44,21 @@ const defaultHome: HomeData = {
   about: { title: '', copy: '' },
   joinTeam: { title: '', copy: '', buttonText: '', href: '' },
   news: { title: 'News', sections: [] },
+  hero: {
+    eyebrow: '',
+    title: '',
+    subtitle: '',
+    primaryLabel: '',
+    primaryHref: '',
+    secondaryLabel: '',
+    secondaryHref: '',
+    badgeTitle: '',
+    badgeBody: '',
+    badgePoints: [],
+  },
+  metrics: [],
+  featuredClients: [],
+  sections: [],
 };
 
 export default function AdminHomePage() {
@@ -36,6 +66,7 @@ export default function AdminHomePage() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState<{ type: 'ok' | 'error'; text: string } | null>(null);
+  const [showAdvanced, setShowAdvanced] = useState(false);
 
   useEffect(() => {
     fetch('/api/admin/content?type=home')
@@ -68,6 +99,9 @@ export default function AdminHomePage() {
   const about = data.about ?? defaultHome.about!;
   const joinTeam = data.joinTeam ?? defaultHome.joinTeam!;
   const news = data.news ?? defaultHome.news!;
+  const hero = data.hero ?? defaultHome.hero!;
+  const metrics = data.metrics ?? defaultHome.metrics!;
+  const featuredClients = data.featuredClients ?? defaultHome.featuredClients!;
 
   return (
     <div>
@@ -93,12 +127,224 @@ export default function AdminHomePage() {
 
       <div className="space-y-6 max-w-2xl">
         <section className="rounded border border-zinc-200 bg-white p-4">
-          <h2 className="font-medium text-zinc-900 mb-3">Hero</h2>
+          <h2 className="font-medium text-zinc-900 mb-3">Hero image</h2>
           <ImageField
             label="Hero banner image"
             value={data.heroBanner ?? ''}
             onChange={(heroBanner) => setData({ ...data, heroBanner })}
           />
+        </section>
+
+        <section className="rounded border border-zinc-200 bg-white p-4">
+          <h2 className="font-medium text-zinc-900 mb-3">Hero content</h2>
+          <div className="space-y-3">
+            <input
+              type="text"
+              value={hero.eyebrow ?? ''}
+              onChange={(e) => setData({ ...data, hero: { ...hero, eyebrow: e.target.value } })}
+              placeholder="Eyebrow"
+              className="w-full rounded border border-zinc-300 px-3 py-2 text-sm"
+            />
+            <textarea
+              value={hero.title ?? ''}
+              onChange={(e) => setData({ ...data, hero: { ...hero, title: e.target.value } })}
+              placeholder="Hero title"
+              rows={3}
+              className="w-full rounded border border-zinc-300 px-3 py-2 text-sm"
+            />
+            <textarea
+              value={hero.subtitle ?? ''}
+              onChange={(e) => setData({ ...data, hero: { ...hero, subtitle: e.target.value } })}
+              placeholder="Hero subtitle"
+              rows={3}
+              className="w-full rounded border border-zinc-300 px-3 py-2 text-sm"
+            />
+            <div className="grid gap-2 sm:grid-cols-2">
+              <input
+                type="text"
+                value={hero.primaryLabel ?? ''}
+                onChange={(e) => setData({ ...data, hero: { ...hero, primaryLabel: e.target.value } })}
+                placeholder="Primary CTA label"
+                className="rounded border border-zinc-300 px-3 py-2 text-sm"
+              />
+              <input
+                type="text"
+                value={hero.primaryHref ?? ''}
+                onChange={(e) => setData({ ...data, hero: { ...hero, primaryHref: e.target.value } })}
+                placeholder="Primary CTA href"
+                className="rounded border border-zinc-300 px-3 py-2 text-sm"
+              />
+            </div>
+            <div className="grid gap-2 sm:grid-cols-2">
+              <input
+                type="text"
+                value={hero.secondaryLabel ?? ''}
+                onChange={(e) => setData({ ...data, hero: { ...hero, secondaryLabel: e.target.value } })}
+                placeholder="Secondary CTA label"
+                className="rounded border border-zinc-300 px-3 py-2 text-sm"
+              />
+              <input
+                type="text"
+                value={hero.secondaryHref ?? ''}
+                onChange={(e) => setData({ ...data, hero: { ...hero, secondaryHref: e.target.value } })}
+                placeholder="Secondary CTA href"
+                className="rounded border border-zinc-300 px-3 py-2 text-sm"
+              />
+            </div>
+            <input
+              type="text"
+              value={hero.badgeTitle ?? ''}
+              onChange={(e) => setData({ ...data, hero: { ...hero, badgeTitle: e.target.value } })}
+              placeholder="Right-side badge title"
+              className="w-full rounded border border-zinc-300 px-3 py-2 text-sm"
+            />
+            <textarea
+              value={hero.badgeBody ?? ''}
+              onChange={(e) => setData({ ...data, hero: { ...hero, badgeBody: e.target.value } })}
+              placeholder="Right-side badge body"
+              rows={2}
+              className="w-full rounded border border-zinc-300 px-3 py-2 text-sm"
+            />
+            <textarea
+              value={(hero.badgePoints ?? []).join('\n')}
+              onChange={(e) =>
+                setData({
+                  ...data,
+                  hero: {
+                    ...hero,
+                    badgePoints: e.target.value
+                      .split('\n')
+                      .map((value) => value.trim())
+                      .filter(Boolean),
+                  },
+                })
+              }
+              placeholder="Badge points, one per line"
+              rows={4}
+              className="w-full rounded border border-zinc-300 px-3 py-2 text-sm"
+            />
+          </div>
+        </section>
+
+        <section className="rounded border border-zinc-200 bg-white p-4">
+          <h2 className="font-medium text-zinc-900 mb-3">Metrics</h2>
+          <div className="space-y-3">
+            {metrics.map((metric, index) => (
+              <div key={`${metric.value}-${index}`} className="rounded border border-zinc-100 p-3 space-y-2">
+                <div className="grid gap-2 sm:grid-cols-2">
+                  <input
+                    type="text"
+                    value={metric.value}
+                    onChange={(e) => {
+                      const next = [...metrics];
+                      next[index] = { ...metric, value: e.target.value };
+                      setData({ ...data, metrics: next });
+                    }}
+                    placeholder="Value"
+                    className="rounded border border-zinc-300 px-3 py-2 text-sm"
+                  />
+                  <input
+                    type="text"
+                    value={metric.label}
+                    onChange={(e) => {
+                      const next = [...metrics];
+                      next[index] = { ...metric, label: e.target.value };
+                      setData({ ...data, metrics: next });
+                    }}
+                    placeholder="Label"
+                    className="rounded border border-zinc-300 px-3 py-2 text-sm"
+                  />
+                </div>
+                <textarea
+                  value={metric.detail ?? ''}
+                  onChange={(e) => {
+                    const next = [...metrics];
+                    next[index] = { ...metric, detail: e.target.value };
+                    setData({ ...data, metrics: next });
+                  }}
+                  placeholder="Detail"
+                  rows={2}
+                  className="w-full rounded border border-zinc-300 px-3 py-2 text-sm"
+                />
+                <button
+                  type="button"
+                  onClick={() => setData({ ...data, metrics: metrics.filter((_, i) => i !== index) })}
+                  className="text-sm text-red-600 hover:underline"
+                >
+                  Remove
+                </button>
+              </div>
+            ))}
+            <button
+              type="button"
+              onClick={() => setData({ ...data, metrics: [...metrics, { value: '', label: '', detail: '' }] })}
+              className="text-sm text-zinc-600 hover:underline"
+            >
+              + Add metric
+            </button>
+          </div>
+        </section>
+
+        <section className="rounded border border-zinc-200 bg-white p-4">
+          <h2 className="font-medium text-zinc-900 mb-3">Featured clients</h2>
+          <div className="space-y-3">
+            {featuredClients.map((client, index) => (
+              <div key={`${client.name}-${index}`} className="rounded border border-zinc-100 p-3 space-y-2">
+                <input
+                  type="text"
+                  value={client.name}
+                  onChange={(e) => {
+                    const next = [...featuredClients];
+                    next[index] = { ...client, name: e.target.value };
+                    setData({ ...data, featuredClients: next });
+                  }}
+                  placeholder="Client name"
+                  className="w-full rounded border border-zinc-300 px-3 py-2 text-sm"
+                />
+                <input
+                  type="text"
+                  value={client.outcome}
+                  onChange={(e) => {
+                    const next = [...featuredClients];
+                    next[index] = { ...client, outcome: e.target.value };
+                    setData({ ...data, featuredClients: next });
+                  }}
+                  placeholder="Outcome headline"
+                  className="w-full rounded border border-zinc-300 px-3 py-2 text-sm"
+                />
+                <textarea
+                  value={client.summary}
+                  onChange={(e) => {
+                    const next = [...featuredClients];
+                    next[index] = { ...client, summary: e.target.value };
+                    setData({ ...data, featuredClients: next });
+                  }}
+                  placeholder="Summary"
+                  rows={3}
+                  className="w-full rounded border border-zinc-300 px-3 py-2 text-sm"
+                />
+                <button
+                  type="button"
+                  onClick={() => setData({ ...data, featuredClients: featuredClients.filter((_, i) => i !== index) })}
+                  className="text-sm text-red-600 hover:underline"
+                >
+                  Remove
+                </button>
+              </div>
+            ))}
+            <button
+              type="button"
+              onClick={() =>
+                setData({
+                  ...data,
+                  featuredClients: [...featuredClients, { name: '', outcome: '', summary: '' }],
+                })
+              }
+              className="text-sm text-zinc-600 hover:underline"
+            >
+              + Add client
+            </button>
+          </div>
         </section>
 
         <section className="rounded border border-zinc-200 bg-white p-4">
@@ -180,6 +426,36 @@ export default function AdminHomePage() {
               + Add pillar
             </button>
           </div>
+        </section>
+
+        <section className="rounded border border-zinc-200 bg-white p-4">
+          <button
+            type="button"
+            onClick={() => setShowAdvanced(!showAdvanced)}
+            className="text-sm font-medium text-zinc-700 hover:text-zinc-900"
+          >
+            {showAdvanced ? '▼' : '▶'} Advanced: Edit raw home data (JSON)
+          </button>
+          {showAdvanced ? (
+            <>
+              <p className="mt-2 mb-2 text-xs text-zinc-500">
+                Use this for future homepage sections and layout blocks that are not yet exposed in the form UI.
+              </p>
+              <textarea
+                value={JSON.stringify(data, null, 2)}
+                onChange={(e) => {
+                  try {
+                    setData(JSON.parse(e.target.value || '{}') as HomeData);
+                  } catch {
+                    // keep previous value on invalid JSON
+                  }
+                }}
+                rows={18}
+                className="w-full rounded border border-zinc-300 px-3 py-2 text-sm font-mono"
+                spellCheck={false}
+              />
+            </>
+          ) : null}
         </section>
 
         <section className="rounded border border-zinc-200 bg-white p-4">

@@ -6,10 +6,10 @@ import { Footer } from '@/components/Footer';
 import { PageHero } from '@/components/PageHero';
 import { ContactForm } from '@/components/ContactForm';
 import { RichText } from '@/components/RichText';
-import { PrimaryButton, SecondaryButton } from '@/components/Button';
 import { getAllPageSlugs, getGlobalContent, getPageContent, type PageContent } from '@/lib/content';
 import { getPageAliases, resolvePageSlug } from '@/lib/public-pages';
 import { SITE, canonicalUrl } from '@/lib/site';
+import { ContentBlocks, type ContentBlock } from '@/components/ContentBlocks';
 
 type ServiceItem = {
   title?: string;
@@ -50,6 +50,7 @@ type PublicPageData = PageContent & {
   formNote?: string;
   contactEmail?: string;
   contactPhone?: string;
+  sections?: ContentBlock[];
 };
 
 function getResolvedPage(slug: string): PublicPageData | null {
@@ -310,6 +311,7 @@ export default async function PublicPage({
         {renderMission(page.mission, page.secondaryImage)}
         {renderServices(page.services)}
         {renderTestimonials(page.testimonials)}
+        {page.sections?.length ? <ContentBlocks blocks={page.sections} /> : null}
         {isContact ? renderContact(page, globalContent?.contactEmail, globalContent?.contactPhone) : null}
         {!isContact ? renderCTA(page.cta) : null}
       </main>
