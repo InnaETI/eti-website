@@ -27,7 +27,7 @@ export function HeaderClient({ navItems, logoUrl, ctaHref }: HeaderClientProps) 
 
   return (
     <header className="site-header">
-      <div className="mx-auto flex w-full max-w-[1240px] items-center justify-between gap-6 px-5 py-4 lg:px-8">
+      <div className="mx-auto flex w-full max-w-[1240px] items-center justify-between gap-8 px-5 py-4 lg:px-8">
         <Link href="/" className="flex items-center gap-3 text-slate-950" onClick={() => setOpen(false)}>
           <Image
             src={logoUrl}
@@ -35,19 +35,19 @@ export function HeaderClient({ navItems, logoUrl, ctaHref }: HeaderClientProps) 
             width={180}
             height={56}
             priority
-            className="h-11 w-auto sm:h-12"
+            className="h-10 w-auto sm:h-11"
           />
         </Link>
 
-        <nav className="hidden items-center gap-1 lg:flex">
+        <nav className="hidden items-center gap-6 lg:flex">
           {navItems.map((item) => (
             <Link
               key={item.href}
               href={item.href}
-              className={`rounded-full px-4 py-2 text-sm font-semibold transition ${
+              className={`border-b-2 px-0 py-2 text-[0.92rem] font-semibold transition ${
                 isActive(item.href)
-                  ? 'bg-white text-[var(--color-brand-blue)] shadow-[0_10px_30px_rgba(17,39,77,0.08)]'
-                  : 'text-[var(--color-ink-muted)] hover:bg-white/70 hover:text-[var(--color-ink)]'
+                  ? 'border-[var(--color-brand-orange)] text-[var(--color-brand-blue-deep)]'
+                  : 'border-transparent text-[var(--color-ink-muted)] hover:border-[rgba(17,39,77,0.12)] hover:text-[var(--color-brand-blue-deep)]'
               }`}
             >
               {item.label}
@@ -56,7 +56,7 @@ export function HeaderClient({ navItems, logoUrl, ctaHref }: HeaderClientProps) 
         </nav>
 
         <div className="hidden lg:block">
-          <Link href={ctaHref} className="site-button site-button-primary">
+          <Link href={ctaHref} className="site-button site-button-primary px-5 py-2.5 text-[0.82rem] uppercase tracking-[0.06em]">
             Schedule a Call
           </Link>
         </div>
@@ -64,7 +64,7 @@ export function HeaderClient({ navItems, logoUrl, ctaHref }: HeaderClientProps) 
         <button
           type="button"
           onClick={() => setOpen((value) => !value)}
-          className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/70 bg-white/80 text-[var(--color-brand-blue)] shadow-[0_10px_30px_rgba(17,39,77,0.08)] backdrop-blur lg:hidden"
+          className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-[rgba(17,39,77,0.12)] bg-white text-[var(--color-brand-blue)] shadow-[0_10px_30px_rgba(17,39,77,0.08)] lg:hidden"
           aria-expanded={open}
           aria-label="Toggle navigation"
         >

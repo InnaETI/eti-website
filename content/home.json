@@ -2,11 +2,11 @@
   "heroBanner": "/images/services-banner.jpg",
   "hero": {
     "eyebrow": "Emerging Technologies, Inc.",
-    "title": "Technology strategy for high-stakes operating decisions.",
-    "subtitle": "ETI helps leadership teams align business priorities, platform choices, and execution plans across healthcare, AI, and digital transformation.",
+    "title": "Technology strategy for decisions that shape operations.",
+    "subtitle": "ETI helps leadership teams align business priorities, platform choices, and execution plans across healthcare, AI, and digital transformation work.",
     "primaryLabel": "Schedule a call",
     "primaryHref": "/rfp-wizard",
-    "secondaryLabel": "Review capabilities",
+    "secondaryLabel": "View capabilities",
     "secondaryHref": "/services",
     "badgeTitle": "Where ETI fits",
     "badgeBody": "We step in when leadership intent, delivery pressure, budget reality, and technical complexity start pulling in different directions.",
@@ -57,9 +57,9 @@
     }
   ],
   "services": {
-    "intro": "ETI offers a wide variety of professional services ranging from technical to business expertise and resources. As your business grows and scales, your technology needs expand at a rapid pace. Your systems and your IT talent needs to increase in performance, efficiency and expertise. You need a strong, dependable and knowledgeable partner with strong and varied capabilities in order to excel to the next level. Emerging Technologies, Inc. brings such expertise and knowledge to its clients.",
+    "intro": "ETI brings executive advisory, delivery discipline, and hands-on technology guidance to organizations navigating strategic change.",
     "viewMoreHref": "/services",
-    "viewMoreText": "View More",
+    "viewMoreText": "View capabilities",
     "items": [
       { "icon": "/wp-content/uploads/2015/11/clock.svg", "title": "Agile" },
       { "icon": "/wp-content/uploads/2015/11/man.svg", "title": "Digital Transformation" },

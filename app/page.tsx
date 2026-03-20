@@ -100,150 +100,127 @@ export default function HomePage() {
   const cta = homeContent.cta ?? {};
   const about = homeContent.about ?? {};
   const joinTeam = homeContent.joinTeam ?? {};
+  const capabilityItems = (services.items ?? []).map((item) => item.title).filter(Boolean);
 
   return (
     <div className="site-shell">
       <Header />
       <main>
-        <section className="mx-auto w-full max-w-[1240px] px-5 pb-6 pt-6 lg:px-8 lg:pb-8 lg:pt-8">
-          <div className="relative overflow-hidden rounded-[2.4rem] border border-white/30 shadow-[0_34px_110px_rgba(17,39,77,0.18)]">
-            <Image
-              src={homeContent.heroBanner || '/images/services-banner.jpg'}
-              alt={hero.title || 'ETI advisory'}
-              fill
-              priority
-              sizes="(min-width: 1024px) 1240px, 100vw"
-              className="object-cover object-center"
-            />
-            <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(10,27,54,0.94)_0%,rgba(10,27,54,0.85)_36%,rgba(16,48,92,0.34)_58%,rgba(245,248,252,0.02)_100%)]" />
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(117,173,255,0.2),transparent_30%),radial-gradient(circle_at_88%_16%,rgba(226,121,66,0.12),transparent_16%)]" />
-
-            <div className="relative flex min-h-[560px] flex-col justify-between p-8 sm:p-10 lg:p-12">
-              <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_340px] lg:items-start lg:gap-10">
-                <div className="max-w-[600px]">
-                  <span className="eyebrow !text-white/78 before:!bg-white/35">
-                    {hero.eyebrow || globalContent?.legalName || 'Emerging Technologies, Inc.'}
-                  </span>
-                  <h1 className="mt-5 max-w-[10.5ch] font-display text-[clamp(2.3rem,4vw,3.95rem)] font-semibold leading-[0.94] tracking-[-0.055em] text-white">
-                    {hero.title || 'Technology strategy for high-stakes operating decisions.'}
-                  </h1>
-                  <p className="mt-5 max-w-[32rem] text-[0.98rem] leading-8 text-white/82 sm:text-lg">
-                    {hero.subtitle || globalContent?.description}
+        <section className="mx-auto w-full max-w-[1240px] px-5 pb-8 pt-8 lg:px-8 lg:pb-10 lg:pt-10">
+          <div className="overflow-hidden rounded-[2.2rem] border border-white/80 bg-[linear-gradient(135deg,#fbfdff_0%,#eff5fb_48%,#f7fbfe_100%)] shadow-[0_30px_100px_rgba(17,39,77,0.12)]">
+            <div className="grid gap-10 px-6 py-8 lg:grid-cols-[minmax(0,0.95fr)_minmax(360px,0.82fr)] lg:items-center lg:px-10 lg:py-10">
+              <div className="max-w-[560px]">
+                <span className="eyebrow">
+                  {hero.eyebrow || globalContent?.legalName || 'Emerging Technologies, Inc.'}
+                </span>
+                <h1 className="mt-6 max-w-[11ch] font-display text-[clamp(2.55rem,4.4vw,4.45rem)] font-semibold leading-[0.95] tracking-[-0.06em] text-[var(--color-brand-blue-deep)]">
+                  {hero.title || 'Technology strategy for decisions that shape operations.'}
+                </h1>
+                <p className="mt-5 max-w-[33rem] text-[1.02rem] leading-8 text-[var(--color-ink-muted)] sm:text-lg">
+                  {hero.subtitle || globalContent?.description}
+                </p>
+                <div className="mt-8 flex flex-wrap gap-3">
+                  <PrimaryButton as="link" href={hero.primaryHref || '/rfp-wizard'}>
+                    {hero.primaryLabel || 'Schedule a call'}
+                  </PrimaryButton>
+                  <SecondaryButton as="link" href={hero.secondaryHref || '/services'}>
+                    {hero.secondaryLabel || 'Review capabilities'}
+                  </SecondaryButton>
+                </div>
+                <div className="mt-10 border-t border-[rgba(17,39,77,0.08)] pt-5">
+                  <p className="text-sm font-semibold text-[var(--color-brand-blue-deep)]">
+                    Leadership alignment, delivery discipline, and measurable outcomes.
                   </p>
-                  <div className="mt-7 flex flex-wrap gap-3">
-                    <PrimaryButton as="link" href={hero.primaryHref || '/rfp-wizard'}>
-                      {hero.primaryLabel || 'Schedule a call'}
-                    </PrimaryButton>
-                    <SecondaryButton
-                      as="link"
-                      href={hero.secondaryHref || '/services'}
-                      className="!border-white/24 !bg-white/12 !text-white !shadow-none"
-                    >
-                      {hero.secondaryLabel || 'Review capabilities'}
-                    </SecondaryButton>
-                  </div>
-                  <div className="mt-8 flex flex-wrap gap-3 text-xs font-semibold uppercase tracking-[0.18em] text-white/72">
-                    {featuredClients.slice(0, 3).map((client) => (
-                      <span
-                        key={client.name}
-                        className="rounded-full border border-white/14 bg-white/10 px-3 py-2 backdrop-blur-sm"
-                      >
-                        {client.name}
+                  <div className="mt-4 flex flex-wrap gap-x-5 gap-y-3 text-sm text-[var(--color-ink-muted)]">
+                    {capabilityItems.slice(0, 4).map((item) => (
+                      <span key={item} className="inline-flex items-center gap-2">
+                        <span className="h-1.5 w-1.5 rounded-full bg-[var(--color-brand-orange)]" />
+                        {item}
                       </span>
                     ))}
                   </div>
                 </div>
-
-                <div className="lg:justify-self-end">
-                  <div className="rounded-[1.9rem] border border-white/45 bg-[rgba(255,255,255,0.86)] p-6 shadow-[0_24px_60px_rgba(8,22,46,0.18)] backdrop-blur-md">
-                    <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[var(--color-brand-blue)]">
-                      {hero.badgeTitle || 'Where ETI fits'}
-                    </p>
-                    <p className="mt-4 text-sm leading-7 text-[var(--color-ink)]">
-                      {hero.badgeBody ||
-                        'We work where leadership intent, delivery pressure, budget reality, and technology complexity all collide at once.'}
-                    </p>
-                    <div className="mt-5 grid gap-3">
-                      {(hero.badgePoints ?? []).map((point) => (
-                        <div
-                          key={point}
-                          className="rounded-[1.3rem] border border-[rgba(17,39,77,0.08)] bg-white px-4 py-3 text-sm font-medium leading-6 text-[var(--color-ink)]"
-                        >
-                          {point}
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
               </div>
 
-              <div className="mt-8 grid gap-4 lg:grid-cols-3">
-                {pillars.slice(0, 3).map((pillar, index) => {
-                  const metric = metrics[index];
-                  return (
-                    <article
-                      key={pillar.title}
-                      className="flex h-full flex-col rounded-[1.55rem] border border-white/18 bg-[rgba(8,22,46,0.46)] p-5 text-white shadow-[0_18px_45px_rgba(8,22,46,0.12)] backdrop-blur-sm"
-                    >
-                      <div className="flex items-start justify-between gap-4">
-                        <div>
-                          <p className="text-[0.68rem] font-semibold uppercase tracking-[0.19em] text-[var(--color-brand-orange-soft)]">
-                            {metric?.label || `0${index + 1}`}
-                          </p>
-                          <h2 className="mt-2 font-display text-[1.85rem] font-semibold tracking-[-0.04em] text-white">
-                            {pillar.title}
-                          </h2>
-                        </div>
-                        {pillar.href ? (
-                          <Link href={pillar.href} className="text-sm font-semibold text-white/82">
-                            Explore
-                          </Link>
-                        ) : null}
-                      </div>
-                      <p className="mt-3 max-w-[24ch] text-sm leading-7 text-white/76">
-                        {metric?.detail || pillar.copy}
-                      </p>
-                    </article>
-                  );
-                })}
+              <div className="relative min-h-[320px] overflow-hidden rounded-[1.9rem] border border-white/80 bg-[linear-gradient(135deg,#dfeaf5_0%,#edf4fb_46%,#f7fbff_100%)] shadow-[0_24px_80px_rgba(17,39,77,0.08)]">
+                <Image
+                  src={homeContent.heroBanner || '/images/services-banner.jpg'}
+                  alt=""
+                  fill
+                  sizes="(min-width: 1024px) 420px, 100vw"
+                  className="object-cover object-center opacity-95"
+                />
+                <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(17,39,77,0.16)_0%,rgba(17,39,77,0.04)_42%,rgba(255,255,255,0.28)_100%)]" />
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_16%,rgba(86,145,230,0.22),transparent_30%),radial-gradient(circle_at_84%_22%,rgba(255,255,255,0.56),transparent_24%)]" />
+                <div className="absolute left-10 right-10 top-10 h-px bg-white/55" />
+                <div className="absolute bottom-10 left-10 top-10 w-px bg-white/45" />
+                <div className="absolute bottom-10 right-10 h-28 w-28 rounded-full border border-white/60 bg-white/20 backdrop-blur-[2px]" />
+                <div className="absolute left-[30%] top-[24%] h-24 w-24 rounded-full border border-white/35 bg-[rgba(255,255,255,0.12)]" />
               </div>
             </div>
           </div>
         </section>
 
-        <section className="mx-auto mt-6 w-full max-w-[1240px] px-5 lg:px-8">
-          <div className="content-card rounded-[2rem] p-6 sm:p-8">
-            <div className="grid gap-8 lg:grid-cols-[1.05fr_minmax(0,0.95fr)]">
+        <section className="mx-auto mt-8 w-full max-w-[1240px] px-5 lg:px-8">
+          <div className="content-card rounded-[2rem] p-6 sm:p-8 lg:p-10">
+            <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(320px,0.78fr)] lg:items-end">
               <div>
-                <span className="eyebrow">Capabilities</span>
+                <span className="eyebrow">How ETI works</span>
                 <h2 className="section-title mt-5 max-w-2xl text-[var(--color-brand-blue-deep)]">
-                  Advisory work that stays close to operations, delivery, and outcomes.
+                  Strategy, methodology, and execution in one operating model.
                 </h2>
               </div>
               <div className="space-y-5">
                 <p className="text-base leading-8 text-[var(--color-ink-muted)]">
-                  {services.intro}
+                  ETI helps leadership teams move from ambiguous priorities to practical execution without the usual handoff gaps between strategy and delivery.
                 </p>
-                <div className="grid gap-3 sm:grid-cols-2">
-                  {(services.items ?? []).map((item) => (
-                    <div
-                      key={item.title}
-                      className="rounded-[1.5rem] border border-[var(--color-border)] bg-white/80 p-5"
-                    >
-                      <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[var(--color-brand-blue)]">
-                        {item.title}
+                <Link
+                  href={services.viewMoreHref || '/services'}
+                  className="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.16em] text-[var(--color-brand-blue)] transition hover:text-[var(--color-brand-blue-deep)]"
+                >
+                  {services.viewMoreText || 'View services'}
+                  <span aria-hidden="true">→</span>
+                </Link>
+              </div>
+            </div>
+            <div className="mt-8 grid gap-4 lg:grid-cols-3">
+              {pillars.slice(0, 3).map((pillar, index) => {
+                const metric = metrics[index];
+                return (
+                  <Link
+                    key={pillar.title}
+                    href={pillar.href || '/services'}
+                    className="group flex h-full flex-col justify-between rounded-[1.6rem] border border-[rgba(17,39,77,0.1)] bg-white p-6 shadow-[0_16px_45px_rgba(17,39,77,0.06)] transition hover:-translate-y-1 hover:border-[rgba(33,79,152,0.18)] hover:shadow-[0_24px_60px_rgba(17,39,77,0.1)]"
+                  >
+                    <div>
+                      <p className="text-[0.7rem] font-semibold uppercase tracking-[0.2em] text-[var(--color-brand-orange)]">
+                        {metric?.label || `0${index + 1}`}
+                      </p>
+                      <h3 className="mt-4 font-display text-[2rem] font-semibold tracking-[-0.045em] text-[var(--color-brand-blue-deep)]">
+                        {pillar.title}
+                      </h3>
+                      <p className="mt-4 text-sm leading-7 text-[var(--color-ink-muted)]">
+                        {metric?.detail || pillar.copy}
                       </p>
                     </div>
-                  ))}
-                </div>
-                <div className="flex flex-wrap gap-3">
-                  <PrimaryButton as="link" href={services.viewMoreHref || '/services'}>
-                    {services.viewMoreText || 'View services'}
-                  </PrimaryButton>
-                  <SecondaryButton as="link" href="/contact-us">
-                    Discuss your priorities
-                  </SecondaryButton>
-                </div>
+                    <span className="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-[var(--color-brand-blue)] transition group-hover:text-[var(--color-brand-blue-deep)]">
+                      Explore
+                      <span aria-hidden="true">→</span>
+                    </span>
+                  </Link>
+                );
+              })}
+            </div>
+            <div className="mt-8 border-t border-[rgba(17,39,77,0.08)] pt-6">
+              <div className="flex flex-wrap gap-3">
+                {capabilityItems.slice(0, 4).map((item) => (
+                  <span
+                    key={item}
+                    className="rounded-full border border-[rgba(17,39,77,0.1)] bg-[rgba(248,251,255,0.9)] px-4 py-2 text-xs font-semibold uppercase tracking-[0.16em] text-[var(--color-brand-blue)]"
+                  >
+                    {item}
+                  </span>
+                ))}
               </div>
             </div>
           </div>

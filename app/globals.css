@@ -39,9 +39,8 @@
     font-family: var(--font-body), system-ui, sans-serif;
     color: var(--color-ink);
     background:
-      radial-gradient(circle at top left, rgba(46, 94, 180, 0.14), transparent 28%),
-      radial-gradient(circle at top right, rgba(226, 121, 66, 0.1), transparent 22%),
-      linear-gradient(180deg, #f7fbff 0%, #f2f6fb 54%, #faf4ee 100%);
+      radial-gradient(circle at top left, rgba(46, 94, 180, 0.1), transparent 26%),
+      linear-gradient(180deg, #f8fbff 0%, #f3f7fb 58%, #eef4f9 100%);
   }
 
   a {
@@ -69,8 +68,9 @@
     top: 0;
     z-index: 50;
     backdrop-filter: blur(18px);
-    background: rgba(244, 248, 252, 0.78);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.8);
+    background: rgba(249, 252, 255, 0.92);
+    border-bottom: 1px solid rgba(17, 39, 77, 0.08);
+    box-shadow: 0 10px 40px rgba(17, 39, 77, 0.04);
   }
 
   .site-button {
@@ -99,15 +99,14 @@
   .site-button-primary {
     color: white;
     background: linear-gradient(135deg, var(--color-brand-orange), var(--color-brand-orange-soft));
-    box-shadow: 0 18px 40px rgba(226, 121, 66, 0.26);
+    box-shadow: 0 14px 34px rgba(226, 121, 66, 0.2);
   }
 
   .site-button-secondary {
-    color: var(--color-ink);
-    background: rgba(255, 255, 255, 0.72);
-    border: 1px solid var(--color-border-strong);
-    box-shadow: var(--shadow-soft);
-    backdrop-filter: blur(14px);
+    color: var(--color-brand-blue-deep);
+    background: rgba(255, 255, 255, 0.94);
+    border: 1px solid rgba(17, 39, 77, 0.14);
+    box-shadow: 0 12px 30px rgba(17, 39, 77, 0.06);
   }
 
   .content-card {
@@ -120,7 +119,7 @@
   .section-title {
     font-family: var(--font-display), system-ui, sans-serif;
     font-size: clamp(2rem, 4vw, 3.75rem);
-    line-height: 0.98;
+    line-height: 1.02;
     letter-spacing: -0.05em;
   }
 
