@@ -5,7 +5,7 @@ export default function BlogLayout({ children }: { children: React.ReactNode }) 
   return (
     <>
       <Header />
-      <main className="blog-shell">{children}</main>
+      <main>{children}</main>
       <Footer />
     </>
   );

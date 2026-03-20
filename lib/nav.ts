@@ -1,4 +1,3 @@
-// Matches emergingti.com screenshots: ABOUT US, SERVICES, CLIENTS, TEAM, CAREERS, BLOG, CONTACT US
 export const NAV_LINKS = [
   { href: '/about-us', label: 'About Us' },
   { href: '/services', label: 'Services' },

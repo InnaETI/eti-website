@@ -1,15 +1,34 @@
 import type { Metadata } from 'next';
+import { Plus_Jakarta_Sans, Sora, Newsreader } from 'next/font/google';
 import './globals.css';
 
+const bodyFont = Plus_Jakarta_Sans({
+  subsets: ['latin'],
+  variable: '--font-body',
+  display: 'swap',
+});
+
+const displayFont = Sora({
+  subsets: ['latin'],
+  variable: '--font-display',
+  display: 'swap',
+});
+
+const accentFont = Newsreader({
+  subsets: ['latin'],
+  variable: '--font-accent',
+  display: 'swap',
+});
+
 export const metadata: Metadata = {
-  title: 'ETI',
-  description: 'Emerging Technologies, Inc.',
+  title: {
+    default: 'ETI | Executive IT and AI Advisory',
+    template: '%s | ETI',
+  },
+  description:
+    'Emerging Technologies, Inc. helps organizations align strategy, technology, and execution across healthcare, AI, and digital transformation work.',
 };
 
-/**
- * Root layout. Not used for WordPress routes (they are served as full HTML by
- * app/[[...path]]/route.ts). Used only if you add other routes (e.g. /admin).
- */
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -17,7 +36,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body className={`${bodyFont.variable} ${displayFont.variable} ${accentFont.variable}`}>
+        {children}
+      </body>
     </html>
   );
 }
