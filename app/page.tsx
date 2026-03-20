@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
@@ -18,6 +19,7 @@ type HomeService = {
 };
 
 type HomeData = {
+  heroBanner?: string;
   hero?: {
     eyebrow?: string;
     title?: string;
@@ -103,102 +105,123 @@ export default function HomePage() {
     <div className="site-shell">
       <Header />
       <main>
-        <section className="mx-auto w-full max-w-[1240px] px-5 pb-8 pt-8 lg:px-8 lg:pb-10 lg:pt-12">
-          <div className="overflow-hidden rounded-[2.25rem] border border-white/65 bg-[radial-gradient(circle_at_top_left,_rgba(54,107,200,0.28),_transparent_28%),radial-gradient(circle_at_85%_18%,_rgba(226,121,66,0.16),_transparent_18%),linear-gradient(145deg,#f8fbff_0%,#edf3fa_46%,#fbf6f1_100%)] shadow-[0_30px_100px_rgba(17,39,77,0.14)]">
-            <div className="grid gap-10 px-6 py-10 lg:grid-cols-[minmax(0,1.12fr)_400px] lg:px-8 lg:py-12">
-              <div className="flex flex-col justify-between">
-                <div>
-                  <span className="eyebrow">{hero.eyebrow || globalContent?.legalName || 'Emerging Technologies, Inc.'}</span>
-                  <h1 className="mt-6 max-w-4xl font-display text-[clamp(2.9rem,7vw,5.9rem)] font-semibold leading-[0.95] tracking-[-0.07em] text-[var(--color-brand-blue-deep)]">
-                    {hero.title || 'Technology transformation when the decision surface is messy.'}
+        <section className="mx-auto w-full max-w-[1240px] px-5 pb-6 pt-6 lg:px-8 lg:pb-8 lg:pt-8">
+          <div className="relative overflow-hidden rounded-[2.4rem] border border-white/30 shadow-[0_34px_110px_rgba(17,39,77,0.18)]">
+            <Image
+              src={homeContent.heroBanner || '/wp-content/uploads/2020/05/shutterstock-banner_1692360436.jpg'}
+              alt={hero.title || 'ETI advisory'}
+              fill
+              priority
+              sizes="(min-width: 1024px) 1240px, 100vw"
+              className="object-cover object-center"
+            />
+            <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(11,27,54,0.94)_0%,rgba(11,27,54,0.86)_34%,rgba(11,27,54,0.54)_58%,rgba(11,27,54,0.18)_100%)]" />
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(117,173,255,0.18),transparent_28%),radial-gradient(circle_at_84%_18%,rgba(226,121,66,0.18),transparent_20%)]" />
+
+            <div className="relative flex min-h-[600px] flex-col justify-between p-8 sm:p-10 lg:p-12">
+              <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_360px] lg:gap-10">
+                <div className="max-w-[640px]">
+                  <span className="eyebrow !text-white/78 before:!bg-white/35">
+                    {hero.eyebrow || globalContent?.legalName || 'Emerging Technologies, Inc.'}
+                  </span>
+                  <h1 className="mt-5 max-w-[11ch] font-display text-[clamp(2.65rem,4.6vw,4.35rem)] font-semibold leading-[0.93] tracking-[-0.06em] text-white">
+                    {hero.title || 'Technology strategy for high-stakes operating decisions.'}
                   </h1>
-                  <p className="mt-6 max-w-2xl text-lg leading-8 text-[var(--color-ink-muted)]">
+                  <p className="mt-5 max-w-[34rem] text-base leading-8 text-white/80 sm:text-lg">
                     {hero.subtitle || globalContent?.description}
                   </p>
-                  <div className="mt-8 flex flex-wrap gap-3">
+                  <div className="mt-7 flex flex-wrap gap-3">
                     <PrimaryButton as="link" href={hero.primaryHref || '/rfp-wizard'}>
                       {hero.primaryLabel || 'Schedule a call'}
                     </PrimaryButton>
-                    <SecondaryButton as="link" href={hero.secondaryHref || '/services'}>
+                    <SecondaryButton
+                      as="link"
+                      href={hero.secondaryHref || '/services'}
+                      className="!border-white/24 !bg-white/12 !text-white !shadow-none"
+                    >
                       {hero.secondaryLabel || 'Review capabilities'}
                     </SecondaryButton>
                   </div>
                 </div>
 
-                <div className="mt-10 grid gap-4 md:grid-cols-3">
-                  {metrics.map((metric) => (
-                    <article
-                      key={`${metric.value}-${metric.label}`}
-                      className="rounded-[1.75rem] border border-white/75 bg-white/84 p-5 shadow-[0_16px_45px_rgba(17,39,77,0.08)]"
-                    >
-                      <p className="font-display text-4xl font-semibold tracking-[-0.05em] text-[var(--color-brand-blue-deep)]">
-                        {metric.value}
-                      </p>
-                      <p className="mt-2 text-xs font-semibold uppercase tracking-[0.18em] text-[var(--color-brand-orange)]">
-                        {metric.label}
-                      </p>
-                      {metric.detail ? (
-                        <p className="mt-3 text-sm leading-6 text-[var(--color-ink-muted)]">{metric.detail}</p>
-                      ) : null}
-                    </article>
-                  ))}
+                <div className="lg:justify-self-end">
+                  <div className="rounded-[2rem] border border-white/22 bg-white/92 p-6 shadow-[0_24px_60px_rgba(8,22,46,0.2)] backdrop-blur">
+                    <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[var(--color-brand-blue)]">
+                      {hero.badgeTitle || 'Where ETI fits'}
+                    </p>
+                    <p className="mt-4 text-sm leading-7 text-[var(--color-ink)]">
+                      {hero.badgeBody ||
+                        'We work where leadership intent, delivery pressure, budget reality, and technology complexity all collide at once.'}
+                    </p>
+                    <div className="mt-5 grid gap-3">
+                      {(hero.badgePoints ?? []).map((point) => (
+                        <div
+                          key={point}
+                          className="rounded-[1.3rem] border border-[rgba(17,39,77,0.08)] bg-white px-4 py-3 text-sm font-medium leading-6 text-[var(--color-ink)]"
+                        >
+                          {point}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
                 </div>
               </div>
 
-              <div className="space-y-4">
-                <div className="rounded-[2rem] border border-white/80 bg-white/86 p-6 shadow-[0_20px_60px_rgba(17,39,77,0.1)]">
-                  <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[var(--color-brand-blue)]">
-                    {hero.badgeTitle || 'Where ETI fits'}
-                  </p>
-                  <p className="mt-4 text-sm leading-7 text-[var(--color-ink-muted)]">
-                    {hero.badgeBody ||
-                      'We work where leadership intent, delivery pressure, budget reality, and technology complexity are all colliding at once.'}
-                  </p>
-                  <div className="mt-5 grid gap-3">
-                    {(hero.badgePoints ?? []).map((point) => (
-                      <div
-                        key={point}
-                        className="rounded-[1.25rem] border border-[var(--color-border)] bg-white px-4 py-3 text-sm font-medium text-[var(--color-ink)]"
+              <div className="mt-8 grid gap-4 lg:grid-cols-[minmax(0,1.15fr)_minmax(320px,0.85fr)]">
+                <div className="grid gap-4 md:grid-cols-3">
+                  {pillars.slice(0, 3).map((pillar, index) => {
+                    const metric = metrics[index];
+                    return (
+                      <article
+                        key={pillar.title}
+                        className="flex h-full flex-col rounded-[1.75rem] border border-white/18 bg-[rgba(255,255,255,0.1)] p-5 text-white shadow-[0_18px_45px_rgba(8,22,46,0.14)] backdrop-blur-sm"
                       >
-                        {point}
+                        <div className="flex items-start justify-between gap-4">
+                          <div>
+                            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--color-brand-orange-soft)]">
+                              {metric?.label || `0${index + 1}`}
+                            </p>
+                            <h2 className="mt-2 font-display text-2xl font-semibold tracking-[-0.04em] text-white">
+                              {pillar.title}
+                            </h2>
+                          </div>
+                          {pillar.href ? (
+                            <Link href={pillar.href} className="text-sm font-semibold text-white/88">
+                              Explore
+                            </Link>
+                          ) : null}
+                        </div>
+                        <p className="mt-4 text-sm leading-7 text-white/78">
+                          {metric?.detail || pillar.copy}
+                        </p>
+                      </article>
+                    );
+                  })}
+                </div>
+
+                <div className="rounded-[1.85rem] border border-white/18 bg-[rgba(9,24,48,0.68)] p-6 text-white shadow-[0_20px_50px_rgba(8,22,46,0.18)] backdrop-blur-sm">
+                  <p className="text-xs font-semibold uppercase tracking-[0.22em] text-white/68">
+                    Selected outcomes
+                  </p>
+                  <div className="mt-5 space-y-4">
+                    {featuredClients.slice(0, 3).map((client) => (
+                      <div key={client.name} className="border-b border-white/12 pb-4 last:border-b-0 last:pb-0">
+                        <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[var(--color-brand-orange-soft)]">
+                          {client.name}
+                        </p>
+                        <p className="mt-2 text-lg font-medium leading-7 text-white">
+                          {client.outcome}
+                        </p>
                       </div>
                     ))}
                   </div>
-                </div>
-
-                <div className="grid gap-4">
-                  {pillars.slice(0, 3).map((pillar, index) => (
-                    <article
-                      key={pillar.title}
-                      className="rounded-[1.75rem] border border-[var(--color-border)] bg-white/78 p-5"
-                    >
-                      <div className="flex items-start justify-between gap-4">
-                        <div>
-                          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--color-brand-orange)]">
-                            {String(index + 1).padStart(2, '0')}
-                          </p>
-                          <h2 className="mt-2 font-display text-2xl font-semibold tracking-[-0.03em] text-[var(--color-brand-blue-deep)]">
-                            {pillar.title}
-                          </h2>
-                        </div>
-                        {pillar.href ? (
-                          <Link href={pillar.href} className="text-sm font-semibold text-[var(--color-brand-blue)]">
-                            Explore
-                          </Link>
-                        ) : null}
-                      </div>
-                      {pillar.copy ? (
-                        <p className="mt-3 text-sm leading-7 text-[var(--color-ink-muted)]">{pillar.copy}</p>
-                      ) : null}
-                    </article>
-                  ))}
                 </div>
               </div>
             </div>
           </div>
         </section>
 
-        <section className="mx-auto mt-8 w-full max-w-[1240px] px-5 lg:px-8">
+        <section className="mx-auto mt-6 w-full max-w-[1240px] px-5 lg:px-8">
           <div className="content-card rounded-[2rem] p-6 sm:p-8">
             <div className="grid gap-8 lg:grid-cols-[1.05fr_minmax(0,0.95fr)]">
               <div>
@@ -236,7 +259,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        <section className="mx-auto mt-8 w-full max-w-[1240px] px-5 lg:px-8">
+        <section className="mx-auto mt-6 w-full max-w-[1240px] px-5 lg:px-8">
           <div className="content-card rounded-[2rem] p-6 sm:p-8">
             <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
               <div>
@@ -286,7 +309,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        <section className="mx-auto mt-8 w-full max-w-[1240px] px-5 lg:px-8">
+        <section className="mx-auto mt-6 w-full max-w-[1240px] px-5 lg:px-8">
           <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_360px]">
             <div className="content-card rounded-[2rem] p-6 sm:p-8">
               <span className="eyebrow">Perspective</span>
@@ -340,7 +363,7 @@ export default function HomePage() {
 
         {supplementalSections.length ? <ContentBlocks blocks={supplementalSections} /> : null}
 
-        <section className="mx-auto mt-8 w-full max-w-[1240px] px-5 lg:px-8">
+        <section className="mx-auto mt-6 w-full max-w-[1240px] px-5 lg:px-8">
           <div className="content-card rounded-[2rem] p-6 sm:p-8">
             <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
               <div>

@@ -16,7 +16,9 @@ npm install
 npm run dev
 ```
 
-Open [http://localhost:3010](http://localhost:3010). Admin: [http://localhost:3010/admin](http://localhost:3010/admin).
+Local development runs on [http://eti.localhost:3020](http://eti.localhost:3020). Admin: [http://eti.localhost:3020/admin](http://eti.localhost:3020/admin).
+
+`eti.localhost` is the preferred local hostname for this app. `localhost:3020` will also work, but use the ETI hostname when you want a stable, recognizable local URL.
 
 ## Build and production
 

@@ -10,6 +10,15 @@ const nextConfig = {
   images: {
     remotePatterns: [{ protocol: 'https', hostname: 'www.emergingti.com', pathname: '/**' }],
   },
+  async redirects() {
+    return [
+      {
+        source: '/home',
+        destination: '/',
+        permanent: true,
+      },
+    ];
+  },
   async headers() {
     return [
       {
