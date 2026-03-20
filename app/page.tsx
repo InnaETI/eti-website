@@ -108,26 +108,26 @@ export default function HomePage() {
         <section className="mx-auto w-full max-w-[1240px] px-5 pb-6 pt-6 lg:px-8 lg:pb-8 lg:pt-8">
           <div className="relative overflow-hidden rounded-[2.4rem] border border-white/30 shadow-[0_34px_110px_rgba(17,39,77,0.18)]">
             <Image
-              src={homeContent.heroBanner || '/wp-content/uploads/2020/05/shutterstock-banner_1692360436.jpg'}
+              src={homeContent.heroBanner || '/images/services-banner.jpg'}
               alt={hero.title || 'ETI advisory'}
               fill
               priority
               sizes="(min-width: 1024px) 1240px, 100vw"
               className="object-cover object-center"
             />
-            <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(11,27,54,0.94)_0%,rgba(11,27,54,0.86)_34%,rgba(11,27,54,0.54)_58%,rgba(11,27,54,0.18)_100%)]" />
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(117,173,255,0.18),transparent_28%),radial-gradient(circle_at_84%_18%,rgba(226,121,66,0.18),transparent_20%)]" />
+            <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(10,27,54,0.94)_0%,rgba(10,27,54,0.85)_36%,rgba(16,48,92,0.34)_58%,rgba(245,248,252,0.02)_100%)]" />
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(117,173,255,0.2),transparent_30%),radial-gradient(circle_at_88%_16%,rgba(226,121,66,0.12),transparent_16%)]" />
 
-            <div className="relative flex min-h-[600px] flex-col justify-between p-8 sm:p-10 lg:p-12">
-              <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_360px] lg:gap-10">
-                <div className="max-w-[640px]">
+            <div className="relative flex min-h-[560px] flex-col justify-between p-8 sm:p-10 lg:p-12">
+              <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_340px] lg:items-start lg:gap-10">
+                <div className="max-w-[600px]">
                   <span className="eyebrow !text-white/78 before:!bg-white/35">
                     {hero.eyebrow || globalContent?.legalName || 'Emerging Technologies, Inc.'}
                   </span>
-                  <h1 className="mt-5 max-w-[11ch] font-display text-[clamp(2.65rem,4.6vw,4.35rem)] font-semibold leading-[0.93] tracking-[-0.06em] text-white">
+                  <h1 className="mt-5 max-w-[10.5ch] font-display text-[clamp(2.3rem,4vw,3.95rem)] font-semibold leading-[0.94] tracking-[-0.055em] text-white">
                     {hero.title || 'Technology strategy for high-stakes operating decisions.'}
                   </h1>
-                  <p className="mt-5 max-w-[34rem] text-base leading-8 text-white/80 sm:text-lg">
+                  <p className="mt-5 max-w-[32rem] text-[0.98rem] leading-8 text-white/82 sm:text-lg">
                     {hero.subtitle || globalContent?.description}
                   </p>
                   <div className="mt-7 flex flex-wrap gap-3">
@@ -142,10 +142,20 @@ export default function HomePage() {
                       {hero.secondaryLabel || 'Review capabilities'}
                     </SecondaryButton>
                   </div>
+                  <div className="mt-8 flex flex-wrap gap-3 text-xs font-semibold uppercase tracking-[0.18em] text-white/72">
+                    {featuredClients.slice(0, 3).map((client) => (
+                      <span
+                        key={client.name}
+                        className="rounded-full border border-white/14 bg-white/10 px-3 py-2 backdrop-blur-sm"
+                      >
+                        {client.name}
+                      </span>
+                    ))}
+                  </div>
                 </div>
 
                 <div className="lg:justify-self-end">
-                  <div className="rounded-[2rem] border border-white/22 bg-white/92 p-6 shadow-[0_24px_60px_rgba(8,22,46,0.2)] backdrop-blur">
+                  <div className="rounded-[1.9rem] border border-white/45 bg-[rgba(255,255,255,0.86)] p-6 shadow-[0_24px_60px_rgba(8,22,46,0.18)] backdrop-blur-md">
                     <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[var(--color-brand-blue)]">
                       {hero.badgeTitle || 'Where ETI fits'}
                     </p>
@@ -167,55 +177,35 @@ export default function HomePage() {
                 </div>
               </div>
 
-              <div className="mt-8 grid gap-4 lg:grid-cols-[minmax(0,1.15fr)_minmax(320px,0.85fr)]">
-                <div className="grid gap-4 md:grid-cols-3">
-                  {pillars.slice(0, 3).map((pillar, index) => {
-                    const metric = metrics[index];
-                    return (
-                      <article
-                        key={pillar.title}
-                        className="flex h-full flex-col rounded-[1.75rem] border border-white/18 bg-[rgba(255,255,255,0.1)] p-5 text-white shadow-[0_18px_45px_rgba(8,22,46,0.14)] backdrop-blur-sm"
-                      >
-                        <div className="flex items-start justify-between gap-4">
-                          <div>
-                            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--color-brand-orange-soft)]">
-                              {metric?.label || `0${index + 1}`}
-                            </p>
-                            <h2 className="mt-2 font-display text-2xl font-semibold tracking-[-0.04em] text-white">
-                              {pillar.title}
-                            </h2>
-                          </div>
-                          {pillar.href ? (
-                            <Link href={pillar.href} className="text-sm font-semibold text-white/88">
-                              Explore
-                            </Link>
-                          ) : null}
+              <div className="mt-8 grid gap-4 lg:grid-cols-3">
+                {pillars.slice(0, 3).map((pillar, index) => {
+                  const metric = metrics[index];
+                  return (
+                    <article
+                      key={pillar.title}
+                      className="flex h-full flex-col rounded-[1.55rem] border border-white/18 bg-[rgba(8,22,46,0.46)] p-5 text-white shadow-[0_18px_45px_rgba(8,22,46,0.12)] backdrop-blur-sm"
+                    >
+                      <div className="flex items-start justify-between gap-4">
+                        <div>
+                          <p className="text-[0.68rem] font-semibold uppercase tracking-[0.19em] text-[var(--color-brand-orange-soft)]">
+                            {metric?.label || `0${index + 1}`}
+                          </p>
+                          <h2 className="mt-2 font-display text-[1.85rem] font-semibold tracking-[-0.04em] text-white">
+                            {pillar.title}
+                          </h2>
                         </div>
-                        <p className="mt-4 text-sm leading-7 text-white/78">
-                          {metric?.detail || pillar.copy}
-                        </p>
-                      </article>
-                    );
-                  })}
-                </div>
-
-                <div className="rounded-[1.85rem] border border-white/18 bg-[rgba(9,24,48,0.68)] p-6 text-white shadow-[0_20px_50px_rgba(8,22,46,0.18)] backdrop-blur-sm">
-                  <p className="text-xs font-semibold uppercase tracking-[0.22em] text-white/68">
-                    Selected outcomes
-                  </p>
-                  <div className="mt-5 space-y-4">
-                    {featuredClients.slice(0, 3).map((client) => (
-                      <div key={client.name} className="border-b border-white/12 pb-4 last:border-b-0 last:pb-0">
-                        <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[var(--color-brand-orange-soft)]">
-                          {client.name}
-                        </p>
-                        <p className="mt-2 text-lg font-medium leading-7 text-white">
-                          {client.outcome}
-                        </p>
+                        {pillar.href ? (
+                          <Link href={pillar.href} className="text-sm font-semibold text-white/82">
+                            Explore
+                          </Link>
+                        ) : null}
                       </div>
-                    ))}
-                  </div>
-                </div>
+                      <p className="mt-3 max-w-[24ch] text-sm leading-7 text-white/76">
+                        {metric?.detail || pillar.copy}
+                      </p>
+                    </article>
+                  );
+                })}
               </div>
             </div>
           </div>
