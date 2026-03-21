@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import Link from 'next/link';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
@@ -84,6 +83,23 @@ function formatDate(value: string): string {
   });
 }
 
+/** Renders card title with last word emphasized (e.g. "Where ETI leads"). */
+function HeroBadgeTitle({ title }: { title: string }) {
+  const trimmed = title.trim();
+  const lastSpace = trimmed.lastIndexOf(' ');
+  if (lastSpace <= 0) {
+    return <span className="text-lg font-semibold text-[var(--color-brand-blue-deep)]">{trimmed}</span>;
+  }
+  const before = trimmed.slice(0, lastSpace);
+  const last = trimmed.slice(lastSpace + 1);
+  return (
+    <p className="text-lg leading-snug text-[var(--color-brand-blue-deep)]">
+      {before}{' '}
+      <strong className="font-bold">{last}</strong>
+    </p>
+  );
+}
+
 export default function HomePage() {
   const globalContent = getGlobalContent();
   const homeContent = (getHomeContent() ?? {}) as HomeData;
@@ -106,51 +122,80 @@ export default function HomePage() {
     <div className="site-shell">
       <Header />
       <main>
-        <section className="mx-auto w-full max-w-[1240px] px-5 pb-8 pt-8 lg:px-8 lg:pb-10 lg:pt-10">
-          <div className="overflow-hidden rounded-[2.2rem] border border-white/80 bg-[linear-gradient(135deg,#fbfdff_0%,#eff5fb_48%,#f7fbfe_100%)] shadow-[0_30px_100px_rgba(17,39,77,0.12)]">
-            <div className="grid gap-10 px-6 py-8 lg:grid-cols-[minmax(0,0.95fr)_minmax(360px,0.82fr)] lg:items-center lg:px-10 lg:py-10">
-              <div className="max-w-[560px]">
-                <span className="eyebrow">
+        {/* Hero — matches design mockup: light canvas, mesh right, two-column, floating card */}
+        <section className="relative min-h-[min(88vh,920px)] overflow-hidden bg-[#f4f6f9]">
+          {/* Abstract mesh / sphere (right side) */}
+          <div
+            className="pointer-events-none absolute inset-y-0 right-0 w-[min(58%,720px)]"
+            aria-hidden
+          >
+            <div className="absolute -right-[8%] top-1/2 h-[min(110%,900px)] w-[min(110vw,900px)] -translate-y-1/2 rounded-full bg-[radial-gradient(ellipse_at_40%_40%,rgba(168,196,255,0.35)_0%,transparent_55%),radial-gradient(ellipse_at_70%_60%,rgba(216,200,255,0.28)_0%,transparent_50%)] blur-2xl" />
+            <div
+              className="absolute inset-0 opacity-[0.14]"
+              style={{
+                backgroundImage: `
+                  linear-gradient(105deg, transparent 40%, rgba(120, 160, 220, 0.25) 40.1%, transparent 40.2%),
+                  linear-gradient(75deg, transparent 55%, rgba(180, 170, 230, 0.2) 55.1%, transparent 55.2%),
+                  repeating-linear-gradient(
+                    -12deg,
+                    transparent,
+                    transparent 18px,
+                    rgba(130, 160, 210, 0.08) 18px,
+                    rgba(130, 160, 210, 0.08) 19px
+                  ),
+                  repeating-linear-gradient(
+                    78deg,
+                    transparent,
+                    transparent 22px,
+                    rgba(190, 175, 230, 0.07) 22px,
+                    rgba(190, 175, 230, 0.07) 23px
+                  )
+                `,
+                maskImage: 'radial-gradient(ellipse 70% 80% at 75% 50%, black 20%, transparent 70%)',
+                WebkitMaskImage:
+                  'radial-gradient(ellipse 70% 80% at 75% 50%, black 20%, transparent 70%)',
+              }}
+            />
+          </div>
+
+          <div className="relative mx-auto flex w-full max-w-[1240px] min-h-[min(88vh,920px)] items-center px-5 py-12 lg:px-8 lg:py-16">
+            <div className="grid w-full gap-12 lg:grid-cols-[minmax(0,1.05fr)_minmax(300px,420px)] lg:items-center lg:gap-14">
+              <div className="max-w-[620px]">
+                <span className="eyebrow text-[var(--color-brand-blue-deep)]">
                   {hero.eyebrow || globalContent?.legalName || 'Emerging Technologies, Inc.'}
                 </span>
-                <h1 className="mt-6 max-w-[11ch] font-display text-[clamp(2.55rem,4.4vw,4.45rem)] font-semibold leading-[0.95] tracking-[-0.06em] text-[var(--color-brand-blue-deep)]">
-                  {hero.title || 'Technology strategy for decisions that shape operations.'}
+                <h1 className="mt-7 font-display text-[clamp(2.35rem,4.2vw,3.75rem)] font-semibold leading-[1.08] tracking-[-0.045em] text-[var(--color-brand-blue-deep)]">
+                  {hero.title || 'Technology decisions that shape performance.'}
                 </h1>
-                <p className="mt-5 max-w-[33rem] text-[1.02rem] leading-8 text-[var(--color-ink-muted)] sm:text-lg">
+                <p className="mt-6 max-w-[36rem] text-base leading-8 text-[var(--color-ink-muted)] sm:text-[1.0625rem]">
                   {hero.subtitle || globalContent?.description}
                 </p>
-                <div className="mt-8 flex flex-wrap gap-3">
+                <div className="mt-9 flex flex-wrap gap-3">
                   <PrimaryButton as="link" href={hero.primaryHref || '/rfp-wizard'}>
-                    {hero.primaryLabel || 'Schedule a call'}
+                    {hero.primaryLabel || 'Request a conversation'}
                   </PrimaryButton>
                   <SecondaryButton as="link" href={hero.secondaryHref || '/services'}>
-                    {hero.secondaryLabel || 'View capabilities'}
+                    {hero.secondaryLabel || 'Explore capabilities'}
                   </SecondaryButton>
-                </div>
-                <div className="mt-10 border-t border-[rgba(17,39,77,0.08)] pt-5">
-                  <p className="text-sm font-semibold text-[var(--color-brand-blue-deep)]">
-                    Leadership alignment, delivery discipline, and measurable outcomes.
-                  </p>
-                  <div className="mt-4 flex flex-wrap gap-x-5 gap-y-3 text-sm text-[var(--color-ink-muted)]">
-                    {capabilityItems.slice(0, 4).map((item) => (
-                      <span key={item} className="inline-flex items-center gap-2">
-                        <span className="h-1.5 w-1.5 rounded-full bg-[var(--color-brand-orange)]" />
-                        {item}
-                      </span>
-                    ))}
-                  </div>
                 </div>
               </div>
 
-              <div className="relative min-h-[320px] overflow-hidden rounded-[1.9rem] border border-white/80 bg-[linear-gradient(135deg,#e8f3fb_0%,#f4f7fc_48%,#edeafb_100%)] shadow-[0_24px_80px_rgba(17,39,77,0.08)]">
-                <Image
-                  src={homeContent.heroBanner || '/images/background-image-for-eti.png'}
-                  alt=""
-                  fill
-                  sizes="(min-width: 1024px) 420px, 100vw"
-                  className="object-cover object-right opacity-100"
-                />
-                <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(255,255,255,0.06)_0%,rgba(255,255,255,0.02)_38%,rgba(255,255,255,0.14)_100%)]" />
+              <div className="rounded-[2rem] border border-white/90 bg-white/95 p-7 shadow-[0_32px_90px_rgba(17,39,77,0.1),0_4px_24px_rgba(17,39,77,0.04)] backdrop-blur-sm lg:p-8">
+                <HeroBadgeTitle title={hero.badgeTitle || 'Where ETI leads'} />
+                <p className="mt-5 text-[0.9375rem] leading-7 text-[var(--color-ink-muted)]">
+                  {hero.badgeBody ||
+                    'We step in when leadership priorities, delivery pressure, budget constraints, and technical complexity start pulling in different directions.'}
+                </p>
+                <div className="mt-6 grid gap-3">
+                  {(hero.badgePoints ?? []).map((point) => (
+                    <div
+                      key={point}
+                      className="rounded-2xl bg-[#eef1f6] px-4 py-3.5 text-sm leading-6 text-[var(--color-ink)]"
+                    >
+                      {point}
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </div>

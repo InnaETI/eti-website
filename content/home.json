@@ -2,18 +2,18 @@
   "heroBanner": "/images/background-image-for-eti.png",
   "hero": {
     "eyebrow": "Emerging Technologies, Inc.",
-    "title": "Technology strategy for decisions that shape operations.",
-    "subtitle": "ETI helps leadership teams align business priorities, platform choices, and execution plans across healthcare, AI, and digital transformation work.",
-    "primaryLabel": "Schedule a call",
+    "title": "Technology decisions that shape performance.",
+    "subtitle": "ETI helps leadership teams align business priorities, technology decisions, and execution plans in complex environments.",
+    "primaryLabel": "Request a conversation",
     "primaryHref": "/rfp-wizard",
-    "secondaryLabel": "View capabilities",
+    "secondaryLabel": "Explore capabilities",
     "secondaryHref": "/services",
-    "badgeTitle": "Where ETI fits",
-    "badgeBody": "We step in when leadership intent, delivery pressure, budget reality, and technical complexity start pulling in different directions.",
+    "badgeTitle": "Where ETI leads",
+    "badgeBody": "We step in when leadership priorities, delivery pressure, budget constraints, and technical complexity start pulling in different directions.",
     "badgePoints": [
-      "Executive alignment before delivery chaos compounds",
-      "Technology strategy tied directly to operational priorities",
-      "Hands-on guidance from planning through execution"
+      "Executive alignment before delivery breaks down",
+      "Technology strategy tied to operational priorities",
+      "Hands-on guidance from planning to execution"
     ]
   },
   "metrics": [
