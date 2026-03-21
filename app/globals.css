@@ -110,17 +110,18 @@
   }
 
   .content-card {
-    border: 1px solid rgba(255, 255, 255, 0.7);
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.8));
-    box-shadow: var(--shadow-card);
+    border: 1px solid rgba(255, 255, 255, 0.75);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(255, 255, 255, 0.88));
+    box-shadow: 0 16px 56px rgba(17, 39, 77, 0.08), 0 2px 12px rgba(17, 39, 77, 0.03);
     backdrop-filter: blur(14px);
   }
 
   .section-title {
     font-family: var(--font-display), system-ui, sans-serif;
-    font-size: clamp(2rem, 4vw, 3.75rem);
-    line-height: 1.02;
-    letter-spacing: -0.05em;
+    font-size: clamp(1.75rem, 3.2vw, 2.5rem);
+    font-weight: 600;
+    line-height: 1.12;
+    letter-spacing: -0.04em;
   }
 
   .eyebrow {

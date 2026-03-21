@@ -63,7 +63,7 @@ export function ContentBlocks({ blocks }: ContentBlocksProps) {
       {blocks.map((block, index) => {
         if (block.type === 'text') {
           return (
-            <section key={`${block.type}-${index}`} className="mx-auto mt-8 w-full max-w-[1240px] px-5 lg:px-8">
+            <section key={`${block.type}-${index}`} className="mx-auto mt-14 w-full max-w-[1320px] px-5 lg:mt-16 lg:px-10">
               <div className="content-card rounded-[2rem] p-6 sm:p-8">
                 {block.eyebrow ? <span className="eyebrow">{block.eyebrow}</span> : null}
                 <h2 className="mt-5 font-display text-3xl font-semibold tracking-[-0.04em] text-[var(--color-brand-blue-deep)]">
@@ -81,7 +81,7 @@ export function ContentBlocks({ blocks }: ContentBlocksProps) {
 
         if (block.type === 'cards') {
           return (
-            <section key={`${block.type}-${index}`} className="mx-auto mt-8 w-full max-w-[1240px] px-5 lg:px-8">
+            <section key={`${block.type}-${index}`} className="mx-auto mt-14 w-full max-w-[1320px] px-5 lg:mt-16 lg:px-10">
               <div className="content-card rounded-[2rem] p-6 sm:p-8">
                 {block.eyebrow ? <span className="eyebrow">{block.eyebrow}</span> : null}
                 <h2 className="mt-5 font-display text-3xl font-semibold tracking-[-0.04em] text-[var(--color-brand-blue-deep)]">
@@ -124,7 +124,7 @@ export function ContentBlocks({ blocks }: ContentBlocksProps) {
 
         if (block.type === 'stats') {
           return (
-            <section key={`${block.type}-${index}`} className="mx-auto mt-8 w-full max-w-[1240px] px-5 lg:px-8">
+            <section key={`${block.type}-${index}`} className="mx-auto mt-14 w-full max-w-[1320px] px-5 lg:mt-16 lg:px-10">
               <div className="content-card rounded-[2rem] p-6 sm:p-8">
                 {block.eyebrow ? <span className="eyebrow">{block.eyebrow}</span> : null}
                 <h2 className="mt-5 font-display text-3xl font-semibold tracking-[-0.04em] text-[var(--color-brand-blue-deep)]">
@@ -160,7 +160,7 @@ export function ContentBlocks({ blocks }: ContentBlocksProps) {
 
         if (block.type === 'quote') {
           return (
-            <section key={`${block.type}-${index}`} className="mx-auto mt-8 w-full max-w-[1240px] px-5 lg:px-8">
+            <section key={`${block.type}-${index}`} className="mx-auto mt-14 w-full max-w-[1320px] px-5 lg:mt-16 lg:px-10">
               <div className="content-card rounded-[2rem] p-6 sm:p-8">
                 {block.eyebrow ? <span className="eyebrow">{block.eyebrow}</span> : null}
                 <blockquote className="mt-5 max-w-4xl font-accent text-3xl leading-[1.3] text-[var(--color-brand-blue-deep)] sm:text-4xl">
@@ -177,7 +177,7 @@ export function ContentBlocks({ blocks }: ContentBlocksProps) {
         }
 
         return (
-          <section key={`${block.type}-${index}`} className="mx-auto my-8 w-full max-w-[1240px] px-5 lg:px-8">
+          <section key={`${block.type}-${index}`} className="mx-auto mt-14 w-full max-w-[1320px] px-5 lg:mt-16 lg:px-10">
             <div className="overflow-hidden rounded-[2rem] bg-[linear-gradient(135deg,#11274d_0%,#1d4e96_42%,#224380_100%)] px-6 py-8 text-white shadow-[0_28px_90px_rgba(17,39,77,0.24)] sm:px-8 sm:py-10">
               {block.eyebrow ? <span className="eyebrow !text-white/72 before:!bg-white/45">{block.eyebrow}</span> : null}
               <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end">

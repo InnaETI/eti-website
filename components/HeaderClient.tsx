@@ -27,7 +27,7 @@ export function HeaderClient({ navItems, logoUrl, ctaHref }: HeaderClientProps) 
 
   return (
     <header className="site-header">
-      <div className="mx-auto flex w-full max-w-[1240px] items-center justify-between gap-8 px-5 py-4 lg:px-8">
+      <div className="mx-auto flex w-full max-w-[1320px] items-center justify-between gap-8 px-5 py-4 lg:px-10">
         <Link href="/" className="flex items-center gap-3 text-slate-950" onClick={() => setOpen(false)}>
           <Image
             src={logoUrl}

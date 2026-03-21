@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
-import { RichText } from '@/components/RichText';
 import { PrimaryButton, SecondaryButton } from '@/components/Button';
 import { getGlobalContent, getHomeContent, getPageContent } from '@/lib/content';
 import { getLatestPosts } from '@/lib/blog';
@@ -114,60 +113,30 @@ export default function HomePage() {
   const supplementalSections = homeContent.sections ?? [];
   const services = homeContent.services ?? {};
   const cta = homeContent.cta ?? {};
-  const about = homeContent.about ?? {};
   const joinTeam = homeContent.joinTeam ?? {};
-  const capabilityItems = (services.items ?? []).map((item) => item.title).filter(Boolean);
-
   return (
     <div className="site-shell">
       <Header />
       <main>
         {/* Hero — matches design mockup: light canvas, mesh right, two-column, floating card */}
         <section className="relative min-h-[min(88vh,920px)] overflow-hidden bg-[#f4f6f9]">
-          {/* Abstract mesh / sphere (right side) */}
+          {/* Full-bleed hero background */}
+          <div className="pointer-events-none absolute inset-0 z-0 bg-[#f4f6f9]" aria-hidden />
           <div
-            className="pointer-events-none absolute inset-y-0 right-0 w-[min(58%,720px)]"
+            className="pointer-events-none absolute inset-0 z-0 bg-[url('/images/background-image-for-eti.png')] bg-cover bg-center bg-no-repeat"
             aria-hidden
-          >
-            <div className="absolute -right-[8%] top-1/2 h-[min(110%,900px)] w-[min(110vw,900px)] -translate-y-1/2 rounded-full bg-[radial-gradient(ellipse_at_40%_40%,rgba(168,196,255,0.35)_0%,transparent_55%),radial-gradient(ellipse_at_70%_60%,rgba(216,200,255,0.28)_0%,transparent_50%)] blur-2xl" />
-            <div
-              className="absolute inset-0 opacity-[0.14]"
-              style={{
-                backgroundImage: `
-                  linear-gradient(105deg, transparent 40%, rgba(120, 160, 220, 0.25) 40.1%, transparent 40.2%),
-                  linear-gradient(75deg, transparent 55%, rgba(180, 170, 230, 0.2) 55.1%, transparent 55.2%),
-                  repeating-linear-gradient(
-                    -12deg,
-                    transparent,
-                    transparent 18px,
-                    rgba(130, 160, 210, 0.08) 18px,
-                    rgba(130, 160, 210, 0.08) 19px
-                  ),
-                  repeating-linear-gradient(
-                    78deg,
-                    transparent,
-                    transparent 22px,
-                    rgba(190, 175, 230, 0.07) 22px,
-                    rgba(190, 175, 230, 0.07) 23px
-                  )
-                `,
-                maskImage: 'radial-gradient(ellipse 70% 80% at 75% 50%, black 20%, transparent 70%)',
-                WebkitMaskImage:
-                  'radial-gradient(ellipse 70% 80% at 75% 50%, black 20%, transparent 70%)',
-              }}
-            />
-          </div>
+          />
 
-          <div className="relative mx-auto flex w-full max-w-[1240px] min-h-[min(88vh,920px)] items-center px-5 py-12 lg:px-8 lg:py-16">
-            <div className="grid w-full gap-12 lg:grid-cols-[minmax(0,1.05fr)_minmax(300px,420px)] lg:items-center lg:gap-14">
-              <div className="max-w-[620px]">
+          <div className="relative z-10 mx-auto flex min-h-[min(88vh,920px)] w-full max-w-[1320px] items-center px-5 py-16 lg:px-10 lg:py-24">
+            <div className="grid w-full gap-9 lg:grid-cols-[minmax(0,1.08fr)_minmax(300px,420px)] lg:items-center lg:gap-10 xl:gap-11">
+              <div className="max-w-[min(42rem,100%)]">
                 <span className="eyebrow text-[var(--color-brand-blue-deep)]">
                   {hero.eyebrow || globalContent?.legalName || 'Emerging Technologies, Inc.'}
                 </span>
                 <h1 className="mt-7 font-display text-[clamp(2.35rem,4.2vw,3.75rem)] font-semibold leading-[1.08] tracking-[-0.045em] text-[var(--color-brand-blue-deep)]">
                   {hero.title || 'Technology decisions that shape performance.'}
                 </h1>
-                <p className="mt-6 max-w-[36rem] text-base leading-8 text-[var(--color-ink-muted)] sm:text-[1.0625rem]">
+                <p className="mt-6 max-w-[38rem] text-base leading-8 text-[var(--color-ink-muted)] sm:text-[1.0625rem]">
                   {hero.subtitle || globalContent?.description}
                 </p>
                 <div className="mt-9 flex flex-wrap gap-3">
@@ -201,49 +170,50 @@ export default function HomePage() {
           </div>
         </section>
 
-        <section className="mx-auto mt-8 w-full max-w-[1240px] px-5 lg:px-8">
-          <div className="content-card rounded-[2rem] p-6 sm:p-8 lg:p-10">
-            <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(320px,0.78fr)] lg:items-end">
-              <div>
-                <span className="eyebrow">How ETI works</span>
-                <h2 className="section-title mt-5 max-w-2xl text-[var(--color-brand-blue-deep)]">
+        <section className="w-full min-h-[min(88vh,920px)] border-t border-[rgba(17,39,77,0.08)] bg-[#f0f3f7]">
+          <div className="mx-auto flex min-h-[min(88vh,920px)] w-full max-w-[1320px] flex-col justify-center px-5 py-16 lg:px-10 lg:py-24">
+            <div className="grid gap-5 lg:grid-cols-12 lg:items-start lg:gap-x-12 lg:gap-y-5">
+              <div className="lg:col-span-12">
+                <span className="eyebrow">How ETI Works</span>
+              </div>
+              <div className="lg:col-span-6 xl:col-span-7">
+                <h2 className="section-title max-w-xl text-[var(--color-brand-blue-deep)] lg:max-w-[22rem] xl:max-w-[24rem]">
                   Strategy, methodology, and execution in one operating model.
                 </h2>
               </div>
-              <div className="space-y-5">
-                <p className="text-base leading-8 text-[var(--color-ink-muted)]">
+              <div className="lg:col-span-6 xl:col-span-5 lg:border-l lg:border-[rgba(17,39,77,0.08)] lg:pl-10 xl:pl-12">
+                <p className="text-base leading-[1.65] text-[var(--color-ink-muted)]">
                   ETI helps leadership teams move from ambiguous priorities to practical execution without the usual handoff gaps between strategy and delivery.
                 </p>
                 <Link
                   href={services.viewMoreHref || '/services'}
-                  className="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.16em] text-[var(--color-brand-blue)] transition hover:text-[var(--color-brand-blue-deep)]"
+                  className="mt-5 inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.14em] text-[var(--color-brand-blue)] transition hover:text-[var(--color-brand-blue-deep)]"
                 >
                   {services.viewMoreText || 'View services'}
                   <span aria-hidden="true">→</span>
                 </Link>
               </div>
             </div>
-            <div className="mt-8 grid gap-4 lg:grid-cols-3">
+
+            <div className="mt-10 grid gap-4 lg:mt-12 lg:grid-cols-3 lg:gap-6">
               {pillars.slice(0, 3).map((pillar, index) => {
                 const metric = metrics[index];
                 return (
                   <Link
                     key={pillar.title}
                     href={pillar.href || '/services'}
-                    className="group flex h-full flex-col justify-between rounded-[1.6rem] border border-[rgba(17,39,77,0.1)] bg-white p-6 shadow-[0_16px_45px_rgba(17,39,77,0.06)] transition hover:-translate-y-1 hover:border-[rgba(33,79,152,0.18)] hover:shadow-[0_24px_60px_rgba(17,39,77,0.1)]"
+                    className="group flex flex-col rounded-2xl border border-[rgba(17,39,77,0.09)] bg-white/90 p-5 shadow-[0_1px_0_rgba(17,39,77,0.04)] transition hover:border-[rgba(33,79,152,0.2)] hover:shadow-[0_12px_40px_rgba(17,39,77,0.07)]"
                   >
-                    <div>
-                      <p className="text-[0.7rem] font-semibold uppercase tracking-[0.2em] text-[var(--color-brand-orange)]">
-                        {metric?.label || `0${index + 1}`}
-                      </p>
-                      <h3 className="mt-4 font-display text-[2rem] font-semibold tracking-[-0.045em] text-[var(--color-brand-blue-deep)]">
-                        {pillar.title}
-                      </h3>
-                      <p className="mt-4 text-sm leading-7 text-[var(--color-ink-muted)]">
-                        {metric?.detail || pillar.copy}
-                      </p>
-                    </div>
-                    <span className="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-[var(--color-brand-blue)] transition group-hover:text-[var(--color-brand-blue-deep)]">
+                    <p className="text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-[var(--color-brand-orange)]">
+                      {metric?.label || `0${index + 1}`}
+                    </p>
+                    <h3 className="mt-3 font-display text-xl font-semibold tracking-[-0.03em] text-[var(--color-brand-blue-deep)] lg:text-[1.35rem]">
+                      {pillar.title}
+                    </h3>
+                    <p className="mt-2.5 text-sm leading-6 text-[var(--color-ink-muted)]">
+                      {metric?.detail || pillar.copy}
+                    </p>
+                    <span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-[var(--color-brand-blue)] transition group-hover:text-[var(--color-brand-blue-deep)]">
                       Explore
                       <span aria-hidden="true">→</span>
                     </span>
@@ -251,135 +221,103 @@ export default function HomePage() {
                 );
               })}
             </div>
-            <div className="mt-8 border-t border-[rgba(17,39,77,0.08)] pt-6">
-              <div className="flex flex-wrap gap-3">
-                {capabilityItems.slice(0, 4).map((item) => (
-                  <span
-                    key={item}
-                    className="rounded-full border border-[rgba(17,39,77,0.1)] bg-[rgba(248,251,255,0.9)] px-4 py-2 text-xs font-semibold uppercase tracking-[0.16em] text-[var(--color-brand-blue)]"
-                  >
-                    {item}
-                  </span>
-                ))}
-              </div>
-            </div>
           </div>
         </section>
 
-        <section className="mx-auto mt-6 w-full max-w-[1240px] px-5 lg:px-8">
-          <div className="content-card rounded-[2rem] p-6 sm:p-8">
-            <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
-              <div>
-                <span className="eyebrow">Client trajectories</span>
-                <h2 className="section-title mt-5 text-[var(--color-brand-blue-deep)]">
-                  Business outcomes, not only system deliverables.
-                </h2>
-              </div>
-              <Link
-                href={homeContent.clients?.viewMoreHref || '/clients'}
-                className="text-sm font-semibold uppercase tracking-[0.18em] text-[var(--color-brand-blue)]"
-              >
-                {homeContent.clients?.viewMoreText || 'View client work'}
-              </Link>
+        {/* Client trajectories — editorial layout; same band height as section 2 */}
+        <section className="w-full min-h-[min(88vh,920px)] border-t border-[rgba(17,39,77,0.08)] bg-[#f0f3f7]">
+          <div className="mx-auto flex min-h-[min(88vh,920px)] w-full max-w-[1320px] flex-col justify-center px-5 py-16 lg:px-10 lg:py-24">
+            <div className="flex items-center gap-3">
+              <span className="h-px w-9 shrink-0 bg-[var(--color-brand-orange)]" aria-hidden />
+              <span className="text-[0.68rem] font-bold uppercase tracking-[0.22em] text-[var(--color-brand-orange)]">
+                Client trajectories
+              </span>
             </div>
-            <p className="mt-5 max-w-3xl text-base leading-8 text-[var(--color-ink-muted)]">
-              {homeContent.clients?.intro}
-            </p>
-            <div className="mt-8 grid gap-4 lg:grid-cols-3">
+            <h2 className="section-title mt-6 max-w-[22rem] text-[var(--color-brand-blue-deep)] sm:max-w-xl lg:mt-7 lg:max-w-[36rem]">
+              Business outcomes, not only system deliverables.
+            </h2>
+            {homeContent.clients?.intro ? (
+              <p className="mt-6 max-w-[42rem] text-[1.0625rem] leading-[1.7] text-[var(--color-ink-muted)]">
+                {homeContent.clients.intro}
+              </p>
+            ) : null}
+
+            <div className="mt-10 grid gap-5 md:grid-cols-3 lg:mt-12 lg:gap-6">
               {featuredClients.map((client) => (
-                <article
+                <Link
                   key={client.name}
-                  className="rounded-[1.75rem] border border-[var(--color-border)] bg-white/84 p-5"
+                  href={homeContent.clients?.viewMoreHref || '/clients'}
+                  className="group flex flex-col rounded-[1.25rem] border border-[rgba(17,39,77,0.07)] bg-white p-6 transition hover:border-[rgba(17,39,77,0.12)] lg:rounded-2xl lg:p-7"
                 >
-                  <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--color-brand-orange)]">
+                  <p className="text-[0.65rem] font-semibold uppercase tracking-[0.2em] text-[var(--color-brand-orange)]">
                     {client.name}
                   </p>
-                  <h3 className="mt-3 font-display text-2xl font-semibold tracking-[-0.03em] text-[var(--color-brand-blue-deep)]">
+                  <h3 className="mt-4 font-display text-[1.35rem] font-semibold leading-snug tracking-[-0.03em] text-[var(--color-brand-blue-deep)] lg:text-[1.5rem]">
                     {client.outcome}
                   </h3>
-                  <p className="mt-3 text-sm leading-7 text-[var(--color-ink-muted)]">{client.summary}</p>
-                </article>
+                  <p className="mt-3 text-sm leading-[1.65] text-[var(--color-ink-muted)]">{client.summary}</p>
+                </Link>
               ))}
             </div>
-            <div className="mt-6 grid gap-4 lg:grid-cols-2">
-              {clientTestimonials.slice(0, 2).map((testimonial, index) => (
-                <blockquote
-                  key={`${testimonial.quote}-${index}`}
-                  className="rounded-[1.5rem] border border-[var(--color-border)] bg-white/82 p-5 text-sm leading-7 text-[var(--color-ink)]"
-                >
-                  <p className="font-accent text-xl leading-8 text-[var(--color-brand-blue-deep)]">
-                    “{testimonial.quote}”
-                  </p>
-                </blockquote>
-              ))}
-            </div>
+
+            <Link
+              href={homeContent.clients?.viewMoreHref || '/clients'}
+              className="mt-12 inline-flex items-center gap-2 text-[0.9375rem] font-semibold text-[var(--color-brand-blue-deep)] underline decoration-[rgba(17,39,77,0.2)] underline-offset-[0.2em] transition hover:decoration-[var(--color-brand-orange)] lg:mt-14"
+            >
+              {homeContent.clients?.viewMoreText || 'View client work'}
+              <span aria-hidden="true" className="text-[var(--color-brand-orange)]">
+                →
+              </span>
+            </Link>
+
+            {clientTestimonials.length > 0 ? (
+              <div className="mt-8 grid gap-4 lg:mt-10 lg:grid-cols-2 lg:gap-6">
+                {clientTestimonials.slice(0, 2).map((testimonial, index) => (
+                  <blockquote
+                    key={`${testimonial.quote}-${index}`}
+                    className="rounded-[1.25rem] border border-[rgba(17,39,77,0.08)] bg-white/90 p-6 lg:rounded-2xl lg:p-8"
+                  >
+                    <p
+                      className={`font-accent text-[1.35rem] leading-[1.45] text-[var(--color-brand-blue-deep)] sm:text-[1.45rem] lg:text-[1.55rem] ${
+                        index === 0 ? 'italic' : ''
+                      }`}
+                    >
+                      “{testimonial.quote}”
+                    </p>
+                  </blockquote>
+                ))}
+              </div>
+            ) : null}
           </div>
         </section>
 
-        <section className="mx-auto mt-6 w-full max-w-[1240px] px-5 lg:px-8">
-          <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_360px]">
-            <div className="content-card rounded-[2rem] p-6 sm:p-8">
-              <span className="eyebrow">Perspective</span>
-              <h2 className="section-title mt-5 text-[var(--color-brand-blue-deep)]">
-                {about.title || 'About ETI'}
-              </h2>
-              {about.copy ? <RichText source={about.copy} className="mt-6 max-w-none text-[0.98rem]" /> : null}
-            </div>
-
-            <div className="grid gap-6">
-              <div className="content-card rounded-[2rem] p-6 sm:p-8">
-                <span className="eyebrow">How ETI works</span>
-                <h2 className="mt-5 font-display text-3xl font-semibold tracking-[-0.04em] text-[var(--color-brand-blue-deep)]">
-                  Strategy, methodology, and execution without handoff gaps.
-                </h2>
-                <div className="mt-6 space-y-4">
-                  {pillars.map((pillar, index) => (
-                    <div
-                      key={pillar.title}
-                      className="rounded-[1.5rem] border border-[var(--color-border)] bg-white/80 p-4"
-                    >
-                      <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--color-brand-orange)]">
-                        Step {index + 1}
-                      </p>
-                      <h3 className="mt-2 font-display text-xl font-semibold tracking-[-0.03em] text-[var(--color-brand-blue-deep)]">
-                        {pillar.title}
-                      </h3>
-                      {pillar.copy ? (
-                        <p className="mt-2 text-sm leading-7 text-[var(--color-ink-muted)]">{pillar.copy}</p>
-                      ) : null}
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div className="content-card rounded-[2rem] p-6 sm:p-8">
-                <span className="eyebrow">Careers</span>
-                <h2 className="mt-5 font-display text-3xl font-semibold tracking-[-0.04em] text-[var(--color-brand-blue-deep)]">
-                  {joinTeam.title || 'Join our team'}
-                </h2>
-                {joinTeam.copy ? (
-                  <p className="mt-4 text-base leading-8 text-[var(--color-ink-muted)]">{joinTeam.copy}</p>
-                ) : null}
-                <SecondaryButton as="link" href={joinTeam.href || '/career'} className="mt-6">
-                  {joinTeam.buttonText || 'Explore opportunities'}
-                </SecondaryButton>
-              </div>
-            </div>
+        <section className="mx-auto mt-14 w-full max-w-[1320px] px-5 lg:mt-16 lg:px-10">
+          <div className="content-card rounded-[2rem] p-6 sm:p-8 lg:p-10">
+            <span className="eyebrow">Careers</span>
+            <h2 className="mt-5 font-display text-3xl font-semibold tracking-[-0.04em] text-[var(--color-brand-blue-deep)]">
+              {joinTeam.title || 'Join our team'}
+            </h2>
+            {joinTeam.copy ? (
+              <p className="mt-4 max-w-3xl text-base leading-8 text-[var(--color-ink-muted)]">{joinTeam.copy}</p>
+            ) : null}
+            <SecondaryButton as="link" href={joinTeam.href || '/career'} className="mt-6">
+              {joinTeam.buttonText || 'Explore opportunities'}
+            </SecondaryButton>
           </div>
         </section>
 
         {supplementalSections.length ? <ContentBlocks blocks={supplementalSections} /> : null}
 
-        <section className="mx-auto mt-6 w-full max-w-[1240px] px-5 lg:px-8">
-          <div className="content-card rounded-[2rem] p-6 sm:p-8">
-            <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+        <section className="mx-auto mt-14 w-full max-w-[1320px] px-5 lg:mt-16 lg:px-10">
+          <div className="content-card rounded-[2rem] p-6 sm:p-8 lg:p-10">
+            <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
               <div>
                 <span className="eyebrow">Insights</span>
                 <h2 className="section-title mt-5 text-[var(--color-brand-blue-deep)]">
                   Recent thinking from the front lines.
                 </h2>
               </div>
-              <Link href="/blog" className="text-sm font-semibold uppercase tracking-[0.18em] text-[var(--color-brand-blue)]">
+              <Link href="/blog" className="mt-1 shrink-0 text-sm font-semibold uppercase tracking-[0.14em] text-[var(--color-brand-blue)] transition hover:text-[var(--color-brand-blue-deep)]">
                 View all articles
               </Link>
             </div>
@@ -403,7 +341,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        <section className="mx-auto my-8 w-full max-w-[1240px] px-5 lg:px-8">
+        <section className="mx-auto mt-14 w-full max-w-[1320px] px-5 pb-6 lg:mt-16 lg:px-10 lg:pb-10">
           <div className="overflow-hidden rounded-[2rem] bg-[linear-gradient(135deg,#11274d_0%,#1d4e96_42%,#224380_100%)] px-6 py-8 text-white shadow-[0_28px_90px_rgba(17,39,77,0.24)] sm:px-8 sm:py-10">
             <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end">
               <div>

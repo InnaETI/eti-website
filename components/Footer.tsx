@@ -17,7 +17,7 @@ export function Footer() {
   return (
     <footer className="relative overflow-hidden border-t border-white/60 bg-[linear-gradient(160deg,#0f1f3d_0%,#16386d_42%,#0f2243_100%)] text-white">
       <div className="absolute inset-x-0 top-0 h-px bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.55),transparent)]" />
-      <div className="mx-auto grid w-full max-w-[1240px] gap-12 px-5 py-14 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.25fr)] lg:px-8">
+      <div className="mx-auto grid w-full max-w-[1320px] gap-12 px-5 py-14 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.25fr)] lg:px-10">
         <div className="space-y-6">
           <Link href="/" className="inline-flex items-center">
             <Image
@@ -80,7 +80,7 @@ export function Footer() {
       </div>
 
       <div className="border-t border-white/10">
-        <div className="mx-auto flex w-full max-w-[1240px] flex-col gap-3 px-5 py-5 text-xs uppercase tracking-[0.18em] text-white/45 lg:flex-row lg:items-center lg:justify-between lg:px-8">
+        <div className="mx-auto flex w-full max-w-[1320px] flex-col gap-3 px-5 py-5 text-xs uppercase tracking-[0.18em] text-white/45 lg:flex-row lg:items-center lg:justify-between lg:px-10">
           <p>{copyrightText}</p>
           <p>Built on a native Next.js content system</p>
         </div>
