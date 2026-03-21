@@ -124,7 +124,7 @@ export default function HomePage() {
                     {hero.primaryLabel || 'Schedule a call'}
                   </PrimaryButton>
                   <SecondaryButton as="link" href={hero.secondaryHref || '/services'}>
-                    {hero.secondaryLabel || 'Review capabilities'}
+                    {hero.secondaryLabel || 'View capabilities'}
                   </SecondaryButton>
                 </div>
                 <div className="mt-10 border-t border-[rgba(17,39,77,0.08)] pt-5">
@@ -142,20 +142,15 @@ export default function HomePage() {
                 </div>
               </div>
 
-              <div className="relative min-h-[320px] overflow-hidden rounded-[1.9rem] border border-white/80 bg-[linear-gradient(135deg,#dfeaf5_0%,#edf4fb_46%,#f7fbff_100%)] shadow-[0_24px_80px_rgba(17,39,77,0.08)]">
+              <div className="relative min-h-[320px] overflow-hidden rounded-[1.9rem] border border-white/80 bg-[linear-gradient(135deg,#e8f3fb_0%,#f4f7fc_48%,#edeafb_100%)] shadow-[0_24px_80px_rgba(17,39,77,0.08)]">
                 <Image
-                  src={homeContent.heroBanner || '/images/services-banner.jpg'}
+                  src={homeContent.heroBanner || '/images/background-image-for-eti.png'}
                   alt=""
                   fill
                   sizes="(min-width: 1024px) 420px, 100vw"
-                  className="object-cover object-center opacity-95"
+                  className="object-cover object-right opacity-100"
                 />
-                <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(17,39,77,0.16)_0%,rgba(17,39,77,0.04)_42%,rgba(255,255,255,0.28)_100%)]" />
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_16%,rgba(86,145,230,0.22),transparent_30%),radial-gradient(circle_at_84%_22%,rgba(255,255,255,0.56),transparent_24%)]" />
-                <div className="absolute left-10 right-10 top-10 h-px bg-white/55" />
-                <div className="absolute bottom-10 left-10 top-10 w-px bg-white/45" />
-                <div className="absolute bottom-10 right-10 h-28 w-28 rounded-full border border-white/60 bg-white/20 backdrop-blur-[2px]" />
-                <div className="absolute left-[30%] top-[24%] h-24 w-24 rounded-full border border-white/35 bg-[rgba(255,255,255,0.12)]" />
+                <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(255,255,255,0.06)_0%,rgba(255,255,255,0.02)_38%,rgba(255,255,255,0.14)_100%)]" />
               </div>
             </div>
           </div>
