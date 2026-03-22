@@ -68,25 +68,27 @@
     ]
   },
   "clients": {
-    "intro": "Our valued clients epitomize determination, motivation, and an unwavering drive towards achievement. They possess a crystal-clear vision of the elements essential for their business prosperity. In collaboration with ETI, they entrust us to bring this vision to fruition. Acting as an integral part of their team, we wholeheartedly share in their enthusiasm, passion, and innovative spirit. Our close partnerships extend across diverse industries and regions within the United States.",
+    "sectionLabel": "Selected work",
+    "sectionHeadline": "Technology work tied to business outcomes.",
+    "intro": "ETI supports organizations where technology decisions shape growth, operations, and execution. These examples show how we help leadership teams move important initiatives forward with clearer direction and measurable value.",
     "viewMoreHref": "/clients",
-    "viewMoreText": "view more"
+    "viewMoreText": "View selected work"
   },
   "featuredClients": [
     {
       "name": "Oak Street Health",
-      "outcome": "Custom outreach and supplemental coverage platform built for scale.",
-      "summary": "ETI supported the technology ecosystem behind multi-market growth and a business trajectory that culminated in a $10.6B acquisition by CVS Health."
+      "outcome": "Outreach and supplemental coverage platform built for scale.",
+      "summary": "ETI supported a custom technology ecosystem that helped power multi-market growth and long term enterprise value."
     },
     {
       "name": "Integrated Surgical Solutions",
-      "outcome": "Technology-enabled growth from a niche model to national scale.",
-      "summary": "ETI helped align systems and execution as the business expanded revenue dramatically and advanced toward a major strategic exit."
+      "outcome": "Technology foundation for national growth.",
+      "summary": "ETI helped align systems, execution, and internal processes as the business expanded and advanced toward a major strategic milestone."
     },
     {
       "name": "Healthcare Payment Specialists",
-      "outcome": "Platform assessment and improvement work tied to reimbursement operations.",
-      "summary": "ETI focused on real process, compliance, and product improvement rather than abstract transformation language."
+      "outcome": "Platform improvement tied to reimbursement operations.",
+      "summary": "ETI assessed and improved the platform to strengthen automation, workflows, and operational performance in a complex healthcare environment."
     }
   ],
   "cta": {

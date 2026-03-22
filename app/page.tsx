@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
@@ -52,6 +53,8 @@ type HomeData = {
     intro?: string;
     viewMoreHref?: string;
     viewMoreText?: string;
+    sectionLabel?: string;
+    sectionHeadline?: string;
   };
   cta?: {
     title?: string;
@@ -70,6 +73,57 @@ type HomeData = {
     href?: string;
   };
 };
+
+const OUR_WORK_TILES = [
+  {
+    title: 'Clinical Workflow and Decision Support Solutions',
+    description:
+      'Technology solutions designed to improve clinical workflows, strengthen decision support, and connect care operations more effectively across the enterprise. This work includes workflow automation, predictive healthcare analytics, interoperability with EMRs and EHRs, and patient-centered solution design.',
+    objectPosition: '18% 42%',
+    href: '/services',
+    image: '/images/our-work/clinical-workflow.png',
+  },
+  {
+    title: 'Patient Outreach and Supplemental Coverage Platform',
+    description:
+      'Custom technology ecosystem built to support patient outreach, supplemental coverage workflows, and operational growth across a multi-site healthcare environment. Designed to help organizations manage outreach more intelligently, expand service capacity, and support scalable patient engagement.',
+    objectPosition: '72% 38%',
+    href: '/services',
+    image: '/images/our-work/patient-outreach.png',
+  },
+  {
+    title: 'Surgical Cost Management and Health Plan Integration Platform',
+    description:
+      'Modernized platform supporting surgical cost management, internal process efficiency, cross-functional communication, and health plan integration. This work helped strengthen operational coordination and create a more scalable foundation for payer-aligned growth.',
+    objectPosition: '50% 55%',
+    href: '/services',
+    image: '/images/our-work/surgical-cost.png',
+  },
+  {
+    title: 'Healthcare Reimbursement and Compliance Platform Improvement',
+    description:
+      'Platform assessment and improvement initiative focused on reimbursement operations, process automation, and compliance-aware workflows. ETI helped strengthen the underlying platform to support more efficient operations, better data handling, and more reliable performance in a complex healthcare environment.',
+    objectPosition: '28% 60%',
+    href: '/services',
+    image: '/images/our-work/reimbursement-compliance.png',
+  },
+  {
+    title: 'Carrier and Patient Collections Revenue Cycle Platform',
+    description:
+      'Revenue cycle platform designed to improve carrier and patient collections through stronger workflow management, better financial visibility, and more efficient follow-through across the collections lifecycle. This work supports cleaner processes, stronger recovery performance, and more disciplined revenue operations.',
+    objectPosition: '65% 48%',
+    href: '/services',
+    image: '/images/our-work/revenue-cycle-collections.png',
+  },
+  {
+    title: 'AI Driven Medical Policy Automation',
+    description:
+      'AI-enabled solution for automating the interpretation, structuring, and operational use of medical policies. Designed to reduce manual review, improve consistency, accelerate policy-driven decision making, and create a stronger foundation for scalable utilization management and clinical policy operations.',
+    objectPosition: '45% 35%',
+    href: '/services',
+    image: '/images/our-work/ai-policy.png',
+  },
+] as const;
 
 function formatDate(value: string): string {
   if (!value) return '';
@@ -105,6 +159,22 @@ export default function HomePage() {
   const latestPosts = getLatestPosts(3);
   const clientsPage = getPageContent('clients');
   const clientTestimonials = Array.isArray(clientsPage?.testimonials) ? clientsPage?.testimonials : [];
+
+  function renderQuoteWithEmphasis(quote: string, emphasis?: string) {
+    if (emphasis && quote.includes(emphasis)) {
+      const i = quote.indexOf(emphasis);
+      const before = quote.slice(0, i);
+      const after = quote.slice(i + emphasis.length);
+      return (
+        <>
+          “{before}
+          <em className="italic">{emphasis}</em>
+          {after}”
+        </>
+      );
+    }
+    return <>“{quote}”</>;
+  }
 
   const hero = homeContent.hero ?? {};
   const pillars = homeContent.pillars ?? [];
@@ -224,68 +294,135 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Client trajectories — editorial layout; same band height as section 2 */}
-        <section className="w-full min-h-[min(88vh,920px)] border-t border-[rgba(17,39,77,0.08)] bg-[#f0f3f7]">
-          <div className="mx-auto flex min-h-[min(88vh,920px)] w-full max-w-[1320px] flex-col justify-center px-5 py-16 lg:px-10 lg:py-24">
+        {/* Our Work — consulting-style image tiles (between Section 2 and Selected work) */}
+        <section
+          className="w-full border-t border-[rgba(17,39,77,0.08)] bg-[#f8fafc]"
+          aria-labelledby="our-work-heading"
+        >
+          <div className="mx-auto w-full max-w-[1320px] px-5 py-12 lg:px-10 lg:py-16">
+            <span className="eyebrow">Our Work</span>
+            <h2
+              id="our-work-heading"
+              className="section-title mt-5 max-w-4xl text-[var(--color-brand-blue-deep)]"
+            >
+              Work that moves important initiatives forward
+            </h2>
+            <p className="mt-4 max-w-3xl text-base leading-relaxed text-[var(--color-ink-muted)] sm:text-[1.0625rem]">
+              Examples of how ETI supports organizations across healthcare, AI, and enterprise technology
+              initiatives.
+            </p>
+
+            <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-5">
+              {OUR_WORK_TILES.map((tile) => (
+                <Link
+                  key={tile.title}
+                  href={tile.href}
+                  className="group relative aspect-[4/3] overflow-hidden rounded-2xl border border-[rgba(17,39,77,0.1)] shadow-[0_8px_30px_rgba(17,39,77,0.06)] outline-none transition duration-300 ease-out hover:border-[rgba(17,39,77,0.16)] hover:shadow-[0_16px_48px_rgba(17,39,77,0.1)] focus-visible:ring-2 focus-visible:ring-[var(--color-brand-orange)] focus-visible:ring-offset-2 focus-visible:ring-offset-[#f8fafc]"
+                  aria-label={`${tile.title}. ${tile.description}`}
+                >
+                  <Image
+                    src={tile.image}
+                    alt=""
+                    fill
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    className="object-cover transition-[filter] duration-300 ease-out brightness-100 group-hover:brightness-[0.82]"
+                    style={{ objectPosition: tile.objectPosition }}
+                    priority={false}
+                  />
+                  {/* Strong bottom scrim + frosted title bar so white titles read on light/busy photos */}
+                  <div
+                    className="absolute inset-0 bg-[linear-gradient(to_top,rgba(5,10,20,0.97)_0%,rgba(13,27,51,0.92)_16%,rgba(13,27,51,0.72)_34%,rgba(13,27,51,0.38)_55%,rgba(13,27,51,0.12)_78%,transparent_100%)]"
+                    aria-hidden
+                  />
+                  <div
+                    className="absolute inset-0 bg-[#0d1b33]/0 transition-colors duration-300 ease-out group-hover:bg-[#0d1b33]/18"
+                    aria-hidden
+                  />
+                  <div className="relative flex h-full min-h-0 flex-col justify-end p-6">
+                    <div className="w-full max-w-full rounded-xl bg-[#050a14]/68 px-3 py-2.5 shadow-[0_6px_28px_rgba(0,0,0,0.42)] ring-1 ring-white/[0.1] backdrop-blur-md supports-[backdrop-filter]:bg-[#050a14]/52">
+                      <h3 className="font-display text-lg font-semibold leading-snug tracking-[-0.02em] text-white [text-shadow:0_1px_2px_rgba(0,0,0,0.85),0_0_1px_rgba(0,0,0,0.9)] sm:text-xl">
+                        {tile.title}
+                      </h3>
+                    </div>
+                    <div className="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out group-hover:grid-rows-[1fr]">
+                      <div className="min-h-0 max-h-0 overflow-hidden group-hover:max-h-[min(15rem,42vh)] group-hover:overflow-y-auto group-hover:[scrollbar-color:rgba(255,255,255,0.35)_transparent]">
+                        {/* Panel behind description: readable on busy photos without fading the whole image at rest */}
+                        <div className="mt-2.5 rounded-xl border border-white/12 bg-[#0a1629]/92 px-3.5 py-3 shadow-[0_12px_40px_rgba(0,0,0,0.45)] backdrop-blur-md supports-[backdrop-filter]:bg-[#0a1629]/78">
+                          <p className="text-[0.8125rem] leading-relaxed text-white/95 sm:text-sm">
+                            {tile.description}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Selected work — distinct canvas vs section 2; compact */}
+        <section className="w-full border-t border-[rgba(17,39,77,0.08)] bg-[#eef4fa]">
+          <div className="mx-auto w-full max-w-[1320px] px-5 py-12 lg:px-10 lg:py-16">
             <div className="flex items-center gap-3">
               <span className="h-px w-9 shrink-0 bg-[var(--color-brand-orange)]" aria-hidden />
               <span className="text-[0.68rem] font-bold uppercase tracking-[0.22em] text-[var(--color-brand-orange)]">
-                Client trajectories
+                {homeContent.clients?.sectionLabel || 'Selected work'}
               </span>
             </div>
-            <h2 className="section-title mt-6 max-w-[22rem] text-[var(--color-brand-blue-deep)] sm:max-w-xl lg:mt-7 lg:max-w-[36rem]">
-              Business outcomes, not only system deliverables.
+            <h2 className="section-title mt-4 max-w-4xl text-[var(--color-brand-blue-deep)] lg:mt-5 lg:max-w-5xl">
+              {homeContent.clients?.sectionHeadline || 'Technology work tied to business outcomes.'}
             </h2>
             {homeContent.clients?.intro ? (
-              <p className="mt-6 max-w-[42rem] text-[1.0625rem] leading-[1.7] text-[var(--color-ink-muted)]">
+              <p className="mt-4 max-w-[min(100%,68rem)] text-[1.0625rem] leading-[1.65] text-[var(--color-ink-muted)] lg:mt-5">
                 {homeContent.clients.intro}
               </p>
             ) : null}
 
-            <div className="mt-10 grid gap-5 md:grid-cols-3 lg:mt-12 lg:gap-6">
+            <div className="mt-8 grid gap-4 md:grid-cols-3 lg:mt-9 lg:gap-5">
               {featuredClients.map((client) => (
                 <Link
                   key={client.name}
                   href={homeContent.clients?.viewMoreHref || '/clients'}
-                  className="group flex flex-col rounded-[1.25rem] border border-[rgba(17,39,77,0.07)] bg-white p-6 transition hover:border-[rgba(17,39,77,0.12)] lg:rounded-2xl lg:p-7"
+                  className="group flex flex-col rounded-[1.25rem] border border-[rgba(17,39,77,0.07)] bg-white p-5 transition hover:border-[rgba(17,39,77,0.12)] lg:rounded-2xl lg:p-6"
                 >
-                  <p className="text-[0.65rem] font-semibold uppercase tracking-[0.2em] text-[var(--color-brand-orange)]">
+                  <p className="text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-[var(--color-brand-orange)]">
                     {client.name}
                   </p>
-                  <h3 className="mt-4 font-display text-[1.35rem] font-semibold leading-snug tracking-[-0.03em] text-[var(--color-brand-blue-deep)] lg:text-[1.5rem]">
+                  <h3 className="mt-3 font-display text-[1.25rem] font-semibold leading-snug tracking-[-0.03em] text-[var(--color-brand-blue-deep)] lg:text-[1.35rem]">
                     {client.outcome}
                   </h3>
-                  <p className="mt-3 text-sm leading-[1.65] text-[var(--color-ink-muted)]">{client.summary}</p>
+                  <p className="mt-2.5 text-sm leading-[1.6] text-[var(--color-ink-muted)]">{client.summary}</p>
                 </Link>
               ))}
             </div>
 
             <Link
               href={homeContent.clients?.viewMoreHref || '/clients'}
-              className="mt-12 inline-flex items-center gap-2 text-[0.9375rem] font-semibold text-[var(--color-brand-blue-deep)] underline decoration-[rgba(17,39,77,0.2)] underline-offset-[0.2em] transition hover:decoration-[var(--color-brand-orange)] lg:mt-14"
+              className="mt-8 inline-flex items-center gap-2 text-[0.9375rem] font-semibold text-[var(--color-brand-blue-deep)] underline decoration-[rgba(17,39,77,0.2)] underline-offset-[0.2em] transition hover:decoration-[var(--color-brand-orange)] lg:mt-9"
             >
-              {homeContent.clients?.viewMoreText || 'View client work'}
+              {homeContent.clients?.viewMoreText || 'View selected work'}
               <span aria-hidden="true" className="text-[var(--color-brand-orange)]">
                 →
               </span>
             </Link>
 
             {clientTestimonials.length > 0 ? (
-              <div className="mt-8 grid gap-4 lg:mt-10 lg:grid-cols-2 lg:gap-6">
-                {clientTestimonials.slice(0, 2).map((testimonial, index) => (
-                  <blockquote
-                    key={`${testimonial.quote}-${index}`}
-                    className="rounded-[1.25rem] border border-[rgba(17,39,77,0.08)] bg-white/90 p-6 lg:rounded-2xl lg:p-8"
-                  >
-                    <p
-                      className={`font-accent text-[1.35rem] leading-[1.45] text-[var(--color-brand-blue-deep)] sm:text-[1.45rem] lg:text-[1.55rem] ${
-                        index === 0 ? 'italic' : ''
-                      }`}
+              <div className="mt-6 grid gap-4 lg:mt-8 lg:grid-cols-2 lg:gap-5">
+                {clientTestimonials.slice(0, 2).map((testimonial, index) => {
+                  const t = testimonial as { quote?: string; emphasizedPhrase?: string };
+                  const q = t.quote ?? '';
+                  return (
+                    <blockquote
+                      key={`${q}-${index}`}
+                      className="rounded-[1.25rem] border border-[rgba(17,39,77,0.08)] bg-white p-5 lg:rounded-2xl lg:p-6"
                     >
-                      “{testimonial.quote}”
-                    </p>
-                  </blockquote>
-                ))}
+                      <p className="font-accent text-[1.25rem] leading-[1.45] text-[var(--color-brand-blue-deep)] sm:text-[1.35rem] lg:text-[1.45rem]">
+                        {renderQuoteWithEmphasis(q, t.emphasizedPhrase)}
+                      </p>
+                    </blockquote>
+                  );
+                })}
               </div>
             ) : null}
           </div>

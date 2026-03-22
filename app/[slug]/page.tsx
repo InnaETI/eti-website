@@ -225,36 +225,96 @@ function renderCTA(cta: CTAData | undefined) {
   );
 }
 
+function MailIcon() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden className="text-white">
+      <path
+        d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path d="m22 6-10 7L2 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+function PhoneIcon() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden className="text-white">
+      <path
+        d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
 function renderContact(page: PublicPageData, globalEmail?: string, globalPhone?: string) {
   const email = page.contactEmail || globalEmail;
   const phone = page.contactPhone || globalPhone;
+  const telHref = phone ? phone.replace(/[^\d+]/g, '') : '';
 
   return (
-    <section className="mx-auto my-8 w-full max-w-[1240px] px-5 lg:px-8">
-      <div className="grid gap-6 lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)]">
-        <div className="content-card rounded-[2rem] p-6 sm:p-8">
-          <span className="eyebrow">Reach out</span>
-          <h2 className="mt-5 font-display text-3xl font-semibold tracking-[-0.04em] text-[var(--color-brand-blue-deep)]">
-            Start with the current business reality.
+    <section className="mx-auto my-8 w-full max-w-[1320px] px-5 lg:my-10 lg:px-10">
+      <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.02fr)] lg:items-start lg:gap-12">
+        <div className="lg:pt-1">
+          <h2 className="section-title text-[var(--color-brand-blue-deep)]">
+            Let&apos;s start the conversation
           </h2>
+          <p className="mt-5 max-w-xl text-base leading-[1.7] text-[var(--color-ink-muted)] sm:text-[1.0625rem]">
+            {page.intro ||
+              'Tell us what initiative you are planning, where the complexity sits, and how ETI can help.'}
+          </p>
           {page.formNote ? (
-            <p className="mt-4 text-base leading-8 text-[var(--color-ink-muted)]">{page.formNote}</p>
+            <p className="mt-4 max-w-xl text-sm leading-7 text-[var(--color-ink-muted)]">{page.formNote}</p>
           ) : null}
-          <div className="mt-8 space-y-4 rounded-[1.5rem] border border-[var(--color-border)] bg-white/80 p-5">
+
+          <div className="mt-10 space-y-8">
             {email ? (
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--color-ink-muted)]">Email</p>
-                <a href={`mailto:${email}`} className="mt-1 inline-flex text-base font-medium text-[var(--color-brand-blue)]">
-                  {email}
-                </a>
+              <div className="flex gap-4">
+                <div
+                  className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[var(--color-brand-blue)] shadow-[0_8px_24px_rgba(33,79,152,0.25)]"
+                  aria-hidden
+                >
+                  <MailIcon />
+                </div>
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--color-ink-muted)]">
+                    Email
+                  </p>
+                  <a
+                    href={`mailto:${email}`}
+                    className="mt-1 block text-base font-semibold text-[var(--color-brand-blue-deep)] transition hover:text-[var(--color-brand-blue)]"
+                  >
+                    {email}
+                  </a>
+                </div>
               </div>
             ) : null}
             {phone ? (
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--color-ink-muted)]">Phone</p>
-                <a href={`tel:${phone}`} className="mt-1 inline-flex text-base font-medium text-[var(--color-brand-blue)]">
-                  {phone}
-                </a>
+              <div className="flex gap-4">
+                <div
+                  className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[var(--color-brand-blue)] shadow-[0_8px_24px_rgba(33,79,152,0.25)]"
+                  aria-hidden
+                >
+                  <PhoneIcon />
+                </div>
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--color-ink-muted)]">
+                    Phone
+                  </p>
+                  <a
+                    href={telHref ? `tel:${telHref}` : undefined}
+                    className="mt-1 block text-base font-semibold text-[var(--color-brand-blue-deep)] transition hover:text-[var(--color-brand-blue)]"
+                  >
+                    {phone}
+                  </a>
+                </div>
               </div>
             ) : null}
           </div>
@@ -285,19 +345,25 @@ export default async function PublicPage({
       <Header />
       <main>
         <PageHero
-          eyebrow={SITE.legalName}
+          eyebrow={isContact ? 'Contact' : SITE.legalName}
           title={page.title}
-          description={page.subheading || page.intro}
+          description={
+            isContact
+              ? page.subheading || globalContent?.tagline || globalContent?.description
+              : page.subheading || page.intro
+          }
           backgroundImage={page.bannerImage}
         >
-          <div className="content-card rounded-[2rem] p-6 text-[var(--color-ink)]">
-            <p className="mb-2 text-xs font-semibold uppercase tracking-[0.22em] text-[var(--color-brand-blue)]">
-              Page overview
-            </p>
-            <p className="text-sm leading-7 text-[var(--color-ink-muted)]">
-              {page.intro || page.subheading || globalContent?.description}
-            </p>
-          </div>
+          {!isContact ? (
+            <div className="content-card rounded-[2rem] p-6 text-[var(--color-ink)]">
+              <p className="mb-2 text-xs font-semibold uppercase tracking-[0.22em] text-[var(--color-brand-blue)]">
+                Page overview
+              </p>
+              <p className="text-sm leading-7 text-[var(--color-ink-muted)]">
+                {page.intro || page.subheading || globalContent?.description}
+              </p>
+            </div>
+          ) : null}
         </PageHero>
 
         {page.body ? (

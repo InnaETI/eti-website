@@ -20,6 +20,19 @@ Local development runs on [http://eti.localhost:3020](http://eti.localhost:3020)
 
 `eti.localhost` is the preferred local hostname for this app. `localhost:3020` will also work, but use the ETI hostname when you want a stable, recognizable local URL.
 
+### “Site can’t be reached” locally
+
+Nothing will load until **`npm run dev`** is running and listening on **port 3020**. Leave that terminal open.
+
+**Before handing off changes**, verify the dev server responds:
+
+```bash
+chmod +x scripts/check-dev-server.sh   # once
+./scripts/check-dev-server.sh
+```
+
+If it fails, start the app with `npm run dev`, wait until you see “Ready”, then retry. For `eti.localhost`, ensure `/etc/hosts` includes `127.0.0.1 eti.localhost` (or use `http://localhost:3020`).
+
 ## Build and production
 
 ```bash
