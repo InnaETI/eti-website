@@ -1,0 +1,4 @@
+public/images/our-work/*.dmg
+public/images/our-work/*.zip
+.next
+node_modules
