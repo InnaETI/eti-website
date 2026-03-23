@@ -1,4 +1,5 @@
 {
+  "howItWorksBackground": "/images/section-2-how-eti-works-bg.jpg",
   "heroBanner": "/images/background-image-for-eti.png",
   "hero": {
     "eyebrow": "Emerging Technologies, Inc.",
@@ -100,12 +101,6 @@
   "about": {
     "title": "About Emerging Technologies",
     "copy": "Emerging Technologies, Inc. (ETI) consulting services offer a holistic approach to transforming organizations, from fostering user collaboration and Agile practices to implementing DevOps methodologies, ensuring quality assurance, and delivering accurate project estimates. We specialize in aligning project goals with budgets, optimizing resource management, and enhancing team efficiency through proactive project management. Our tailored change management strategies facilitate seamless transitions and maximize adoption. With our comprehensive solutions, we empower businesses to overcome challenges, achieve user-centric development, streamline operations, and achieve successful project outcomes."
-  },
-  "joinTeam": {
-    "title": "Join Our Team",
-    "copy": "Our Team of experts represents the spirit and vision of the company. We are self-motivated, committed and dedicated to limitless growth of our clients. Our resources have determination to succeed and enable our clients to grow and expand their business. We strive to build workforce that is team-oriented, talented, well-rounded, and always ready to go extra mile for our clients. If you share our vision and see technology as a means to mutual success we encourage you to reach and see you and ETI is a great match.",
-    "buttonText": "Join our Team",
-    "href": "/career"
   },
   "sections": [
     {

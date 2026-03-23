@@ -10,6 +10,7 @@ import { getAllPageSlugs, getGlobalContent, getPageContent, type PageContent } f
 import { getPageAliases, resolvePageSlug } from '@/lib/public-pages';
 import { SITE, canonicalUrl } from '@/lib/site';
 import { ContentBlocks, type ContentBlock } from '@/components/ContentBlocks';
+import TeamPage from '@/components/TeamPage';
 
 type ServiceItem = {
   title?: string;
@@ -70,10 +71,22 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
+  const resolved = resolvePageSlug(slug);
   const page = getResolvedPage(slug);
 
   if (!page) {
     return {};
+  }
+
+  if (resolved === 'team') {
+    return {
+      title: page.title || 'Team',
+      description:
+        'ETI brings executive leadership, delivery discipline, and practical technology judgment to complex initiatives.',
+      alternates: {
+        canonical: canonicalUrl(`/${slug}`),
+      },
+    };
   }
 
   return {
@@ -338,48 +351,56 @@ export default async function PublicPage({
   }
 
   const globalContent = getGlobalContent();
-  const isContact = resolvePageSlug(slug) === 'contact-us';
+  const resolved = resolvePageSlug(slug);
+  const isContact = resolved === 'contact-us';
+  const isTeam = resolved === 'team';
 
   return (
     <div className="site-shell">
       <Header />
       <main>
-        <PageHero
-          eyebrow={isContact ? 'Contact' : SITE.legalName}
-          title={page.title}
-          description={
-            isContact
-              ? page.subheading || globalContent?.tagline || globalContent?.description
-              : page.subheading || page.intro
-          }
-          backgroundImage={page.bannerImage}
-        >
-          {!isContact ? (
-            <div className="content-card rounded-[2rem] p-6 text-[var(--color-ink)]">
-              <p className="mb-2 text-xs font-semibold uppercase tracking-[0.22em] text-[var(--color-brand-blue)]">
-                Page overview
-              </p>
-              <p className="text-sm leading-7 text-[var(--color-ink-muted)]">
-                {page.intro || page.subheading || globalContent?.description}
-              </p>
-            </div>
-          ) : null}
-        </PageHero>
+        {isTeam ? (
+          <TeamPage />
+        ) : (
+          <>
+            <PageHero
+              eyebrow={isContact ? 'Contact' : SITE.legalName}
+              title={page.title}
+              description={
+                isContact
+                  ? page.subheading || globalContent?.tagline || globalContent?.description
+                  : page.subheading || page.intro
+              }
+              backgroundImage={page.bannerImage}
+            >
+              {!isContact ? (
+                <div className="content-card rounded-[2rem] p-6 text-[var(--color-ink)]">
+                  <p className="mb-2 text-xs font-semibold uppercase tracking-[0.22em] text-[var(--color-brand-blue)]">
+                    Page overview
+                  </p>
+                  <p className="text-sm leading-7 text-[var(--color-ink-muted)]">
+                    {page.intro || page.subheading || globalContent?.description}
+                  </p>
+                </div>
+              ) : null}
+            </PageHero>
 
-        {page.body ? (
-          <section className="mx-auto mt-8 w-full max-w-[1240px] px-5 lg:px-8">
-            <div className="content-card rounded-[2rem] p-6 sm:p-8">
-              <RichText source={page.body} />
-            </div>
-          </section>
-        ) : null}
+            {page.body ? (
+              <section className="mx-auto mt-8 w-full max-w-[1240px] px-5 lg:px-8">
+                <div className="content-card rounded-[2rem] p-6 sm:p-8">
+                  <RichText source={page.body} />
+                </div>
+              </section>
+            ) : null}
 
-        {renderMission(page.mission, page.secondaryImage)}
-        {renderServices(page.services)}
-        {renderTestimonials(page.testimonials)}
-        {page.sections?.length ? <ContentBlocks blocks={page.sections} /> : null}
-        {isContact ? renderContact(page, globalContent?.contactEmail, globalContent?.contactPhone) : null}
-        {!isContact ? renderCTA(page.cta) : null}
+            {renderMission(page.mission, page.secondaryImage)}
+            {renderServices(page.services)}
+            {renderTestimonials(page.testimonials)}
+            {page.sections?.length ? <ContentBlocks blocks={page.sections} /> : null}
+            {isContact ? renderContact(page, globalContent?.contactEmail, globalContent?.contactPhone) : null}
+            {!isContact ? renderCTA(page.cta) : null}
+          </>
+        )}
       </main>
       <Footer />
     </div>

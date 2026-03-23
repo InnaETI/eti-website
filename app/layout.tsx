@@ -28,9 +28,9 @@ export const metadata: Metadata = {
   description:
     'Emerging Technologies, Inc. helps organizations align strategy, technology, and execution across healthcare, AI, and digital transformation work.',
   icons: {
-    icon: '/wp-content/uploads/2017/08/transparent-300-logo.ico',
-    shortcut: '/wp-content/uploads/2017/08/transparent-300-logo.ico',
-    apple: '/wp-content/uploads/2017/08/transparent-300-logo.ico',
+    icon: '/wp-content/uploads/2017/08/eti__identity__logo_.svg',
+    shortcut: '/wp-content/uploads/2017/08/eti__identity__logo_.svg',
+    apple: '/wp-content/uploads/2017/08/eti__identity__logo_.svg',
   },
 };
 

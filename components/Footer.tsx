@@ -9,7 +9,7 @@ export function Footer() {
     ? globalContent.footerLinks
     : [...NAV_LINKS, { href: '/privacy-policy', label: 'Privacy' }];
   const footerLogoUrl =
-    globalContent?.footerLogoUrl || '/wp-content/uploads/2017/08/logo-transparent-horizontal-80-237-dark.png';
+    globalContent?.footerLogoUrl || '/wp-content/uploads/2017/08/eti__identity__logo_.svg';
   const social = globalContent?.social ?? {};
   const copyrightText =
     globalContent?.copyrightText || `Copyright © ${new Date().getFullYear()} Emerging Technologies, Inc.`;

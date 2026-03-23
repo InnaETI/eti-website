@@ -35,6 +35,7 @@ export function HeaderClient({ navItems, logoUrl, ctaHref }: HeaderClientProps) 
             width={180}
             height={56}
             priority
+            unoptimized={logoUrl.endsWith('.svg')}
             className="h-10 w-auto sm:h-11"
           />
         </Link>
@@ -77,7 +78,7 @@ export function HeaderClient({ navItems, logoUrl, ctaHref }: HeaderClientProps) 
       </div>
 
       {open ? (
-        <div className="border-t border-white/60 bg-[rgba(245,248,252,0.96)] px-5 py-4 shadow-[0_18px_60px_rgba(17,39,77,0.12)] backdrop-blur lg:hidden">
+        <div className="border-t border-white/60 bg-[#f5f8fc] px-5 py-4 shadow-[0_18px_60px_rgba(17,39,77,0.12)] lg:hidden">
           <nav className="flex flex-col gap-2">
             {navItems.map((item) => (
               <Link

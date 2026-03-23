@@ -30,15 +30,9 @@ const nextConfig = {
           },
         ],
       },
-      {
-        source: '/:path*',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 'no-cache, no-store, must-revalidate',
-          },
-        ],
-      },
+      // Do NOT use a catch-all `/:path*` Cache-Control here: it matches `/_next/*` too and
+      // can override the immutable rule (last match wins), forcing re-download of every chunk
+      // and making dev/prod feel “frozen” or extremely slow.
     ];
   },
 };

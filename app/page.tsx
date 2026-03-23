@@ -66,12 +66,8 @@ type HomeData = {
     title?: string;
     copy?: string;
   };
-  joinTeam?: {
-    title?: string;
-    copy?: string;
-    buttonText?: string;
-    href?: string;
-  };
+  /** Optional full-bleed background for section 2 (“How ETI Works”). File under `public/images/`. */
+  howItWorksBackground?: string;
 };
 
 const OUR_WORK_TILES = [
@@ -183,7 +179,7 @@ export default function HomePage() {
   const supplementalSections = homeContent.sections ?? [];
   const services = homeContent.services ?? {};
   const cta = homeContent.cta ?? {};
-  const joinTeam = homeContent.joinTeam ?? {};
+  const howItWorksBg = homeContent.howItWorksBackground?.trim();
   return (
     <div className="site-shell">
       <Header />
@@ -219,7 +215,7 @@ export default function HomePage() {
                 </div>
               </div>
 
-              <div className="rounded-[2rem] border border-white/90 bg-white/95 p-7 shadow-[0_32px_90px_rgba(17,39,77,0.1),0_4px_24px_rgba(17,39,77,0.04)] backdrop-blur-sm lg:p-8">
+              <div className="rounded-[2rem] border border-white/90 bg-white/95 p-7 shadow-[0_32px_90px_rgba(17,39,77,0.1),0_4px_24px_rgba(17,39,77,0.04)] lg:p-8">
                 <HeroBadgeTitle title={hero.badgeTitle || 'Where ETI leads'} />
                 <p className="mt-5 text-[0.9375rem] leading-7 text-[var(--color-ink-muted)]">
                   {hero.badgeBody ||
@@ -240,8 +236,21 @@ export default function HomePage() {
           </div>
         </section>
 
-        <section className="w-full min-h-[min(88vh,920px)] border-t border-[rgba(17,39,77,0.08)] bg-[#f0f3f7]">
-          <div className="mx-auto flex min-h-[min(88vh,920px)] w-full max-w-[1320px] flex-col justify-center px-5 py-16 lg:px-10 lg:py-24">
+        <section className="relative w-full min-h-[min(88vh,920px)] overflow-hidden border-t border-[rgba(17,39,77,0.08)] bg-[#f0f3f7]">
+          {howItWorksBg ? (
+            <>
+              <div
+                className="pointer-events-none absolute inset-0 z-0 bg-cover bg-center bg-no-repeat"
+                style={{ backgroundImage: `url('${howItWorksBg}')` }}
+                aria-hidden
+              />
+              <div
+                className="pointer-events-none absolute inset-0 z-[1] bg-[#f0f3f7]/70"
+                aria-hidden
+              />
+            </>
+          ) : null}
+          <div className="relative z-10 mx-auto flex min-h-[min(88vh,920px)] w-full max-w-[1320px] flex-col justify-center px-5 py-16 lg:px-10 lg:py-24">
             <div className="grid gap-5 lg:grid-cols-12 lg:items-start lg:gap-x-12 lg:gap-y-5">
               <div className="lg:col-span-12">
                 <span className="eyebrow">How ETI Works</span>
@@ -325,30 +334,34 @@ export default function HomePage() {
                     alt=""
                     fill
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                    className="object-cover transition-[filter] duration-300 ease-out brightness-100 group-hover:brightness-[0.82]"
+                    className="object-cover transition-[filter] duration-300 ease-out brightness-[0.82] group-hover:brightness-[0.56]"
                     style={{ objectPosition: tile.objectPosition }}
                     priority={false}
                   />
-                  {/* Strong bottom scrim + frosted title bar so white titles read on light/busy photos */}
                   <div
-                    className="absolute inset-0 bg-[linear-gradient(to_top,rgba(5,10,20,0.97)_0%,rgba(13,27,51,0.92)_16%,rgba(13,27,51,0.72)_34%,rgba(13,27,51,0.38)_55%,rgba(13,27,51,0.12)_78%,transparent_100%)]"
+                    className="absolute inset-0 bg-[#061124]/34 transition-colors duration-300 ease-out group-hover:bg-[#061124]/52"
+                    aria-hidden
+                  />
+                  {/* Darker scrim so headings and hover text stay readable on bright images */}
+                  <div
+                    className="absolute inset-0 bg-[linear-gradient(to_top,rgba(3,8,18,0.98)_0%,rgba(9,22,42,0.95)_18%,rgba(9,22,42,0.78)_36%,rgba(9,22,42,0.5)_58%,rgba(9,22,42,0.2)_80%,rgba(9,22,42,0.08)_100%)]"
                     aria-hidden
                   />
                   <div
-                    className="absolute inset-0 bg-[#0d1b33]/0 transition-colors duration-300 ease-out group-hover:bg-[#0d1b33]/18"
+                    className="absolute inset-0 bg-[#0d1b33]/16 transition-colors duration-300 ease-out group-hover:bg-[#0d1b33]/32"
                     aria-hidden
                   />
                   <div className="relative flex h-full min-h-0 flex-col justify-end p-6">
-                    <div className="w-full max-w-full rounded-xl bg-[#050a14]/68 px-3 py-2.5 shadow-[0_6px_28px_rgba(0,0,0,0.42)] ring-1 ring-white/[0.1] backdrop-blur-md supports-[backdrop-filter]:bg-[#050a14]/52">
-                      <h3 className="font-display text-lg font-semibold leading-snug tracking-[-0.02em] text-white [text-shadow:0_1px_2px_rgba(0,0,0,0.85),0_0_1px_rgba(0,0,0,0.9)] sm:text-xl">
+                    <div className="w-full max-w-full rounded-xl bg-[#030915]/95 px-3.5 py-3 shadow-[0_10px_32px_rgba(0,0,0,0.5)] ring-1 ring-white/[0.16] backdrop-blur-[1px]">
+                      <h3 className="font-display text-lg font-semibold leading-snug tracking-[-0.02em] text-white [text-shadow:0_1px_2px_rgba(0,0,0,0.95),0_0_2px_rgba(0,0,0,0.9)] sm:text-xl">
                         {tile.title}
                       </h3>
                     </div>
                     <div className="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out group-hover:grid-rows-[1fr]">
                       <div className="min-h-0 max-h-0 overflow-hidden group-hover:max-h-[min(15rem,42vh)] group-hover:overflow-y-auto group-hover:[scrollbar-color:rgba(255,255,255,0.35)_transparent]">
-                        {/* Panel behind description: readable on busy photos without fading the whole image at rest */}
-                        <div className="mt-2.5 rounded-xl border border-white/12 bg-[#0a1629]/92 px-3.5 py-3 shadow-[0_12px_40px_rgba(0,0,0,0.45)] backdrop-blur-md supports-[backdrop-filter]:bg-[#0a1629]/78">
-                          <p className="text-[0.8125rem] leading-relaxed text-white/95 sm:text-sm">
+                        {/* Keep hover details on a stable dark panel for readability */}
+                        <div className="mt-2.5 rounded-xl border border-white/18 bg-[#040b17]/98 px-3.5 py-3 shadow-[0_14px_42px_rgba(0,0,0,0.56)]">
+                          <p className="text-[0.8125rem] leading-relaxed text-white [text-shadow:0_1px_1px_rgba(0,0,0,0.85)] sm:text-sm">
                             {tile.description}
                           </p>
                         </div>
@@ -425,21 +438,6 @@ export default function HomePage() {
                 })}
               </div>
             ) : null}
-          </div>
-        </section>
-
-        <section className="mx-auto mt-14 w-full max-w-[1320px] px-5 lg:mt-16 lg:px-10">
-          <div className="content-card rounded-[2rem] p-6 sm:p-8 lg:p-10">
-            <span className="eyebrow">Careers</span>
-            <h2 className="mt-5 font-display text-3xl font-semibold tracking-[-0.04em] text-[var(--color-brand-blue-deep)]">
-              {joinTeam.title || 'Join our team'}
-            </h2>
-            {joinTeam.copy ? (
-              <p className="mt-4 max-w-3xl text-base leading-8 text-[var(--color-ink-muted)]">{joinTeam.copy}</p>
-            ) : null}
-            <SecondaryButton as="link" href={joinTeam.href || '/career'} className="mt-6">
-              {joinTeam.buttonText || 'Explore opportunities'}
-            </SecondaryButton>
           </div>
         </section>
 

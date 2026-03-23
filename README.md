@@ -16,13 +16,13 @@ npm install
 npm run dev
 ```
 
-Local development runs on [http://eti.localhost:3020](http://eti.localhost:3020). Admin: [http://eti.localhost:3020/admin](http://eti.localhost:3020/admin).
+Local development runs on [http://eti.localhost:3010](http://eti.localhost:3010). Admin: [http://eti.localhost:3010/admin](http://eti.localhost:3010/admin).
 
-`eti.localhost` is the preferred local hostname for this app. `localhost:3020` will also work, but use the ETI hostname when you want a stable, recognizable local URL.
+`eti.localhost` is the preferred local hostname for this app. `localhost:3010` will also work, but use the ETI hostname when you want a stable, recognizable local URL.
 
 ### “Site can’t be reached” locally
 
-Nothing will load until **`npm run dev`** is running and listening on **port 3020**. Leave that terminal open.
+Nothing will load until **`npm run dev`** is running and listening on **port 3010**. Leave that terminal open.
 
 **Before handing off changes**, verify the dev server responds:
 
@@ -31,7 +31,43 @@ chmod +x scripts/check-dev-server.sh   # once
 ./scripts/check-dev-server.sh
 ```
 
-If it fails, start the app with `npm run dev`, wait until you see “Ready”, then retry. For `eti.localhost`, ensure `/etc/hosts` includes `127.0.0.1 eti.localhost` (or use `http://localhost:3020`).
+If it fails, start the app with `npm run dev`, wait until you see “Ready”, then retry. For `eti.localhost`, ensure `/etc/hosts` includes `127.0.0.1 eti.localhost` (or use `http://localhost:3010`).
+
+### Dev server “listening” but every request times out
+
+Sometimes `next-server` stays bound to **3010** but stops answering (browser spins forever). **Restart fixes it:**
+
+```bash
+# See what holds the port (macOS / Linux)
+lsof -i :3010
+
+# Stop it (replace PID), then start clean
+kill <PID>          # or: kill -9 <PID> if it won’t exit
+npm run dev
+```
+
+After restart, smoke-check: `/`, `/about-us/`, `/blog/`, etc. should return **200** quickly.
+
+### `@next/swc` version mismatch warning
+
+If startup warns that **`@next/swc` ≠ `next`** (e.g. 15.5.7 vs 15.5.11): **npm publishes `next@15.5.11` with SWC binaries still pinned to 15.5.7** in `optionalDependencies`. That’s upstream packaging, not a broken install. Safe to ignore unless you see real compile errors; upgrading `next` when a newer patch aligns SWC will clear it.
+
+### Runtime error: `Cannot find module './vendor-chunks/...'` (e.g. `mdast-util-to-hast`)
+
+Stale **`.next`** after dependency changes. **Clean and restart:**
+
+```bash
+rm -rf .next
+npm run dev
+```
+
+If it persists:
+
+```bash
+rm -rf .next node_modules
+npm install
+npm run dev
+```
 
 ## Build and production
 
