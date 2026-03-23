@@ -1,6 +1,4 @@
-const PAGE_ALIASES: Record<string, string> = {
-  career: 'careers',
-};
+const PAGE_ALIASES: Record<string, string> = {};
 
 export function resolvePageSlug(slug: string): string {
   return PAGE_ALIASES[slug] ?? slug;

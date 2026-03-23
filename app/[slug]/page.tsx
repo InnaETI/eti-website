@@ -11,6 +11,7 @@ import { getPageAliases, resolvePageSlug } from '@/lib/public-pages';
 import { SITE, canonicalUrl } from '@/lib/site';
 import { ContentBlocks, type ContentBlock } from '@/components/ContentBlocks';
 import TeamPage from '@/components/TeamPage';
+import AboutPage from '@/components/AboutPage';
 
 type ServiceItem = {
   title?: string;
@@ -354,6 +355,7 @@ export default async function PublicPage({
   const resolved = resolvePageSlug(slug);
   const isContact = resolved === 'contact-us';
   const isTeam = resolved === 'team';
+  const isAbout = resolved === 'about-us' || resolved === 'about';
 
   return (
     <div className="site-shell">
@@ -361,6 +363,8 @@ export default async function PublicPage({
       <main>
         {isTeam ? (
           <TeamPage />
+        ) : isAbout ? (
+          <AboutPage page={page} />
         ) : (
           <>
             <PageHero

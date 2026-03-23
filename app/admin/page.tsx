@@ -27,7 +27,7 @@ export default function AdminDashboardPage() {
           className="rounded-lg border border-zinc-200 bg-white p-5 shadow-sm hover:border-zinc-300 hover:shadow transition"
         >
           <h2 className="font-medium text-zinc-900">Pages</h2>
-          <p className="text-sm text-zinc-500 mt-1">About, Services, Team, Careers, Contact, etc.</p>
+          <p className="text-sm text-zinc-500 mt-1">About, Services, Team, Contact, etc.</p>
         </Link>
         <Link
           href="/admin/blog"

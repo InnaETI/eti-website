@@ -4,8 +4,11 @@
   "private": true,
   "scripts": {
     "dev": "next dev --hostname 0.0.0.0 --port 3010",
+    "dev:turbopack": "next dev --turbopack --hostname 0.0.0.0 --port 3010",
+    "dev:clean": "rm -rf .next && npm run dev",
     "build": "next build",
     "start": "next start",
+    "check": "tsc --noEmit && next build",
     "lint": "next lint",
     "postbuild": "next-sitemap",
     "fetch-wordpress": "node scripts/fetch-wordpress.mjs"

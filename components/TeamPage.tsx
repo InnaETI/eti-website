@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import Link from 'next/link';
 
 type Leader = {
   id: string;
@@ -45,38 +44,41 @@ const LEADERS: Leader[] = [
 function TeamMemberRow({
   leader,
   muted = false,
+  animationDelayMs = 0,
 }: {
   leader: Leader;
   muted?: boolean;
+  /** Stagger slide-down animation per row */
+  animationDelayMs?: number;
 }) {
   return (
-    <section className={muted ? 'bg-[#eaf0f5]' : 'bg-white'}>
-      <div className="mx-auto grid max-w-[1160px] gap-8 px-5 py-14 sm:px-8 lg:grid-cols-[280px_minmax(0,1fr)] lg:items-center lg:gap-10 lg:px-10 lg:py-20">
-        <div className="mx-auto w-full max-w-[280px]">
-          <div className="overflow-hidden rounded-[1.25rem] bg-[#d7e0ea] shadow-[0_18px_40px_rgba(17,39,77,0.08)]">
-            <Image
-              src={leader.image}
-              alt={leader.imageAlt}
-              width={560}
-              height={640}
-              className={`h-auto w-full object-cover grayscale ${leader.imageClassName || 'object-center'}`}
-              sizes="(max-width: 1024px) 280px, 320px"
-            />
+    <section className={muted ? 'bg-[#f0f4f8]' : 'bg-white'}>
+      <div className="mx-auto max-w-[1180px] px-5 py-12 sm:px-8 sm:py-16 lg:px-10 lg:py-20">
+        <div className="flex flex-col items-stretch lg:flex-row lg:items-start">
+          <div className="relative z-0 mx-auto w-full max-w-[300px] shrink-0 lg:mx-0 lg:w-[min(100%,320px)] lg:max-w-[320px]">
+            <div className="overflow-hidden bg-[#d7e0ea] shadow-[0_6px_24px_rgba(17,39,77,0.1)]">
+              <Image
+                src={leader.image}
+                alt={leader.imageAlt}
+                width={640}
+                height={800}
+                className={`aspect-[4/5] h-auto w-full object-cover grayscale ${leader.imageClassName || 'object-center'}`}
+                sizes="(max-width: 1024px) 300px, 320px"
+              />
+            </div>
           </div>
-        </div>
 
-        <article className="content-card rounded-[1.5rem] p-6 sm:p-8 lg:p-10">
-          <p className="text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-[var(--color-brand-orange)]">
-            Leadership
-          </p>
-          <h2 className="mt-3 font-display text-[clamp(1.6rem,2.8vw,2.35rem)] font-semibold tracking-[-0.04em] text-[var(--color-brand-blue-deep)]">
-            {leader.name}
-          </h2>
-          <p className="mt-2 text-sm font-semibold uppercase tracking-[0.14em] text-[var(--color-brand-blue)]">
-            {leader.title}
-          </p>
-          <p className="mt-5 max-w-[68ch] text-[0.98rem] leading-8 text-[var(--color-ink-muted)]">{leader.bio}</p>
-        </article>
+          <article
+            className="team-bio-slide-in relative z-10 mt-8 w-full border border-black/[0.04] bg-white p-8 shadow-[0_10px_36px_rgba(17,39,77,0.1)] sm:p-10 lg:mt-[6.25rem] lg:-ml-3 lg:min-w-0 lg:flex-1 lg:self-stretch"
+            style={{ animationDelay: `${animationDelayMs}ms` }}
+          >
+            <h2 className="font-sans text-[clamp(1.15rem,2.2vw,1.5rem)] font-bold uppercase tracking-[0.06em] text-black">
+              {leader.name}
+            </h2>
+            <p className="mt-2 font-sans text-sm font-medium text-[#c9a227] sm:text-base">{leader.title}</p>
+            <p className="mt-6 max-w-[68ch] text-[0.95rem] leading-[1.75] text-[#333333]">{leader.bio}</p>
+          </article>
+        </div>
       </div>
     </section>
   );
@@ -115,16 +117,13 @@ function TeamPage() {
               Leadership and Team
             </p>
             <p className="mt-5 text-[1rem] leading-8 text-[var(--color-ink-muted)]">{INTRO}</p>
-            <Link href="/careers/" className="site-button site-button-primary mt-7">
-              Join Our Team
-            </Link>
           </div>
         </div>
       </section>
 
-      <TeamMemberRow leader={LEADERS[0]} muted />
-      <TeamMemberRow leader={LEADERS[1]} />
-      <TeamMemberRow leader={LEADERS[2]} muted />
+      <TeamMemberRow leader={LEADERS[0]} muted animationDelayMs={0} />
+      <TeamMemberRow leader={LEADERS[1]} animationDelayMs={90} />
+      <TeamMemberRow leader={LEADERS[2]} muted animationDelayMs={180} />
     </>
   );
 }

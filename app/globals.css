@@ -211,6 +211,21 @@
   }
 }
 
+/* Team page: bio panel eases down into place (emergingti.com-style); honors reduced-motion below */
+/* No opacity in keyframes — avoids invisible bios if animation is skipped or glitches */
+@keyframes team-bio-slide-down {
+  from {
+    transform: translateY(-1.35rem);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+.team-bio-slide-in {
+  animation: team-bio-slide-down 0.65s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
