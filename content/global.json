@@ -15,8 +15,7 @@
     { "href": "/services", "label": "Services" },
     { "href": "/clients", "label": "Clients" },
     { "href": "/team", "label": "Team" },
-    { "href": "/blog", "label": "Blog" },
-    { "href": "/contact-us", "label": "Contact Us" }
+    { "href": "/blog", "label": "Blog" }
   ],
   "footerLinks": [
     { "href": "/about-us", "label": "About Us" },

@@ -1,7 +1,5 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { Header } from '@/components/Header';
-import { Footer } from '@/components/Footer';
 import { PrimaryButton, SecondaryButton } from '@/components/Button';
 import { getGlobalContent, getHomeContent, getPageContent } from '@/lib/content';
 import { getLatestPosts } from '@/lib/blog';
@@ -181,11 +179,9 @@ export default function HomePage() {
   const cta = homeContent.cta ?? {};
   const howItWorksBg = homeContent.howItWorksBackground?.trim();
   return (
-    <div className="site-shell">
-      <Header />
-      <main>
-        {/* Hero — matches design mockup: light canvas, mesh right, two-column, floating card */}
-        <section className="relative min-h-[min(88vh,920px)] overflow-hidden bg-[#f4f6f9]">
+    <>
+      {/* Hero — matches design mockup: light canvas, mesh right, two-column, floating card */}
+      <section className="relative min-h-[min(88vh,920px)] overflow-hidden bg-[#f4f6f9]">
           {/* Full-bleed hero background */}
           <div className="pointer-events-none absolute inset-0 z-0 bg-[#f4f6f9]" aria-hidden />
           <div
@@ -206,7 +202,7 @@ export default function HomePage() {
                   {hero.subtitle || globalContent?.description}
                 </p>
                 <div className="mt-9 flex flex-wrap gap-3">
-                  <PrimaryButton as="link" href={hero.primaryHref || '/rfp-wizard'}>
+                  <PrimaryButton as="link" href={hero.primaryHref || '/contact-us'}>
                     {hero.primaryLabel || 'Request a conversation'}
                   </PrimaryButton>
                   <SecondaryButton as="link" href={hero.secondaryHref || '/services'}>
@@ -234,9 +230,9 @@ export default function HomePage() {
               </div>
             </div>
           </div>
-        </section>
+      </section>
 
-        <section className="relative w-full min-h-[min(88vh,920px)] overflow-hidden border-t border-[rgba(17,39,77,0.08)] bg-[#f0f3f7]">
+      <section className="relative w-full min-h-[min(88vh,920px)] overflow-hidden border-t border-[rgba(17,39,77,0.08)] bg-[#f0f3f7]">
           {howItWorksBg ? (
             <>
               <div
@@ -301,13 +297,13 @@ export default function HomePage() {
               })}
             </div>
           </div>
-        </section>
+      </section>
 
         {/* Our Work — consulting-style image tiles (between Section 2 and Selected work) */}
-        <section
-          className="w-full border-t border-[rgba(17,39,77,0.08)] bg-[#f8fafc]"
-          aria-labelledby="our-work-heading"
-        >
+      <section
+        className="w-full border-t border-[rgba(17,39,77,0.08)] bg-[#f8fafc]"
+        aria-labelledby="our-work-heading"
+      >
           <div className="mx-auto w-full max-w-[1320px] px-5 py-12 lg:px-10 lg:py-16">
             <span className="eyebrow">Our Work</span>
             <h2
@@ -372,10 +368,10 @@ export default function HomePage() {
               ))}
             </div>
           </div>
-        </section>
+      </section>
 
         {/* Selected work — distinct canvas vs section 2; compact */}
-        <section className="w-full border-t border-[rgba(17,39,77,0.08)] bg-[#eef4fa]">
+      <section className="w-full border-t border-[rgba(17,39,77,0.08)] bg-[#eef4fa]">
           <div className="mx-auto w-full max-w-[1320px] px-5 py-12 lg:px-10 lg:py-16">
             <div className="flex items-center gap-3">
               <span className="h-px w-9 shrink-0 bg-[var(--color-brand-orange)]" aria-hidden />
@@ -439,11 +435,11 @@ export default function HomePage() {
               </div>
             ) : null}
           </div>
-        </section>
+      </section>
 
-        {supplementalSections.length ? <ContentBlocks blocks={supplementalSections} /> : null}
+      {supplementalSections.length ? <ContentBlocks blocks={supplementalSections} /> : null}
 
-        <section className="mx-auto mt-14 w-full max-w-[1320px] px-5 lg:mt-16 lg:px-10">
+      <section className="mx-auto mt-14 w-full max-w-[1320px] px-5 lg:mt-16 lg:px-10">
           <div className="content-card rounded-[2rem] p-6 sm:p-8 lg:p-10">
             <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
               <div>
@@ -474,9 +470,9 @@ export default function HomePage() {
               ))}
             </div>
           </div>
-        </section>
+      </section>
 
-        <section className="mx-auto mt-14 w-full max-w-[1320px] px-5 pb-6 lg:mt-16 lg:px-10 lg:pb-10">
+      <section className="mx-auto mt-14 w-full max-w-[1320px] px-5 pb-6 lg:mt-16 lg:px-10 lg:pb-10">
           <div className="overflow-hidden rounded-[2rem] bg-[linear-gradient(135deg,#11274d_0%,#1d4e96_42%,#224380_100%)] px-6 py-8 text-white shadow-[0_28px_90px_rgba(17,39,77,0.24)] sm:px-8 sm:py-10">
             <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end">
               <div>
@@ -489,7 +485,7 @@ export default function HomePage() {
                 ) : null}
               </div>
               <div className="flex flex-wrap gap-3">
-                <Link href={cta.href || '/rfp-wizard'} className="site-button site-button-primary">
+                <Link href={cta.href || '/contact-us'} className="site-button site-button-primary">
                   {cta.buttonText || 'Brainstorm with an expert'}
                 </Link>
                 <Link href="/services" className="site-button site-button-secondary !bg-white/10 !text-white !border-white/20 !shadow-none">
@@ -498,9 +494,7 @@ export default function HomePage() {
               </div>
             </div>
           </div>
-        </section>
-      </main>
-      <Footer />
-    </div>
+      </section>
+    </>
   );
 }

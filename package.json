@@ -3,12 +3,15 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "predev": "rm -rf .next-dev",
     "dev": "next dev --hostname 0.0.0.0 --port 3010",
     "dev:turbopack": "next dev --turbopack --hostname 0.0.0.0 --port 3010",
-    "dev:clean": "rm -rf .next && npm run dev",
+    "dev:clean": "rm -rf .next .next-dev && npm run dev",
+    "prebuild": "rm -rf .next",
     "build": "next build",
     "start": "next start",
     "check": "tsc --noEmit && next build",
+    "smoke": "tsc --noEmit && next build",
     "lint": "next lint",
     "postbuild": "next-sitemap",
     "fetch-wordpress": "node scripts/fetch-wordpress.mjs"

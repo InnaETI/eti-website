@@ -16,7 +16,6 @@ const INTERNAL_PATHS = [
   '/blog/',
   '/contact-us/',
   '/privacy-policy/',
-  '/rfp-wizard/',
   '/strategy/',
   '/methodology/',
   '/execution/',

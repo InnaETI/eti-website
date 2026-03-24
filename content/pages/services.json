@@ -1,6 +1,14 @@
 {
   "title": "Our Services",
   "bannerImage": "/wp-content/uploads/2017/08/methodology-2.jpg",
+  "servicesOverview": {
+    "title": "ETI Services Overview",
+    "intro": "ETI provides consulting and delivery services that help organizations modernize, scale, and perform. We work with healthcare organizations, private equity backed businesses, and growth focused companies that need experienced leadership, strong execution, and measurable results.",
+    "columns": [
+      "Our services span technology, operations, product, data, security, AI, and enterprise transformation.",
+      "We can lead a strategy, manage an implementation, build a solution, strengthen operations, or support a business through critical change."
+    ]
+  },
   "intro": "As your business evolves and expands, the demand for both technical and business proficiency becomes increasingly paramount. At ETI, we offer a diverse spectrum of professional services, from technical prowess to business acumen and resources, enabling your organization to navigate the intricate landscape of growth seamlessly. Our services are tailored to cater to your evolving technology needs, ensuring that your systems and IT talent elevate their performance, efficiency, and expertise in lockstep with your ambitions. With ETI as your steadfast partner, you gain access to a reliable and knowledgeable ally, equipped with robust capabilities, to propel your business to the next level of excellence. We bring a wealth of expertise and knowledge to empower our clients on their journey to success.",
   "services": [
     {
@@ -26,10 +34,21 @@
       "items": ["AI BOT Services", "Azure Healthcare BOT Integration", "Skills BOT Development", "AI Document Intelligence", "MLOps (Full ML Model LifeCycle)"]
     }
   ],
+  "valueDeliver": {
+    "title": "Value We Deliver",
+    "items": [
+      "Technology strategy aligned to business priorities",
+      "Stronger execution across critical initiatives",
+      "Modernized systems and operating environments",
+      "Improved operational efficiency and performance",
+      "Better visibility through data and analytics",
+      "Greater readiness for scale, integration, and growth"
+    ]
+  },
   "cta": {
     "title": "Let's Talk about your project",
     "subtitle": "Please inquire how ETI can provide you with the expertise you desire.",
     "buttonText": "Brainstorm with our Experts",
-    "href": "/rfp-wizard"
+    "href": "/contact-us"
   }
 }

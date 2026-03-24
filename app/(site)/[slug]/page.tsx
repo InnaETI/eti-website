@@ -1,8 +1,6 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
-import { Header } from '@/components/Header';
-import { Footer } from '@/components/Footer';
 import { PageHero } from '@/components/PageHero';
 import { ContactForm } from '@/components/ContactForm';
 import { RichText } from '@/components/RichText';
@@ -12,6 +10,8 @@ import { SITE, canonicalUrl } from '@/lib/site';
 import { ContentBlocks, type ContentBlock } from '@/components/ContentBlocks';
 import TeamPage from '@/components/TeamPage';
 import AboutPage from '@/components/AboutPage';
+import { ServicesOverviewSection } from '@/components/ServicesOverviewSection';
+import { ServicesValueDeliverSection } from '@/components/ServicesValueDeliverSection';
 
 type ServiceItem = {
   title?: string;
@@ -42,8 +42,21 @@ type Mission = {
   text?: string;
 };
 
+type ServicesOverview = {
+  title: string;
+  intro: string;
+  columns: string[];
+};
+
+type ValueDeliver = {
+  title: string;
+  items: string[];
+};
+
 type PublicPageData = PageContent & {
   intro?: string;
+  servicesOverview?: ServicesOverview;
+  valueDeliver?: ValueDeliver;
   services?: ServiceItem[];
   testimonials?: Testimonial[];
   cta?: CTAData;
@@ -217,7 +230,10 @@ function renderCTA(cta: CTAData | undefined) {
       <div className="overflow-hidden rounded-[2rem] bg-[linear-gradient(135deg,#11274d_0%,#1d4e96_42%,#224380_100%)] px-6 py-8 text-white shadow-[0_28px_90px_rgba(17,39,77,0.24)] sm:px-8 sm:py-10">
         <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end">
           <div>
-            <span className="eyebrow !text-white/72 before:!bg-white/45">Next step</span>
+            <span className="inline-flex items-center gap-[0.55rem] text-xs font-bold uppercase tracking-[0.24em] text-white">
+              <span className="block h-px w-7 shrink-0 bg-white" aria-hidden />
+              Next step
+            </span>
             <h2 className="mt-5 font-display text-4xl font-semibold tracking-[-0.04em] text-white">
               {cta.title || cta.text}
             </h2>
@@ -228,9 +244,6 @@ function renderCTA(cta: CTAData | undefined) {
           <div className="flex flex-wrap gap-3">
             <a href={cta.href || '/contact-us'} className="site-button site-button-primary">
               {cta.buttonText || 'Start the conversation'}
-            </a>
-            <a href="/contact-us" className="site-button site-button-secondary !border-white/20 !bg-white/10 !text-white !shadow-none">
-              Contact ETI
             </a>
           </div>
         </div>
@@ -356,57 +369,63 @@ export default async function PublicPage({
   const isContact = resolved === 'contact-us';
   const isTeam = resolved === 'team';
   const isAbout = resolved === 'about-us' || resolved === 'about';
+  const isServices = resolved === 'services';
 
-  return (
-    <div className="site-shell">
-      <Header />
-      <main>
-        {isTeam ? (
-          <TeamPage />
-        ) : isAbout ? (
-          <AboutPage page={page} />
-        ) : (
-          <>
-            <PageHero
-              eyebrow={isContact ? 'Contact' : SITE.legalName}
-              title={page.title}
-              description={
-                isContact
-                  ? page.subheading || globalContent?.tagline || globalContent?.description
-                  : page.subheading || page.intro
-              }
-              backgroundImage={page.bannerImage}
-            >
-              {!isContact ? (
-                <div className="content-card rounded-[2rem] p-6 text-[var(--color-ink)]">
-                  <p className="mb-2 text-xs font-semibold uppercase tracking-[0.22em] text-[var(--color-brand-blue)]">
-                    Page overview
-                  </p>
-                  <p className="text-sm leading-7 text-[var(--color-ink-muted)]">
-                    {page.intro || page.subheading || globalContent?.description}
-                  </p>
-                </div>
-              ) : null}
-            </PageHero>
+  return isTeam ? (
+    <TeamPage />
+  ) : isAbout ? (
+    <AboutPage page={page} />
+  ) : (
+    <>
+      <PageHero
+        eyebrow={isContact ? undefined : SITE.legalName}
+        title={page.title}
+        description={
+          isContact
+            ? page.subheading || globalContent?.tagline || globalContent?.description
+            : page.subheading || page.intro
+        }
+        backgroundImage={page.bannerImage}
+        compact={isContact}
+        backgroundSoft={isContact}
+      >
+        {!isContact ? (
+          <div className="content-card rounded-[2rem] p-6 text-[var(--color-ink)]">
+            <p className="mb-2 text-xs font-semibold uppercase tracking-[0.22em] text-[var(--color-brand-blue)]">
+              Page overview
+            </p>
+            <p className="text-sm leading-7 text-[var(--color-ink-muted)]">
+              {page.intro || page.subheading || globalContent?.description}
+            </p>
+          </div>
+        ) : null}
+      </PageHero>
 
-            {page.body ? (
-              <section className="mx-auto mt-8 w-full max-w-[1240px] px-5 lg:px-8">
-                <div className="content-card rounded-[2rem] p-6 sm:p-8">
-                  <RichText source={page.body} />
-                </div>
-              </section>
-            ) : null}
+      {isServices && page.servicesOverview?.columns?.length ? (
+        <ServicesOverviewSection
+          title={page.servicesOverview.title}
+          intro={page.servicesOverview.intro}
+          columns={page.servicesOverview.columns}
+        />
+      ) : null}
 
-            {renderMission(page.mission, page.secondaryImage)}
-            {renderServices(page.services)}
-            {renderTestimonials(page.testimonials)}
-            {page.sections?.length ? <ContentBlocks blocks={page.sections} /> : null}
-            {isContact ? renderContact(page, globalContent?.contactEmail, globalContent?.contactPhone) : null}
-            {!isContact ? renderCTA(page.cta) : null}
-          </>
-        )}
-      </main>
-      <Footer />
-    </div>
+      {page.body ? (
+        <section className="mx-auto mt-8 w-full max-w-[1240px] px-5 lg:px-8">
+          <div className="content-card rounded-[2rem] p-6 sm:p-8">
+            <RichText source={page.body} />
+          </div>
+        </section>
+      ) : null}
+
+      {renderMission(page.mission, page.secondaryImage)}
+      {renderServices(page.services)}
+      {renderTestimonials(page.testimonials)}
+      {page.sections?.length ? <ContentBlocks blocks={page.sections} /> : null}
+      {isContact ? renderContact(page, globalContent?.contactEmail, globalContent?.contactPhone) : null}
+      {isServices && page.valueDeliver?.items?.length ? (
+        <ServicesValueDeliverSection title={page.valueDeliver.title} items={page.valueDeliver.items} />
+      ) : null}
+      {!isContact ? renderCTA(page.cta) : null}
+    </>
   );
 }

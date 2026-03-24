@@ -4,7 +4,6 @@ export const NAV_LINKS = [
   { href: '/clients', label: 'Clients' },
   { href: '/team', label: 'Team' },
   { href: '/blog', label: 'Blog' },
-  { href: '/contact-us', label: 'Contact Us' },
 ] as const;
 
 export type NavLink = (typeof NAV_LINKS)[number];

@@ -75,7 +75,7 @@ export default async function BlogIndexPage({
       </section>
 
       <div className="mt-8 grid gap-6 lg:grid-cols-[minmax(0,1fr)_320px]">
-        <main>
+        <section aria-label="Blog posts">
           <ul className="grid gap-4" aria-label="Blog posts">
             {filteredPosts.map((post) => {
               const dateText = formatDate(post.date);
@@ -113,7 +113,7 @@ export default async function BlogIndexPage({
               No posts match that search.
             </p>
           ) : null}
-        </main>
+        </section>
 
         <aside className="space-y-4" aria-label="Blog sidebar">
           <div className="content-card rounded-[1.75rem] p-5">

@@ -6,7 +6,7 @@
     "title": "Technology decisions that shape performance.",
     "subtitle": "ETI helps leadership teams align business priorities, technology decisions, and execution plans in complex environments.",
     "primaryLabel": "Request a conversation",
-    "primaryHref": "/rfp-wizard",
+    "primaryHref": "/contact-us",
     "secondaryLabel": "Explore capabilities",
     "secondaryHref": "/services",
     "badgeTitle": "Where ETI leads",
@@ -96,7 +96,7 @@
     "title": "Schedule a call with ETI Leader",
     "subtitle": "to discuss your business situation and desired horizons",
     "buttonText": "Brainstorm with an Expert",
-    "href": "/rfp-wizard"
+    "href": "/contact-us"
   },
   "about": {
     "title": "About Emerging Technologies",
