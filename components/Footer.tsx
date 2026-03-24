@@ -2,7 +2,6 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { getGlobalContent } from '@/lib/content';
 import { NAV_LINKS } from '@/lib/nav';
-import { FooterNav } from '@/components/FooterNav';
 
 function FacebookIcon({ className }: { className?: string }) {
   return (
@@ -66,7 +65,20 @@ export function Footer() {
           </div>
 
           <div className="flex flex-col bg-[#141820] px-6 pb-10 pt-12 sm:px-10 lg:pb-12 lg:pt-14">
-            <FooterNav links={footerLinks} />
+            <nav
+              className="flex flex-wrap items-center justify-center gap-x-5 gap-y-3 sm:gap-x-7 md:gap-x-9"
+              aria-label="Footer"
+            >
+              {footerLinks.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className="text-[0.65rem] font-semibold uppercase tracking-[0.14em] text-white transition-colors hover:text-white/85 sm:text-[0.7rem]"
+                >
+                  {item.label}
+                </Link>
+              ))}
+            </nav>
 
             <p className="mx-auto mt-10 max-w-3xl text-center text-[0.625rem] font-semibold uppercase leading-relaxed tracking-[0.18em] text-white/50 sm:text-[0.6875rem]">
               {copyrightText}
