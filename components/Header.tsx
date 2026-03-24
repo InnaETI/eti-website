@@ -1,9 +1,24 @@
+import { headers } from 'next/headers';
 import Image from 'next/image';
 import Link from 'next/link';
 import { getGlobalContent } from '@/lib/content';
 import { NAV_LINKS } from '@/lib/nav';
 
-export function Header() {
+function normalizePath(path: string) {
+  const normalized = path.replace(/\/$/, '') || '/';
+  return normalized;
+}
+
+function isActiveLink(pathname: string, href: string) {
+  const current = normalizePath(pathname);
+  const target = normalizePath(href);
+
+  if (target === '/') return current === '/';
+  return current === target || current.startsWith(`${target}/`);
+}
+
+export async function Header() {
+  const currentPath = (await headers()).get('x-current-path') || '';
   const globalContent = getGlobalContent();
   const navItems = globalContent?.nav?.length ? globalContent.nav : [...NAV_LINKS];
   const logoUrl = globalContent?.logoUrl || '/wp-content/uploads/2017/08/eti__identity__logo_.svg';
@@ -25,15 +40,23 @@ export function Header() {
         </Link>
 
         <nav className="hidden items-center gap-8 lg:flex">
-          {navItems.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className="border-b-2 border-transparent px-0 py-2 text-[0.94rem] font-semibold text-[var(--color-ink-muted)] transition hover:border-[rgba(17,39,77,0.12)] hover:text-[var(--color-brand-blue-deep)]"
-            >
-              {item.label}
-            </Link>
-          ))}
+          {navItems.map((item) => {
+            const active = isActiveLink(currentPath, item.href);
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                aria-current={active ? 'page' : undefined}
+                className={`border-b-2 px-0 py-2 text-[0.94rem] font-semibold transition ${
+                  active
+                    ? 'border-[var(--color-brand-orange)] text-[var(--color-brand-blue-deep)]'
+                    : 'border-transparent text-[var(--color-ink-muted)] hover:border-[rgba(17,39,77,0.12)] hover:text-[var(--color-brand-blue-deep)]'
+                }`}
+              >
+                {item.label}
+              </Link>
+            );
+          })}
         </nav>
 
         <div className="hidden lg:block">
@@ -53,15 +76,23 @@ export function Header() {
 
           <div className="absolute right-0 top-[calc(100%+0.75rem)] z-50 w-[min(20rem,calc(100vw-2.5rem))] rounded-[1.5rem] border border-white/60 bg-[#f5f8fc] p-4 shadow-[0_18px_60px_rgba(17,39,77,0.12)]">
             <nav className="flex flex-col gap-2">
-              {navItems.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className="rounded-2xl px-4 py-3 text-sm font-semibold text-[var(--color-ink)] transition hover:bg-white"
-                >
-                  {item.label}
-                </Link>
-              ))}
+              {navItems.map((item) => {
+                const active = isActiveLink(currentPath, item.href);
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    aria-current={active ? 'page' : undefined}
+                    className={`rounded-2xl px-4 py-3 text-sm font-semibold transition ${
+                      active
+                        ? 'bg-white text-[var(--color-brand-blue-deep)]'
+                        : 'text-[var(--color-ink)] hover:bg-white'
+                    }`}
+                  >
+                    {item.label}
+                  </Link>
+                );
+              })}
               <Link href={ctaHref} className="site-button site-button-primary mt-2 justify-center">
                 Contact Us
               </Link>

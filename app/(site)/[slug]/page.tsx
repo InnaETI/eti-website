@@ -10,6 +10,7 @@ import { SITE, canonicalUrl } from '@/lib/site';
 import { ContentBlocks, type ContentBlock } from '@/components/ContentBlocks';
 import TeamPage from '@/components/TeamPage';
 import AboutPage from '@/components/AboutPage';
+import ClientsPage from '@/components/ClientsPage';
 import { ServicesOverviewSection } from '@/components/ServicesOverviewSection';
 import { ServicesValueDeliverSection } from '@/components/ServicesValueDeliverSection';
 
@@ -369,12 +370,15 @@ export default async function PublicPage({
   const isContact = resolved === 'contact-us';
   const isTeam = resolved === 'team';
   const isAbout = resolved === 'about-us' || resolved === 'about';
+  const isClients = resolved === 'clients';
   const isServices = resolved === 'services';
 
   return isTeam ? (
     <TeamPage />
   ) : isAbout ? (
     <AboutPage page={page} />
+  ) : isClients ? (
+    <ClientsPage page={page} />
   ) : (
     <>
       <PageHero
