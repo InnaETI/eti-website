@@ -11,6 +11,7 @@ import { ContentBlocks, type ContentBlock } from '@/components/ContentBlocks';
 import TeamPage from '@/components/TeamPage';
 import AboutPage from '@/components/AboutPage';
 import ClientsPage from '@/components/ClientsPage';
+import ClientsLabPage from '@/components/ClientsLabPage';
 import { ServicesOverviewSection } from '@/components/ServicesOverviewSection';
 import { ServicesValueDeliverSection } from '@/components/ServicesValueDeliverSection';
 
@@ -371,6 +372,7 @@ export default async function PublicPage({
   const isTeam = resolved === 'team';
   const isAbout = resolved === 'about-us' || resolved === 'about';
   const isClients = resolved === 'clients';
+  const isClientsLab = resolved === 'clients-lab';
   const isServices = resolved === 'services';
 
   return isTeam ? (
@@ -378,7 +380,9 @@ export default async function PublicPage({
   ) : isAbout ? (
     <AboutPage page={page} />
   ) : isClients ? (
-    <ClientsPage page={page} />
+    <ClientsLabPage page={page} />
+  ) : isClientsLab ? (
+    <ClientsLabPage page={page} />
   ) : (
     <>
       <PageHero
