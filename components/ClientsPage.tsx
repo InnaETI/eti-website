@@ -8,6 +8,8 @@ type ClientStory = {
   logoAlt: string;
   href?: string;
   sector: string;
+  logoCaptionTitle?: string;
+  logoCaptionText?: string;
   summary: string;
   impact?: string[];
   role: string[];
@@ -35,6 +37,9 @@ const featuredStories: ClientStory[] = [
     logoAlt: 'Integrated Surgical Solutions logo',
     href: 'https://www.ipg.com/',
     sector: 'Surgical cost management solutions',
+    logoCaptionTitle: 'Growth & Acquisition',
+    logoCaptionText:
+      'From $11M to $375M+ acquisition through modernized technology and strategic execution',
     summary:
       "IPG stands as a leading provider of Surgical Cost Management solutions. Founded in 2007 by private investors, the company grew from roughly $11 million in revenue in 2008 to about $100 million by 2020. ETI supported that trajectory through ongoing technology innovation, process streamlining, stronger communication, and deeper health plan integration.",
     impact: [
@@ -71,6 +76,9 @@ const featuredStories: ClientStory[] = [
     logo: '/wp-content/uploads/2017/11/Oak20Street20Health20-202445015771.jpg',
     logoAlt: 'Oak Street Health logo',
     sector: 'Primary care for Medicare patients with complex conditions',
+    logoCaptionTitle: 'Scale & Public Success',
+    logoCaptionText:
+      'Public healthcare leader scaled from 17 to 150+ clinics, acquired for $10.6B',
     summary:
       'Oak Street Health is a multi-payor primary care provider built around full-risk Medicare contracting. ETI partnered with its Sales and Outreach teams to build and modernize custom systems that improved how the business supported existing patients and generated new prospects.',
     impact: [
@@ -144,12 +152,6 @@ const supportingStories: ClientStory[] = [
   },
 ];
 
-const trustPoints = [
-  'Healthcare, reimbursement, surgery, fitness, and construction platforms',
-  'Strategy, modernization, integration, and delivery execution',
-  'Relationships built around real systems, measurable results, and operating pace',
-];
-
 const testimonialDetails = [
   {
     quote:
@@ -191,22 +193,6 @@ function StoryTags({ technologies }: { technologies?: string[] }) {
   );
 }
 
-function StoryLink({ href }: { href?: string }) {
-  if (!href) return null;
-
-  return (
-    <a
-      href={href}
-      target="_blank"
-      rel="noreferrer"
-      className="inline-flex items-center gap-2 text-sm font-semibold text-[var(--color-brand-blue)] transition hover:text-[var(--color-brand-blue-deep)]"
-    >
-      Visit client site
-      <span aria-hidden>↗</span>
-    </a>
-  );
-}
-
 export default function ClientsPage({ page }: ClientsPageProps) {
   const intro =
     page.intro ||
@@ -224,7 +210,7 @@ export default function ClientsPage({ page }: ClientsPageProps) {
               'radial-gradient(circle at 18% 18%, rgba(255,255,255,0.16), transparent 26%), radial-gradient(circle at 84% 12%, rgba(229,141,73,0.14), transparent 24%), linear-gradient(115deg, rgba(255,255,255,0.06), transparent 38%), repeating-linear-gradient(160deg, rgba(255,255,255,0.05) 0px, rgba(255,255,255,0.05) 1px, transparent 1px, transparent 22px)',
           }}
         />
-        <div className="mx-auto grid w-full max-w-[1320px] gap-10 px-5 py-16 lg:grid-cols-[minmax(0,1fr)_360px] lg:px-10 lg:py-20">
+        <div className="mx-auto w-full max-w-[1320px] px-5 py-16 lg:px-10 lg:py-20">
           <div className="relative z-10 max-w-4xl">
             <span className="eyebrow text-white before:bg-white/45">Selected Work</span>
             <h1 className="mt-6 max-w-4xl font-display text-4xl font-semibold leading-[1.02] tracking-[-0.04em] text-white sm:text-5xl lg:text-[4.6rem]">
@@ -232,54 +218,6 @@ export default function ClientsPage({ page }: ClientsPageProps) {
             </h1>
             <p className="mt-6 max-w-3xl text-lg leading-8 text-white/82">
               {intro}
-            </p>
-            <div className="mt-8 grid gap-3 sm:grid-cols-3">
-              {trustPoints.map((point) => (
-                <div
-                  key={point}
-                  className="rounded-[1.4rem] border border-white/14 bg-white/8 px-4 py-4 text-sm leading-6 text-white/84 backdrop-blur-[2px]"
-                >
-                  {point}
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <aside className="relative z-10 self-end rounded-[2rem] border border-white/15 bg-white/10 p-6 shadow-[0_22px_70px_rgba(10,20,40,0.2)] backdrop-blur-[8px]">
-            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-white/78">Where ETI fits</p>
-            <div className="mt-5 space-y-4">
-              <div className="rounded-[1.25rem] border border-white/10 bg-white/10 px-4 py-4">
-                <p className="text-[0.72rem] font-semibold uppercase tracking-[0.16em] text-white/62">Featured case studies</p>
-                <p className="mt-2 text-3xl font-semibold tracking-[-0.04em] text-white">2</p>
-              </div>
-              <div className="rounded-[1.25rem] border border-white/10 bg-white/10 px-4 py-4">
-                <p className="text-[0.72rem] font-semibold uppercase tracking-[0.16em] text-white/62">Additional client stories</p>
-                <p className="mt-2 text-3xl font-semibold tracking-[-0.04em] text-white">4</p>
-              </div>
-              <div className="rounded-[1.25rem] border border-white/10 bg-white/10 px-4 py-4">
-                <p className="text-[0.72rem] font-semibold uppercase tracking-[0.16em] text-white/62">What the page shows</p>
-                <p className="mt-2 text-sm leading-7 text-white/80">
-                  Real client names, the work delivered, supporting technologies, and the outcomes that mattered.
-                </p>
-              </div>
-            </div>
-          </aside>
-        </div>
-      </section>
-
-      <section className="mx-auto mt-12 w-full max-w-[1320px] px-5 lg:px-10">
-        <div className="grid gap-8 lg:grid-cols-[minmax(0,0.88fr)_minmax(0,1.12fr)] lg:items-start">
-          <div className="content-card rounded-[2rem] p-7 sm:p-9">
-            <span className="eyebrow">Client relationships</span>
-            <h2 className="mt-5 font-display text-3xl font-semibold tracking-[-0.04em] text-[var(--color-brand-blue-deep)] lg:text-[2.75rem]">
-              Partnerships built around difficult work and real business stakes.
-            </h2>
-          </div>
-          <div className="rounded-[2rem] border border-[var(--color-border)] bg-white/82 px-7 py-8 shadow-[var(--shadow-soft)] sm:px-9">
-            <p className="text-base leading-8 text-[var(--color-ink-muted)] sm:text-[1.05rem]">
-              ETI works where leadership teams need more than technical advice. The work often sits at the intersection of
-              modernization, operations, growth, and execution discipline. Across these client stories, the pattern is
-              consistent: ETI helps turn ambiguity into systems, programs, and delivery that move the business forward.
             </p>
           </div>
         </div>
@@ -289,9 +227,6 @@ export default function ClientsPage({ page }: ClientsPageProps) {
         <div className="flex items-end justify-between gap-6">
           <div>
             <span className="eyebrow">Featured client stories</span>
-            <h2 className="mt-5 font-display text-3xl font-semibold tracking-[-0.04em] text-[var(--color-brand-blue-deep)] lg:text-[3rem]">
-              Two engagements where ETI’s role is easiest to see.
-            </h2>
           </div>
         </div>
 
@@ -299,22 +234,38 @@ export default function ClientsPage({ page }: ClientsPageProps) {
           {featuredStories.map((story, index) => (
             <article
               key={story.name}
-              className="content-card overflow-hidden rounded-[2.2rem] border border-white/80 p-0"
+              className="border-b border-[var(--color-border)] py-8 last:border-b-0 lg:py-10"
             >
-              <div className="grid gap-0 lg:grid-cols-[320px_minmax(0,1fr)]">
-                <div className="flex items-center justify-center border-b border-[var(--color-border)] bg-[linear-gradient(180deg,#fbfdff_0%,#edf3fa_100%)] px-8 py-10 lg:min-h-[100%] lg:border-b-0 lg:border-r">
-                  <div className="flex w-full max-w-[210px] items-center justify-center rounded-[1.8rem] bg-white px-6 py-8 shadow-[0_18px_50px_rgba(17,39,77,0.08)]">
-                    <Image
-                      src={story.logo}
-                      alt={story.logoAlt}
-                      width={260}
-                      height={180}
-                      className={`h-auto w-full object-contain ${index === 0 ? 'max-w-[170px]' : 'max-w-[190px]'}`}
-                    />
+              <div className="grid gap-8 lg:grid-cols-[340px_minmax(0,1fr)] lg:items-start">
+                <div className="flex items-center justify-center px-3 py-4 lg:px-2 lg:py-2">
+                  <div className="w-full bg-transparent">
+                    <div className="flex items-center justify-center">
+                      <Image
+                        src={story.logo}
+                        alt={story.logoAlt}
+                        width={320}
+                        height={220}
+                        className={`h-auto w-full object-contain ${index === 0 ? 'max-w-[250px]' : 'max-w-[292px]'}`}
+                      />
+                    </div>
+                    {story.logoCaptionTitle || story.logoCaptionText ? (
+                      <div className="mx-auto mt-6 max-w-[300px] text-center">
+                        {story.logoCaptionTitle ? (
+                          <p className="text-[0.82rem] font-semibold uppercase tracking-[0.12em] text-[var(--color-brand-blue-deep)]">
+                            <strong>{story.logoCaptionTitle}</strong>
+                          </p>
+                        ) : null}
+                        {story.logoCaptionText ? (
+                          <p className="mt-2 text-sm leading-6 text-[var(--color-ink-muted)]">
+                            {story.logoCaptionText}
+                          </p>
+                        ) : null}
+                      </div>
+                    ) : null}
                   </div>
                 </div>
 
-                <div className="px-7 py-8 sm:px-9 sm:py-9">
+                <div className="px-0 py-2 sm:px-0 sm:py-4">
                   <div className="flex flex-wrap items-start justify-between gap-4">
                     <div className="max-w-3xl">
                       <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--color-brand-orange)]">
@@ -324,7 +275,6 @@ export default function ClientsPage({ page }: ClientsPageProps) {
                         {story.name}
                       </h3>
                     </div>
-                    <StoryLink href={story.href} />
                   </div>
 
                   <p className="mt-5 max-w-4xl text-base leading-8 text-[var(--color-ink-muted)]">{story.summary}</p>
@@ -371,29 +321,29 @@ export default function ClientsPage({ page }: ClientsPageProps) {
         <div className="flex items-end justify-between gap-6">
           <div>
             <span className="eyebrow">Additional client stories</span>
-            <h2 className="mt-5 font-display text-3xl font-semibold tracking-[-0.04em] text-[var(--color-brand-blue-deep)] lg:text-[2.7rem]">
+            <h2 className="mt-5 font-display text-[2.2rem] font-semibold tracking-[-0.04em] text-[var(--color-brand-blue-deep)] lg:whitespace-nowrap lg:text-[2.45rem]">
               Supporting work across adjacent industries and operating models.
             </h2>
           </div>
         </div>
 
-        <div className="mt-8 grid gap-5 lg:grid-cols-2 xl:grid-cols-4">
+        <div className="mt-8 grid gap-x-10 gap-y-12 lg:grid-cols-2">
           {supportingStories.map((story) => (
-            <article key={story.name} className="content-card flex h-full flex-col rounded-[1.9rem] p-6">
-              <div className="flex h-[120px] items-center justify-center rounded-[1.4rem] border border-[var(--color-border)] bg-white">
+            <article key={story.name} className="flex h-full flex-col border-b border-[var(--color-border)] pb-10 last:border-b-0 lg:pb-12">
+              <div className="flex h-[164px] items-center justify-center">
                 <Image
                   src={story.logo}
                   alt={story.logoAlt}
-                  width={180}
-                  height={120}
+                  width={280}
+                  height={180}
                   className={`h-auto w-auto object-contain ${
                     story.name === 'Healthcare Payment Specialists'
-                      ? 'max-h-[68px] max-w-[150px]'
+                      ? 'max-h-[118px] max-w-[205px]'
                       : story.name === 'StratusVue'
-                        ? 'max-h-[70px] max-w-[138px]'
+                        ? 'max-h-[118px] max-w-[212px]'
                         : story.name === 'Trainerly'
-                          ? 'max-h-[70px] max-w-[124px]'
-                          : 'max-h-[82px] max-w-[138px]'
+                          ? 'max-h-[116px] max-w-[210px]'
+                          : 'max-h-[118px] max-w-[212px]'
                   }`}
                 />
               </div>
@@ -416,9 +366,6 @@ export default function ClientsPage({ page }: ClientsPageProps) {
               </div>
               <div className="mt-auto pt-6">
                 <StoryTags technologies={story.technologies} />
-                <div className="mt-5">
-                  <StoryLink href={story.href} />
-                </div>
               </div>
             </article>
           ))}

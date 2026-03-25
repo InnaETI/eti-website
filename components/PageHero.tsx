@@ -6,6 +6,7 @@ type PageHeroProps = {
   description?: string;
   backgroundImage?: string;
   compact?: boolean;
+  thin?: boolean;
   backgroundSoft?: boolean;
   children?: ReactNode;
 };
@@ -16,6 +17,7 @@ export function PageHero({
   description,
   backgroundImage,
   compact = false,
+  thin = false,
   backgroundSoft = false,
   children,
 }: PageHeroProps) {
@@ -39,7 +41,9 @@ export function PageHero({
       >
         <div
           className={`mx-auto grid w-full max-w-[1240px] items-end gap-10 px-5 lg:grid-cols-[minmax(0,1fr)_320px] lg:px-8 ${
-            compact
+            thin
+              ? 'min-h-[220px] py-10 lg:py-12'
+              : compact
               ? 'min-h-[380px] py-16 lg:py-20'
               : 'min-h-[420px] py-20 lg:py-24'
           }`}

@@ -391,9 +391,10 @@ export default async function PublicPage({
         }
         backgroundImage={page.bannerImage}
         compact={isContact}
+        thin={isServices}
         backgroundSoft={isContact}
       >
-        {!isContact ? (
+        {!isContact && !isServices ? (
           <div className="content-card rounded-[2rem] p-6 text-[var(--color-ink)]">
             <p className="mb-2 text-xs font-semibold uppercase tracking-[0.22em] text-[var(--color-brand-blue)]">
               Page overview

@@ -25,7 +25,7 @@ export function Footer() {
     ? globalContent.footerLinks
     : [...NAV_LINKS, { href: '/privacy-policy', label: 'Privacy' }];
   const footerLogoUrl =
-    globalContent?.footerLogoUrl || '/wp-content/uploads/2017/08/eti__identity__logo_.svg';
+    globalContent?.footerLogoUrl || '/wp-content/uploads/2017/08/logo-transparent-horizontal-80-237-dark.png';
   const social = globalContent?.social ?? {};
   const copyrightText =
     globalContent?.copyrightText ||
@@ -33,80 +33,66 @@ export function Footer() {
 
   return (
     <footer className="mt-auto text-white">
-      <div className="relative mx-auto max-w-[1320px]">
-        <div
-          className="pointer-events-none absolute left-1/2 top-0 z-20 hidden h-0 -translate-x-1/2 lg:left-[33.333333%] lg:block lg:translate-x-0"
-          aria-hidden
-        >
-          <div className="absolute left-0 top-0 h-0 w-0 -translate-x-[70%] -translate-y-full border-x-[26px] border-b-[30px] border-x-transparent border-b-[var(--color-brand-blue)]" />
-          <div className="absolute left-0 top-0 h-0 w-0 translate-x-[5%] -translate-y-full border-x-[16px] border-b-[22px] border-x-transparent border-b-[var(--color-brand-orange)]" />
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)]">
-          <div className="flex flex-col items-center justify-center bg-[var(--color-brand-blue)] px-8 py-14 lg:py-16">
-            <Link href="/" className="flex flex-col items-center gap-5 sm:flex-row sm:items-center sm:gap-8">
+      <div className="w-full">
+        <div className="grid grid-cols-1 lg:grid-cols-[35%_65%]">
+          <div className="flex min-h-[112px] items-center justify-center bg-[var(--color-brand-blue)] px-8 py-6 lg:px-10 lg:py-5">
+            <Link href="/" className="flex items-center justify-center">
               <Image
                 src={footerLogoUrl}
                 alt={globalContent?.shortName || 'ETI'}
-                width={200}
-                height={60}
-                className="h-12 w-auto brightness-0 invert sm:h-14"
-                unoptimized={footerLogoUrl.endsWith('.svg')}
+                width={237}
+                height={80}
+                className="h-auto w-[158px] sm:w-[176px] lg:w-[192px]"
+                priority={false}
               />
-              <div className="text-center sm:text-left">
-                <span className="block text-[0.625rem] font-bold uppercase leading-snug tracking-[0.28em] text-white sm:text-[0.6875rem]">
-                  Emerging
-                </span>
-                <span className="block text-[0.625rem] font-bold uppercase leading-snug tracking-[0.28em] text-white sm:text-[0.6875rem]">
-                  Technologies
-                </span>
-              </div>
             </Link>
           </div>
 
-          <div className="flex flex-col bg-[#141820] px-6 pb-10 pt-12 sm:px-10 lg:pb-12 lg:pt-14">
+          <div className="flex min-h-[112px] flex-col justify-center bg-[#2a2a2a] px-6 py-5 sm:px-10 lg:px-12">
             <nav
-              className="flex flex-wrap items-center justify-center gap-x-5 gap-y-3 sm:gap-x-7 md:gap-x-9"
+              className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 lg:justify-start"
               aria-label="Footer"
             >
               {footerLinks.map((item) => (
                 <Link
                   key={item.href}
                   href={item.href}
-                  className="text-[0.65rem] font-semibold uppercase tracking-[0.14em] text-white transition-colors hover:text-white/85 sm:text-[0.7rem]"
+                  className="text-[0.64rem] font-semibold uppercase tracking-[0.12em] text-white transition-colors hover:text-[#f0a165]"
                 >
                   {item.label}
                 </Link>
               ))}
             </nav>
 
-            <p className="mx-auto mt-10 max-w-3xl text-center text-[0.625rem] font-semibold uppercase leading-relaxed tracking-[0.18em] text-white/50 sm:text-[0.6875rem]">
-              {copyrightText}
-            </p>
+            <div className="mt-4 flex flex-col items-center lg:items-start">
+              <p className="text-center text-[0.6rem] font-medium uppercase leading-relaxed tracking-[0.08em] text-white/48 lg:text-left">
+                {copyrightText}
+              </p>
 
-            <div className="mt-8 flex justify-end gap-5 text-white/50">
-              {social.facebook ? (
-                <a
-                  href={social.facebook}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="transition hover:text-white/80"
-                  aria-label="Facebook"
-                >
-                  <FacebookIcon className="h-[18px] w-[18px]" />
-                </a>
-              ) : null}
-              {social.linkedin ? (
-                <a
-                  href={social.linkedin}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="transition hover:text-white/80"
-                  aria-label="LinkedIn"
-                >
-                  <LinkedInIcon className="h-[18px] w-[18px]" />
-                </a>
-              ) : null}
+              <div className="mt-3 flex items-center gap-4 text-white/48">
+                {social.facebook ? (
+                  <a
+                    href={social.facebook}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="transition hover:text-white/82"
+                    aria-label="Facebook"
+                  >
+                    <FacebookIcon className="h-[14px] w-[14px]" />
+                  </a>
+                ) : null}
+                {social.linkedin ? (
+                  <a
+                    href={social.linkedin}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="transition hover:text-white/82"
+                    aria-label="LinkedIn"
+                  >
+                    <LinkedInIcon className="h-[14px] w-[14px]" />
+                  </a>
+                ) : null}
+              </div>
             </div>
           </div>
         </div>
