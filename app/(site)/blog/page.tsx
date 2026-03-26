@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import { getAllPosts } from '@/lib/blog';
 
@@ -12,6 +13,16 @@ function formatDate(value: string): string {
     month: 'long',
     day: 'numeric',
   });
+}
+
+function isContainedThumbnail(image: string | undefined): boolean {
+  if (!image) return false;
+  const normalized = image.toLowerCase();
+  return (
+    normalized.endsWith('.svg') ||
+    normalized.includes('logo') ||
+    normalized.includes('identity')
+  );
 }
 
 export default async function BlogIndexPage({
@@ -80,28 +91,57 @@ export default async function BlogIndexPage({
             {filteredPosts.map((post) => {
               const dateText = formatDate(post.date);
               const meta = [dateText, post.author].filter(Boolean).join(' • ');
+              const useContain = isContainedThumbnail(post.image);
               return (
                 <li key={post.slug}>
                   <Link
                     href={`/blog/${post.slug}`}
                     className="content-card block rounded-[1.75rem] p-6 transition hover:-translate-y-1 hover:border-[var(--color-brand-blue)]"
                   >
-                    {meta ? (
-                      <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--color-brand-orange)]">
-                        {meta}
-                      </p>
-                    ) : null}
-                    <h2 className="mt-4 font-display text-3xl font-semibold tracking-[-0.04em] text-[var(--color-brand-blue-deep)]">
-                      {post.title || post.slug}
-                    </h2>
-                    {post.excerpt ? (
-                      <p className="mt-4 max-w-3xl text-base leading-8 text-[var(--color-ink-muted)]">
-                        {post.excerpt}
-                      </p>
-                    ) : null}
-                    <span className="mt-6 inline-flex text-sm font-semibold uppercase tracking-[0.18em] text-[var(--color-brand-blue)]">
-                      Read article
-                    </span>
+                    <div
+                      className={
+                        post.image
+                          ? 'grid gap-5 sm:grid-cols-[128px_minmax(0,1fr)] sm:items-start sm:gap-6'
+                          : undefined
+                      }
+                    >
+                      {post.image ? (
+                        <div
+                          className={`relative h-[92px] w-[128px] overflow-hidden rounded-[1.35rem] border border-[var(--color-border)] ${
+                            useContain
+                              ? 'bg-[linear-gradient(180deg,#f8fbff_0%,#eef3f8_100%)]'
+                              : 'bg-[#eef3f8]'
+                          }`}
+                        >
+                          <Image
+                            src={post.image}
+                            alt=""
+                            fill
+                            sizes="128px"
+                            unoptimized
+                            className={useContain ? 'object-contain p-4' : 'object-cover'}
+                          />
+                        </div>
+                      ) : null}
+                      <div className="min-w-0">
+                        {meta ? (
+                          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--color-brand-orange)]">
+                            {meta}
+                          </p>
+                        ) : null}
+                        <h2 className="mt-4 font-display text-3xl font-semibold tracking-[-0.04em] text-[var(--color-brand-blue-deep)]">
+                          {post.title || post.slug}
+                        </h2>
+                        {post.excerpt ? (
+                          <p className="mt-4 max-w-3xl text-base leading-8 text-[var(--color-ink-muted)]">
+                            {post.excerpt}
+                          </p>
+                        ) : null}
+                        <span className="mt-6 inline-flex text-sm font-semibold uppercase tracking-[0.18em] text-[var(--color-brand-blue)]">
+                          Read article
+                        </span>
+                      </div>
+                    </div>
                   </Link>
                 </li>
               );
