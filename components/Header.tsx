@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { headers } from 'next/headers';
 import { getGlobalContent } from '@/lib/content';
 import { NAV_LINKS } from '@/lib/nav';
+import { HeaderNav } from '@/components/HeaderNav';
 
 type NavItem = {
   href: string;
@@ -13,51 +14,12 @@ function normalizePath(path: string) {
   return path.replace(/\/$/, '') || '/';
 }
 
-function isActiveLink(pathname: string, href: string) {
-  const current = normalizePath(pathname);
-  const target = normalizePath(href);
-
-  if (target === '/') return current === '/';
-  return current === target || current.startsWith(`${target}/`);
-}
-
-function navLinkClass(active: boolean) {
-  return `border-b-2 px-0 py-2 text-[0.94rem] font-semibold transition ${
-    active
-      ? 'border-[var(--color-brand-orange)] font-bold text-[var(--color-brand-blue-deep)]'
-      : 'border-transparent text-[var(--color-ink-muted)] hover:border-[rgba(17,39,77,0.12)] hover:text-[var(--color-brand-blue-deep)]'
-  }`;
-}
-
-function mobileNavLinkClass(active: boolean) {
-  return `rounded-2xl px-4 py-3 text-sm font-semibold transition ${
-    active ? 'bg-white font-bold text-[var(--color-brand-blue-deep)]' : 'text-[var(--color-ink)] hover:bg-white'
-  }`;
-}
-
-function renderNavLinks(navItems: NavItem[], currentPath: string, mobile = false) {
-  return navItems.map((item) => {
-    const active = isActiveLink(currentPath, item.href);
-    return (
-      <Link
-        key={item.href}
-        href={item.href}
-        aria-current={active ? 'page' : undefined}
-        className={mobile ? mobileNavLinkClass(active) : navLinkClass(active)}
-      >
-        {item.label}
-      </Link>
-    );
-  });
-}
-
 export async function Header() {
   const currentPath = normalizePath((await headers()).get('x-current-path') || '/');
   const globalContent = getGlobalContent();
   const navItems: NavItem[] = globalContent?.nav?.length ? globalContent.nav : [...NAV_LINKS];
   const logoUrl = globalContent?.logoUrl || '/wp-content/uploads/2017/08/eti__identity__logo_.svg';
   const ctaHref = '/contact-us';
-  const isContactActive = isActiveLink(currentPath, ctaHref);
 
   return (
     <header className="site-header">
@@ -75,17 +37,11 @@ export async function Header() {
         </Link>
 
         <nav className="hidden items-center gap-8 lg:flex">
-          {renderNavLinks(navItems, currentPath)}
+          <HeaderNav navItems={navItems} initialPath={currentPath} />
         </nav>
 
         <div className="hidden lg:block">
-          <Link
-            href={ctaHref}
-            aria-current={isContactActive ? 'page' : undefined}
-            className={`site-button px-5 py-2.5 text-[0.82rem] uppercase tracking-[0.06em] ${
-              isContactActive ? 'site-button-primary ring-2 ring-[rgba(229,141,73,0.28)]' : 'site-button-primary'
-            }`}
-          >
+          <Link href={ctaHref} className="site-button site-button-primary px-5 py-2.5 text-[0.82rem] uppercase tracking-[0.06em]">
             Contact Us
           </Link>
         </div>
@@ -101,14 +57,8 @@ export async function Header() {
 
           <div className="absolute right-0 top-[calc(100%+0.75rem)] z-50 w-[min(20rem,calc(100vw-2.5rem))] rounded-[1.5rem] border border-white/60 bg-[#f5f8fc] p-4 shadow-[0_18px_60px_rgba(17,39,77,0.12)]">
             <nav className="flex flex-col gap-2">
-              {renderNavLinks(navItems, currentPath, true)}
-              <Link
-                href={ctaHref}
-                aria-current={isContactActive ? 'page' : undefined}
-                className={`site-button mt-2 justify-center ${
-                  isContactActive ? 'site-button-primary ring-2 ring-[rgba(229,141,73,0.28)]' : 'site-button-primary'
-                }`}
-              >
+              <HeaderNav navItems={navItems} initialPath={currentPath} mobile />
+              <Link href={ctaHref} className="site-button site-button-primary mt-2 justify-center">
                 Contact Us
               </Link>
             </nav>
