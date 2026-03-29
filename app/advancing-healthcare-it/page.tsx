@@ -272,6 +272,30 @@ export default function AdvancingHealthcareItPage() {
             </div>
           </div>
         </section>
+
+        <section className="border-t border-[rgba(17,39,77,0.08)] bg-white">
+          <div className="container-content py-12 lg:pb-8 lg:pt-14">
+            <div className="rounded-[1.75rem] border border-[rgba(17,39,77,0.1)] bg-[linear-gradient(180deg,#ffffff_0%,#f6f9fc_100%)] px-6 py-10 shadow-[0_20px_60px_rgba(17,39,77,0.08)] sm:px-8 lg:px-10">
+              <div className="max-w-[48rem]">
+                <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[var(--color-button-blue)]">
+                  ETI
+                </p>
+                <h2 className="mt-5 font-raleway text-3xl font-semibold tracking-tight text-[var(--color-ink)] sm:text-4xl">
+                  Large initiatives need structure, leadership, and follow through.
+                </h2>
+                <p className="mt-5 max-w-[42rem] text-base leading-8 text-[var(--color-ink-muted)]">
+                  ETI helps organizations move important work from discussion to delivery with clearer priorities,
+                  stronger execution, and practical support.
+                </p>
+                <div className="mt-8">
+                  <PrimaryButton as="link" href={WEBSITE_URL}>
+                    View our website
+                  </PrimaryButton>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
       </main>
       <Footer />
     </div>
