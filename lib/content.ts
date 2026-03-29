@@ -30,12 +30,27 @@ export type PageContent = {
   [key: string]: unknown;
 };
 
+export type PageSummary = {
+  slug: string;
+  title: string;
+  subheading?: string;
+  bannerImage?: string;
+};
+
 export type BlogPostContent = {
   slug: string;
   title: string;
   date: string;
   excerpt: string;
   body: string;
+  image?: string;
+};
+
+export type BlogPostSummary = {
+  slug: string;
+  title: string;
+  date: string;
+  excerpt: string;
   image?: string;
 };
 
@@ -77,6 +92,21 @@ export function getAllPageSlugs(): string[] {
     .map((f) => f.replace(/\.json$/, ''));
 }
 
+export function getAllPageSummaries(): PageSummary[] {
+  const entries: PageSummary[] = [];
+  for (const slug of getAllPageSlugs()) {
+    const data = getPageContent(slug);
+    if (!data) continue;
+    entries.push({
+      slug,
+      title: data.title ?? slug,
+      subheading: data.subheading,
+      bannerImage: data.bannerImage,
+    });
+  }
+  return entries.sort((a, b) => a.title.localeCompare(b.title));
+}
+
 export function writePageContent(slug: string, data: PageContent): void {
   const safe = slug.replace(/[^a-z0-9-]/gi, '');
   const filePath = path.join(PAGES_DIR, `${safe}.json`);
@@ -98,6 +128,22 @@ export function getBlogPostSlugs(): string[] {
     .readdirSync(BLOG_DIR)
     .filter((f) => f.endsWith('.json') || f.endsWith('.mdx'))
     .map((f) => f.replace(/\.(json|mdx)$/, ''));
+}
+
+export function getAllBlogPostSummaries(): BlogPostSummary[] {
+  const entries: BlogPostSummary[] = [];
+  for (const slug of getBlogPostSlugs()) {
+    const post = getBlogPostContent(slug);
+    if (!post) continue;
+    entries.push({
+      slug: post.slug || slug,
+      title: post.title || slug,
+      date: post.date || '',
+      excerpt: post.excerpt || '',
+      image: post.image,
+    });
+  }
+  return entries.sort((a, b) => (b.date || '').localeCompare(a.date || ''));
 }
 
 export function getBlogPostContent(slug: string): BlogPostContent | null {

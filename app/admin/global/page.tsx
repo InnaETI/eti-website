@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from 'react';
 import { ImageField } from '../components/ImageField';
+import { AdminPageHeader } from '../components/AdminPageHeader';
+import { AdminPanel } from '../components/AdminPanel';
 
 type GlobalData = {
   siteName: string;
@@ -97,26 +99,29 @@ export default function AdminGlobalPage() {
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-semibold text-zinc-900">Global settings</h1>
-        <button
-          type="button"
-          onClick={save}
-          disabled={saving}
-          className="rounded bg-zinc-900 px-4 py-2 text-sm font-medium text-white hover:bg-zinc-800 disabled:opacity-50"
-        >
-          {saving ? 'Saving…' : 'Save'}
-        </button>
-      </div>
+      <AdminPageHeader
+        eyebrow="Global"
+        title="Global settings"
+        description="Manage the site-wide brand elements that appear across every page: logos, navigation, footer links, contact details, and social profiles."
+        actions={
+          <button
+            type="button"
+            onClick={save}
+            disabled={saving}
+            className="rounded-full bg-[#1f3b68] px-4 py-2 text-sm font-medium text-white transition hover:bg-[#17345e] disabled:opacity-50"
+          >
+            {saving ? 'Saving…' : 'Save changes'}
+          </button>
+        }
+      />
       {message && (
         <p className={`mb-4 text-sm ${message.type === 'ok' ? 'text-green-600' : 'text-red-600'}`}>
           {message.text}
         </p>
       )}
 
-      <div className="space-y-6 max-w-2xl">
-        <section className="rounded border border-zinc-200 bg-white p-4">
-          <h2 className="font-medium text-zinc-900 mb-3">Brand</h2>
+      <div className="space-y-6 max-w-4xl">
+        <AdminPanel title="Brand">
           <div className="grid gap-3 sm:grid-cols-2">
             <div>
               <label className="block text-sm font-medium text-zinc-700 mb-1">Site name</label>
@@ -164,10 +169,9 @@ export default function AdminGlobalPage() {
               />
             </div>
           </div>
-        </section>
+        </AdminPanel>
 
-        <section className="rounded border border-zinc-200 bg-white p-4">
-          <h2 className="font-medium text-zinc-900 mb-3">Logos</h2>
+        <AdminPanel title="Logos" description="Header and footer logo assets should stay aligned with the ETI brand. Upload replacements or point to an existing asset path.">
           <div className="space-y-4">
             <ImageField
               label="Header logo URL"
@@ -180,10 +184,9 @@ export default function AdminGlobalPage() {
               onChange={(footerLogoUrl) => setData({ ...data, footerLogoUrl })}
             />
           </div>
-        </section>
+        </AdminPanel>
 
-        <section className="rounded border border-zinc-200 bg-white p-4">
-          <h2 className="font-medium text-zinc-900 mb-3">Contact</h2>
+        <AdminPanel title="Contact">
           <div className="grid gap-3 sm:grid-cols-2">
             <div>
               <label className="block text-sm font-medium text-zinc-700 mb-1">Email</label>
@@ -204,10 +207,9 @@ export default function AdminGlobalPage() {
               />
             </div>
           </div>
-        </section>
+        </AdminPanel>
 
-        <section className="rounded border border-zinc-200 bg-white p-4">
-          <h2 className="font-medium text-zinc-900 mb-3">Social</h2>
+        <AdminPanel title="Social">
           <div className="grid gap-3 sm:grid-cols-2">
             <div>
               <label className="block text-sm font-medium text-zinc-700 mb-1">Facebook URL</label>
@@ -228,10 +230,9 @@ export default function AdminGlobalPage() {
               />
             </div>
           </div>
-        </section>
+        </AdminPanel>
 
-        <section className="rounded border border-zinc-200 bg-white p-4">
-          <h2 className="font-medium text-zinc-900 mb-3">Navigation</h2>
+        <AdminPanel title="Navigation" description="These links appear in the top navigation across the public site. Keep labels short and executive-facing.">
           <div className="space-y-2">
             {data.nav.map((item, i) => (
               <LinkRow
@@ -253,10 +254,9 @@ export default function AdminGlobalPage() {
               + Add nav item
             </button>
           </div>
-        </section>
+        </AdminPanel>
 
-        <section className="rounded border border-zinc-200 bg-white p-4">
-          <h2 className="font-medium text-zinc-900 mb-3">Footer links</h2>
+        <AdminPanel title="Footer links">
           <div className="space-y-2">
             {data.footerLinks.map((item, i) => (
               <LinkRow
@@ -278,17 +278,16 @@ export default function AdminGlobalPage() {
               + Add footer link
             </button>
           </div>
-        </section>
+        </AdminPanel>
 
-        <section className="rounded border border-zinc-200 bg-white p-4">
-          <h2 className="font-medium text-zinc-900 mb-3">Copyright</h2>
+        <AdminPanel title="Copyright">
           <input
             type="text"
             value={data.copyrightText}
             onChange={(e) => setData({ ...data, copyrightText: e.target.value })}
             className="w-full rounded border border-zinc-300 px-3 py-2 text-sm"
           />
-        </section>
+        </AdminPanel>
       </div>
     </div>
   );

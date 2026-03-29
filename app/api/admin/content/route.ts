@@ -5,8 +5,10 @@ import {
   getHomeContent,
   getPageContent,
   getAllPageSlugs,
+  getAllPageSummaries,
   getBlogPostContent,
   getBlogPostSlugs,
+  getAllBlogPostSummaries,
   writeGlobalContent,
   writeHomeContent,
   writePageContent,
@@ -40,7 +42,8 @@ export async function GET(request: NextRequest) {
   }
   if (type === 'pages') {
     const slugs = getAllPageSlugs();
-    return NextResponse.json({ slugs });
+    const entries = getAllPageSummaries();
+    return NextResponse.json({ slugs, entries });
   }
   if (type === 'blog' && slug) {
     const data = getBlogPostContent(slug);
@@ -48,7 +51,8 @@ export async function GET(request: NextRequest) {
   }
   if (type === 'blog') {
     const slugs = getBlogPostSlugs();
-    return NextResponse.json({ slugs });
+    const entries = getAllBlogPostSummaries();
+    return NextResponse.json({ slugs, entries });
   }
 
   return NextResponse.json({ error: 'Invalid type or missing slug' }, { status: 400 });

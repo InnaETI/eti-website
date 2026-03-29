@@ -3,6 +3,8 @@
 import { useEffect, useState } from 'react';
 import { ImageField } from '../components/ImageField';
 import { PreviewLink } from '../components/PreviewLink';
+import { AdminPageHeader } from '../components/AdminPageHeader';
+import { AdminPanel } from '../components/AdminPanel';
 
 type Pillar = { title: string; image: string; copy: string; linkText: string; href: string };
 type ServiceItem = { icon: string; title: string };
@@ -105,38 +107,40 @@ export default function AdminHomePage() {
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-6">
-        <div className="flex items-center gap-4">
-          <h1 className="text-2xl font-semibold text-zinc-900">Home page</h1>
-          <PreviewLink href="/" />
-        </div>
-        <button
-          type="button"
-          onClick={save}
-          disabled={saving}
-          className="rounded bg-zinc-900 px-4 py-2 text-sm font-medium text-white hover:bg-zinc-800 disabled:opacity-50"
-        >
-          {saving ? 'Saving…' : 'Save'}
-        </button>
-      </div>
+      <AdminPageHeader
+        eyebrow="Homepage"
+        title="Homepage content"
+        description="Control the ETI homepage hero, metrics, featured client proof points, pillars, and supporting sections from one workspace."
+        actions={
+          <>
+            <PreviewLink href="/" />
+            <button
+              type="button"
+              onClick={save}
+              disabled={saving}
+              className="rounded-full bg-[#1f3b68] px-4 py-2 text-sm font-medium text-white transition hover:bg-[#17345e] disabled:opacity-50"
+            >
+              {saving ? 'Saving…' : 'Save changes'}
+            </button>
+          </>
+        }
+      />
       {message && (
         <p className={`mb-4 text-sm ${message.type === 'ok' ? 'text-green-600' : 'text-red-600'}`}>
           {message.text}
         </p>
       )}
 
-      <div className="space-y-6 max-w-2xl">
-        <section className="rounded border border-zinc-200 bg-white p-4">
-          <h2 className="font-medium text-zinc-900 mb-3">Hero image</h2>
+      <div className="space-y-6 max-w-4xl">
+        <AdminPanel title="Hero image" description="Update the homepage background image without touching the rest of the hero copy.">
           <ImageField
             label="Hero banner image"
             value={data.heroBanner ?? ''}
             onChange={(heroBanner) => setData({ ...data, heroBanner })}
           />
-        </section>
+        </AdminPanel>
 
-        <section className="rounded border border-zinc-200 bg-white p-4">
-          <h2 className="font-medium text-zinc-900 mb-3">Hero content</h2>
+        <AdminPanel title="Hero content">
           <div className="space-y-3">
             <input
               type="text"
@@ -224,10 +228,9 @@ export default function AdminHomePage() {
               className="w-full rounded border border-zinc-300 px-3 py-2 text-sm"
             />
           </div>
-        </section>
+        </AdminPanel>
 
-        <section className="rounded border border-zinc-200 bg-white p-4">
-          <h2 className="font-medium text-zinc-900 mb-3">Metrics</h2>
+        <AdminPanel title="Metrics" description="Short proof points shown high on the homepage.">
           <div className="space-y-3">
             {metrics.map((metric, index) => (
               <div key={`${metric.value}-${index}`} className="rounded border border-zinc-100 p-3 space-y-2">
@@ -283,10 +286,9 @@ export default function AdminHomePage() {
               + Add metric
             </button>
           </div>
-        </section>
+        </AdminPanel>
 
-        <section className="rounded border border-zinc-200 bg-white p-4">
-          <h2 className="font-medium text-zinc-900 mb-3">Featured clients</h2>
+        <AdminPanel title="Featured clients">
           <div className="space-y-3">
             {featuredClients.map((client, index) => (
               <div key={`${client.name}-${index}`} className="rounded border border-zinc-100 p-3 space-y-2">
@@ -345,10 +347,9 @@ export default function AdminHomePage() {
               + Add client
             </button>
           </div>
-        </section>
+        </AdminPanel>
 
-        <section className="rounded border border-zinc-200 bg-white p-4">
-          <h2 className="font-medium text-zinc-900 mb-3">Pillars (Strategy / Methodology / Execution)</h2>
+        <AdminPanel title="Pillars (Strategy / Methodology / Execution)">
           <div className="space-y-4">
             {pillars.map((p, i) => (
               <div key={i} className="rounded border border-zinc-100 p-3 space-y-3">
@@ -426,9 +427,9 @@ export default function AdminHomePage() {
               + Add pillar
             </button>
           </div>
-        </section>
+        </AdminPanel>
 
-        <section className="rounded border border-zinc-200 bg-white p-4">
+        <AdminPanel title="Advanced JSON" description="Use this only when you need to edit homepage fields that are not yet surfaced in the structured form.">
           <button
             type="button"
             onClick={() => setShowAdvanced(!showAdvanced)}
@@ -456,10 +457,9 @@ export default function AdminHomePage() {
               />
             </>
           ) : null}
-        </section>
+        </AdminPanel>
 
-        <section className="rounded border border-zinc-200 bg-white p-4">
-          <h2 className="font-medium text-zinc-900 mb-3">Services</h2>
+        <AdminPanel title="Services">
           <div className="space-y-3">
             <div>
               <label className="block text-sm font-medium text-zinc-700 mb-1">Intro</label>
@@ -532,10 +532,9 @@ export default function AdminHomePage() {
               </button>
             </div>
           </div>
-        </section>
+        </AdminPanel>
 
-        <section className="rounded border border-zinc-200 bg-white p-4">
-          <h2 className="font-medium text-zinc-900 mb-3">Clients</h2>
+        <AdminPanel title="Clients">
           <div className="space-y-3">
             <div>
               <label className="block text-sm font-medium text-zinc-700 mb-1">Intro</label>
@@ -563,10 +562,9 @@ export default function AdminHomePage() {
               />
             </div>
           </div>
-        </section>
+        </AdminPanel>
 
-        <section className="rounded border border-zinc-200 bg-white p-4">
-          <h2 className="font-medium text-zinc-900 mb-3">CTA</h2>
+        <AdminPanel title="CTA">
           <div className="space-y-2">
             <input
               type="text"
@@ -599,10 +597,9 @@ export default function AdminHomePage() {
               />
             </div>
           </div>
-        </section>
+        </AdminPanel>
 
-        <section className="rounded border border-zinc-200 bg-white p-4">
-          <h2 className="font-medium text-zinc-900 mb-3">About</h2>
+        <AdminPanel title="About">
           <input
             type="text"
             value={about.title}
@@ -617,10 +614,9 @@ export default function AdminHomePage() {
             rows={4}
             className="w-full rounded border border-zinc-300 px-3 py-2 text-sm"
           />
-        </section>
+        </AdminPanel>
 
-        <section className="rounded border border-zinc-200 bg-white p-4">
-          <h2 className="font-medium text-zinc-900 mb-3">Join team</h2>
+        <AdminPanel title="Join team">
           <input
             type="text"
             value={joinTeam.title}
@@ -651,10 +647,9 @@ export default function AdminHomePage() {
               className="rounded border border-zinc-300 px-3 py-2 text-sm"
             />
           </div>
-        </section>
+        </AdminPanel>
 
-        <section className="rounded border border-zinc-200 bg-white p-4">
-          <h2 className="font-medium text-zinc-900 mb-3">News</h2>
+        <AdminPanel title="News">
           <input
             type="text"
             value={news.title}
@@ -743,7 +738,7 @@ export default function AdminHomePage() {
           >
             + Add news section
           </button>
-        </section>
+        </AdminPanel>
       </div>
     </div>
   );
