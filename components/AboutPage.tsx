@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import type { PageContent } from '@/lib/content';
 
 type Mission = {
@@ -227,6 +228,14 @@ function AboutPage({ page }: { page: AboutPageContent }) {
             Clients engage ETI when technology needs to do more than function. It needs to support
             growth, absorb complexity, improve execution, and increase the value of the business.
           </p>
+          <div className="mt-8">
+            <Link
+              href="/advancing-healthcare-it"
+              className="site-button site-button-secondary !border-white/20 !bg-white/10 !text-white !shadow-none"
+            >
+              See how ETI advances healthcare IT
+            </Link>
+          </div>
         </div>
       </section>
     </>
