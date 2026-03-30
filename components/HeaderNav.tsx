@@ -22,7 +22,7 @@ function isActiveLink(pathname: string, href: string) {
 }
 
 function navLinkClass(active: boolean) {
-  return `border-b-2 px-0 py-2 text-[0.94rem] font-semibold transition ${
+  return `border-b-2 px-0 py-2 text-[1.06rem] font-semibold transition ${
     active
       ? 'border-[var(--color-brand-orange)] font-bold text-[var(--color-brand-blue-deep)]'
       : 'border-transparent text-[var(--color-ink-muted)] hover:border-[rgba(17,39,77,0.12)] hover:text-[var(--color-brand-blue-deep)]'

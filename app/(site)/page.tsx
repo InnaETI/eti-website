@@ -178,6 +178,12 @@ export default function HomePage() {
   const services = homeContent.services ?? {};
   const cta = homeContent.cta ?? {};
   const howItWorksBg = homeContent.howItWorksBackground?.trim();
+  const selectedWorkIntro = homeContent.clients?.intro ?? '';
+  const selectedWorkSecondSentence = 'These examples show how we help leadership teams move important initiatives forward with clearer direction and measurable value.';
+  const selectedWorkHasForcedBreak = selectedWorkIntro.includes(selectedWorkSecondSentence);
+  const selectedWorkFirstPart = selectedWorkHasForcedBreak
+    ? selectedWorkIntro.replace(selectedWorkSecondSentence, '').trim()
+    : selectedWorkIntro;
   return (
     <>
       {/* Hero — matches design mockup: light canvas, mesh right, two-column, floating card */}
@@ -312,7 +318,7 @@ export default function HomePage() {
             >
               Work that moves important initiatives forward
             </h2>
-            <p className="mt-4 max-w-3xl text-base leading-relaxed text-[var(--color-ink-muted)] sm:text-[1.0625rem]">
+            <p className="mt-4 max-w-none text-base leading-relaxed text-[var(--color-ink-muted)] sm:text-[1.0625rem] lg:whitespace-nowrap lg:text-[1rem]">
               Examples of how ETI supports organizations across healthcare, AI, and enterprise technology
               initiatives.
             </p>
@@ -382,9 +388,14 @@ export default function HomePage() {
             <h2 className="section-title mt-4 max-w-4xl text-[var(--color-brand-blue-deep)] lg:mt-5 lg:max-w-5xl">
               {homeContent.clients?.sectionHeadline || 'Technology work tied to business outcomes.'}
             </h2>
-            {homeContent.clients?.intro ? (
-              <p className="mt-4 max-w-[min(100%,68rem)] text-[1.0625rem] leading-[1.65] text-[var(--color-ink-muted)] lg:mt-5">
-                {homeContent.clients.intro}
+            {selectedWorkIntro ? (
+              <p className="mt-4 max-w-[min(100%,70rem)] text-[1.0625rem] leading-[1.65] text-[var(--color-ink-muted)] lg:mt-5">
+                <span>{selectedWorkFirstPart}</span>
+                {selectedWorkHasForcedBreak ? (
+                  <span className="block">
+                    {selectedWorkSecondSentence}
+                  </span>
+                ) : null}
               </p>
             ) : null}
 
@@ -417,7 +428,9 @@ export default function HomePage() {
             </Link>
 
             {clientTestimonials.length > 0 ? (
-              <div className="mt-6 grid gap-4 lg:mt-8 lg:grid-cols-2 lg:gap-5">
+              <div className="mt-6 lg:mt-8">
+                <span className="eyebrow">Testimonials</span>
+                <div className="mt-4 grid gap-4 lg:grid-cols-2 lg:gap-5">
                 {clientTestimonials.slice(0, 2).map((testimonial, index) => {
                   const t = testimonial as { quote?: string; emphasizedPhrase?: string };
                   const q = t.quote ?? '';
@@ -426,12 +439,13 @@ export default function HomePage() {
                       key={`${q}-${index}`}
                       className="rounded-[1.25rem] border border-[rgba(17,39,77,0.08)] bg-white p-5 lg:rounded-2xl lg:p-6"
                     >
-                      <p className="font-accent text-[1.25rem] leading-[1.45] text-[var(--color-brand-blue-deep)] sm:text-[1.35rem] lg:text-[1.45rem]">
+                      <p className="text-[1.15rem] font-semibold leading-[1.55] tracking-[-0.02em] text-[var(--color-brand-blue-deep)] sm:text-[1.22rem] lg:text-[1.28rem]">
                         {renderQuoteWithEmphasis(q, t.emphasizedPhrase)}
                       </p>
                     </blockquote>
                   );
                 })}
+                </div>
               </div>
             ) : null}
           </div>
@@ -439,7 +453,8 @@ export default function HomePage() {
 
       {supplementalSections.length ? <ContentBlocks blocks={supplementalSections} /> : null}
 
-      <section className="mx-auto mt-14 w-full max-w-[1320px] px-5 lg:mt-16 lg:px-10">
+      <section className="mt-14 w-full border-t border-[rgba(17,39,77,0.08)] bg-[#f8fafc] lg:mt-16">
+          <div className="mx-auto w-full max-w-[1320px] px-5 py-12 lg:px-10 lg:py-16">
           <div className="content-card rounded-[2rem] p-6 sm:p-8 lg:p-10">
             <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
               <div>
@@ -470,13 +485,14 @@ export default function HomePage() {
               ))}
             </div>
           </div>
+          </div>
       </section>
 
       <section className="mx-auto mt-14 w-full max-w-[1320px] px-5 pb-6 lg:mt-16 lg:px-10 lg:pb-10">
           <div className="overflow-hidden rounded-[2rem] bg-[linear-gradient(135deg,#11274d_0%,#1d4e96_42%,#224380_100%)] px-6 py-8 text-white shadow-[0_28px_90px_rgba(17,39,77,0.24)] sm:px-8 sm:py-10">
             <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end">
               <div>
-                <span className="eyebrow !text-white/72 before:!bg-white/45">Start here</span>
+                <span className="eyebrow !text-white before:!bg-white/45">Start here</span>
                 <h2 className="section-title mt-5 text-white">
                   {cta.title || 'Schedule a call with ETI'}
                 </h2>

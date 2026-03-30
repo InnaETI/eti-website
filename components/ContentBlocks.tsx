@@ -41,6 +41,7 @@ export type ContentBlock =
       quote: string;
       attribution?: string;
       role?: string;
+      backgroundImage?: string;
     }
   | {
       type: 'cta';
@@ -160,10 +161,26 @@ export function ContentBlocks({ blocks }: ContentBlocksProps) {
 
         if (block.type === 'quote') {
           return (
-            <section key={`${block.type}-${index}`} className="mx-auto mt-14 w-full max-w-[1320px] px-5 lg:mt-16 lg:px-10">
-              <div className="content-card rounded-[2rem] p-6 sm:p-8">
+            <section
+              key={`${block.type}-${index}`}
+              className="relative mt-14 w-full overflow-hidden border-t border-[rgba(17,39,77,0.08)] bg-[#f3f7fb] lg:mt-16"
+            >
+              {block.backgroundImage ? (
+                <>
+                  <div
+                    className="pointer-events-none absolute inset-0 bg-cover bg-center bg-no-repeat"
+                    style={{ backgroundImage: `url('${block.backgroundImage}')` }}
+                    aria-hidden
+                  />
+                  <div
+                    className="pointer-events-none absolute inset-0 bg-[linear-gradient(135deg,rgba(248,251,254,0.92),rgba(248,251,254,0.88))]"
+                    aria-hidden
+                  />
+                </>
+              ) : null}
+              <div className="relative mx-auto w-full max-w-[1320px] px-5 py-14 lg:px-10 lg:py-16">
                 {block.eyebrow ? <span className="eyebrow">{block.eyebrow}</span> : null}
-                <blockquote className="mt-5 max-w-4xl font-accent text-3xl leading-[1.3] text-[var(--color-brand-blue-deep)] sm:text-4xl">
+                <blockquote className="mt-5 max-w-[60rem] text-[clamp(1.72rem,2.65vw,2.18rem)] font-semibold leading-[1.16] tracking-[-0.035em] text-[var(--color-brand-blue-deep)] lg:max-w-[72rem]">
                   “{block.quote}”
                 </blockquote>
                 {block.attribution || block.role ? (

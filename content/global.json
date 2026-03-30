@@ -15,13 +15,14 @@
     { "href": "/services", "label": "Services" },
     { "href": "/clients", "label": "Clients" },
     { "href": "/team", "label": "Team" },
-    { "href": "/blog", "label": "Blog" }
+    { "href": "/blog", "label": "Insights" }
   ],
   "footerLinks": [
     { "href": "/about-us", "label": "About Us" },
     { "href": "/services", "label": "Services" },
     { "href": "/clients", "label": "Clients" },
     { "href": "/team", "label": "Team" },
+    { "href": "/blog", "label": "Insights" },
     { "href": "/contact-us", "label": "Contact Us" },
     { "href": "/privacy-policy", "label": "Privacy" }
   ],

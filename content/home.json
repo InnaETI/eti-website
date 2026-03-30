@@ -4,7 +4,7 @@
   "hero": {
     "eyebrow": "Emerging Technologies, Inc.",
     "title": "Technology decisions that shape performance.",
-    "subtitle": "ETI helps leadership teams align business priorities, technology decisions, and execution plans in complex environments.",
+    "subtitle": "Our mission is to help companies become more efficient, profitable, and future-proof through the continuous implementation of modern technologies and proven methodologies. ETI helps leadership teams align business priorities, technology decisions, and execution plans in complex environments.",
     "primaryLabel": "Request a conversation",
     "primaryHref": "/contact-us",
     "secondaryLabel": "Explore capabilities",
@@ -12,7 +12,7 @@
     "badgeTitle": "Where ETI leads",
     "badgeBody": "We step in when leadership priorities, delivery pressure, budget constraints, and technical complexity start pulling in different directions.",
     "badgePoints": [
-      "Executive alignment before delivery breaks down",
+      "Executive pre-delivery alignment",
       "Technology strategy tied to operational priorities",
       "Hands-on guidance from planning to execution"
     ]
@@ -100,14 +100,15 @@
   },
   "about": {
     "title": "About Emerging Technologies",
-    "copy": "Emerging Technologies, Inc. (ETI) consulting services offer a holistic approach to transforming organizations, from fostering user collaboration and Agile practices to implementing DevOps methodologies, ensuring quality assurance, and delivering accurate project estimates. We specialize in aligning project goals with budgets, optimizing resource management, and enhancing team efficiency through proactive project management. Our tailored change management strategies facilitate seamless transitions and maximize adoption. With our comprehensive solutions, we empower businesses to overcome challenges, achieve user-centric development, streamline operations, and achieve successful project outcomes."
+    "copy": "Emerging Technologies, Inc. (ETI) brings a practical blend of IT and business expertise to complex transformation work. We help organizations strengthen collaboration, adopt agile and DevOps practices, improve quality and delivery planning, and manage change in a way teams can absorb. Our focus is to align goals, budgets, and execution so clients can modernize operations, improve adoption, and create durable business value."
   },
   "sections": [
     {
       "type": "quote",
       "eyebrow": "Operating principle",
       "quote": "Transformation work fails when strategy, team realities, and execution sequencing are treated as separate problems.",
-      "attribution": "ETI point of view"
+      "attribution": "ETI point of view",
+      "backgroundImage": "/images/section-2-how-eti-works-bg.jpg"
     }
   ],
   "news": {
