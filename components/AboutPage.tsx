@@ -122,8 +122,9 @@ function AboutPage({ page }: { page: AboutPageContent }) {
               Technology leadership and execution that create enterprise value
             </h1>
             <p className="mx-auto mt-6 max-w-[780px] text-[clamp(1.05rem,2.1vw,1.55rem)] leading-[1.65] text-white/86">
-              ETI helps companies strengthen operations, scale platforms, integrate acquisitions, and
-              turn technology investments into measurable business value.
+              Emerging Technologies, Inc. helps companies strengthen operations, scale platforms,
+              integrate acquisitions, and turn technology investments into measurable business
+              value.
             </p>
           </div>
         </div>
@@ -135,7 +136,7 @@ function AboutPage({ page }: { page: AboutPageContent }) {
             <SectionHeading label="Who We Are" />
             <div className="mt-8 max-w-[36rem]">
               <h2 className="font-display text-[clamp(2rem,3.6vw,3.35rem)] font-semibold leading-[1.08] tracking-[-0.05em] text-[var(--color-brand-blue-deep)]">
-                Emerging Technologies is a technology leadership and delivery partner for companies navigating growth, modernization, and operational transformation.
+                Your leadership and delivery Partner for navigating growth, modernization, and operational transformation.
               </h2>
               <p className="mt-6 text-[1.05rem] leading-9 text-[var(--color-ink-muted)]">
                 We work with executive teams and investors to shape direction, guide critical
@@ -162,8 +163,18 @@ function AboutPage({ page }: { page: AboutPageContent }) {
         </div>
       </section>
 
-      <section className="border-y border-black/5 bg-white/68">
-        <div className="mx-auto max-w-[1280px] px-5 py-16 sm:px-8 sm:py-20 lg:px-10 lg:py-24">
+      <section className="relative isolate overflow-hidden border-y border-black/5 bg-white/68">
+        <div className="absolute inset-0">
+          <Image
+            src="/wp-content/uploads/2020/06/future.jpg"
+            alt=""
+            fill
+            sizes="100vw"
+            className="object-cover object-center opacity-12"
+          />
+          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(248,251,254,0.92)_0%,rgba(248,251,254,0.95)_100%)]" />
+        </div>
+        <div className="relative mx-auto max-w-[1280px] px-5 py-16 sm:px-8 sm:py-20 lg:px-10 lg:py-24">
           <SectionHeading label="What We Do" />
           <div className="mt-8 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
             {CAPABILITIES.map((capability) => (
@@ -191,7 +202,7 @@ function AboutPage({ page }: { page: AboutPageContent }) {
           <div className="max-w-[38rem]">
             <SectionHeading label={missionTitle} />
             <h2 className="mt-8 font-display text-[clamp(1.9rem,3.4vw,3.1rem)] font-semibold leading-[1.08] tracking-[-0.05em] text-[var(--color-brand-blue-deep)]">
-              Practical leadership, disciplined delivery, and scalable solutions that support long-term performance.
+              Achieve long-term performance thru practical leadership, disciplined delivery, and scalable solutions.
             </h2>
             <p className="mt-6 text-[1.05rem] leading-9 text-[var(--color-ink-muted)]">{missionText}</p>
           </div>
@@ -225,8 +236,11 @@ function AboutPage({ page }: { page: AboutPageContent }) {
             WHY ORGANIZATIONS CHOOSE ETI
           </h2>
           <p className="mx-auto mt-6 max-w-[840px] text-[1.06rem] leading-9 text-white/82 sm:text-[1.12rem]">
-            Clients engage ETI when technology needs to do more than function. It needs to support
-            growth, absorb complexity, improve execution, and increase the value of the business.
+            <span className="block">Clients engage ETI when technology needs to do more than function.</span>
+            <span className="block">
+              It needs to support growth, absorb complexity, improve execution, and increase the
+              value of the business.
+            </span>
           </p>
           <div className="mt-8">
             <Link

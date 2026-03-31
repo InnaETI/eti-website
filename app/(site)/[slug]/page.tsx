@@ -18,7 +18,7 @@ import { ServicesValueDeliverSection } from '@/components/ServicesValueDeliverSe
 type ServiceItem = {
   title?: string;
   iconUrl?: string;
-  items?: string[];
+  items?: Array<string | { label: string; href?: string }>;
   linkText?: string;
   linkHref?: string;
 };
@@ -164,17 +164,26 @@ function renderServices(services: ServiceItem[] | undefined) {
               {service.items?.length ? (
                 <ul className="mt-4 space-y-2 text-sm leading-7 text-[var(--color-ink-muted)]">
                   {service.items.map((item) => (
-                    <li key={item} className="flex gap-3">
+                    <li
+                      key={typeof item === 'string' ? item : `${item.label}-${item.href ?? ''}`}
+                      className="flex gap-3"
+                    >
                       <span className="mt-2 h-2 w-2 rounded-full bg-[var(--color-brand-orange)]" />
-                      <span>{item}</span>
+                      {typeof item === 'string' ? (
+                        <span>{item}</span>
+                      ) : item.href ? (
+                        <a
+                          href={item.href}
+                          className="font-medium text-[var(--color-brand-blue)] underline-offset-4 transition hover:text-[var(--color-brand-blue-deep)] hover:underline"
+                        >
+                          {item.label}
+                        </a>
+                      ) : (
+                        <span>{item.label}</span>
+                      )}
                     </li>
                   ))}
                 </ul>
-              ) : null}
-              {service.linkHref && service.linkText ? (
-                <a href={service.linkHref} className="mt-5 inline-flex text-sm font-semibold text-[var(--color-brand-orange)]">
-                  {service.linkText}
-                </a>
               ) : null}
             </article>
           ))}
@@ -426,14 +435,14 @@ export default async function PublicPage({
         </section>
       ) : null}
 
+      {isServices && page.valueDeliver?.items?.length ? (
+        <ServicesValueDeliverSection title={page.valueDeliver.title} items={page.valueDeliver.items} />
+      ) : null}
       {renderMission(page.mission, page.secondaryImage)}
       {renderServices(page.services)}
       {renderTestimonials(page.testimonials)}
       {page.sections?.length ? <ContentBlocks blocks={page.sections} /> : null}
       {isContact ? renderContact(page, globalContent?.contactEmail, globalContent?.contactPhone) : null}
-      {isServices && page.valueDeliver?.items?.length ? (
-        <ServicesValueDeliverSection title={page.valueDeliver.title} items={page.valueDeliver.items} />
-      ) : null}
       {!isContact ? renderCTA(page.cta) : null}
     </>
   );

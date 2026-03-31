@@ -13,7 +13,7 @@ export function ServicesOverviewSection({ title, intro, columns }: ServicesOverv
   return (
     <section className="border-b border-[var(--color-border)] bg-[#f5f7f9] px-5 py-14 sm:py-16 lg:px-10 lg:py-[4.5rem]">
       <div className="mx-auto max-w-[1200px]">
-        <h2 className="font-accent text-[clamp(1.85rem,3.5vw,2.75rem)] font-semibold leading-[1.15] tracking-[-0.02em] text-[var(--color-brand-blue-deep)]">
+        <h2 className="font-display text-[clamp(1.85rem,3.5vw,2.75rem)] font-semibold leading-[1.08] tracking-[-0.04em] text-[var(--color-brand-blue-deep)]">
           {title}
         </h2>
         <p className="mt-6 max-w-4xl text-base leading-[1.7] text-[var(--color-ink-muted)] sm:text-[1.0625rem]">

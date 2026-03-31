@@ -12,7 +12,7 @@ export function ServicesValueDeliverSection({ title, items }: ServicesValueDeliv
   return (
     <section className="mt-14 border-b border-[var(--color-border)] bg-[#f5f7f9] px-5 py-14 sm:mt-16 sm:py-16 lg:mt-[4.5rem] lg:px-10 lg:py-[4.5rem]">
       <div className="mx-auto max-w-[1200px]">
-        <h2 className="font-accent text-[clamp(1.85rem,3.5vw,2.75rem)] font-semibold leading-[1.15] tracking-[-0.02em] text-[var(--color-brand-blue-deep)]">
+        <h2 className="font-display text-[clamp(1.85rem,3.5vw,2.75rem)] font-semibold leading-[1.08] tracking-[-0.04em] text-[var(--color-brand-blue-deep)]">
           {title}
         </h2>
         <ul className="mt-10 grid list-none gap-x-8 gap-y-10 p-0 sm:mt-12 md:grid-cols-2 lg:grid-cols-3 lg:gap-x-10 lg:gap-y-12">
