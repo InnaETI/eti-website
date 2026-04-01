@@ -1,12 +1,12 @@
 {
-  "title": "Service",
+  "title": "Services",
   "bannerImage": "/wp-content/uploads/2017/08/methodology-2.jpg",
   "servicesOverview": {
     "title": "ETI Services Overview",
     "intro": "ETI provides consulting and delivery services that help organizations modernize, scale, and perform. We work with healthcare organizations, private equity backed businesses, and growth focused companies that need experienced leadership, strong execution, and measurable results.",
     "columns": [
-      "Our services span technology, operations, product, data, security, AI, and enterprise transformation.",
-      "We can lead a strategy, manage an implementation, architect and build a solution, strengthen operations, and support a business through critical change. Our methods help organizations retain business know-how, preserve internal IP, and future-proof the platform so enterprise value can keep compounding over time."
+      "We work across technology, operations, product, data, security, AI, and enterprise platforms, supporting organizations where business priorities, system constraints, and delivery demands intersect. ETI can engage at the enterprise, program, platform, or workflow level, depending on whether the need is clearer direction, stronger operating discipline, better coordination across teams, or more practical support around important work.",
+      "We provide strategy leadership, implementation oversight, solution architecture and build support, operational improvement, and hands-on support through critical change. Our methods help organizations retain business know-how, preserve internal IP, and future-proof platforms so enterprise value can keep compounding over time."
     ]
   },
   "intro": "ETI helps companies scale, modernize, and perform at a higher level. We combine technical expertise, business acumen, and hands on execution to improve systems, strengthen operations, and deliver measurable results. Clients bring in ETI when they need a trusted partner who can evaluate, re-architect, lead, build, and get the job done.",
