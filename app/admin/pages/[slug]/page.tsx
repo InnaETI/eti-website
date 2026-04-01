@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import { ImageField } from '../../components/ImageField';
+import { MarkdownEditor } from '../../components/MarkdownEditor';
 import { MarkdownPreview } from '../../components/MarkdownPreview';
 import { PreviewLink } from '../../components/PreviewLink';
 import { AdminPageHeader } from '../../components/AdminPageHeader';
@@ -10,7 +11,7 @@ import { AdminPanel } from '../../components/AdminPanel';
 import { AdminBackendNotice } from '../../components/AdminBackendNotice';
 
 const BODY_MARKDOWN_HELP =
-  'Main text content for this page. Use Markdown: **bold**, *italic*, [link text](url), # for headings, - for lists. This is rendered as HTML on the live page.';
+  'Use the toolbar for headings, bold, italic, links, quotes, and lists. Markdown is still stored behind the scenes so the live site stays compatible.';
 
 type PageData = Record<string, unknown> & {
   title?: string;
@@ -143,17 +144,14 @@ export default function AdminPageEditorPage() {
                 help="Used as the hero/background image for this page when the page layout supports one."
                 recommendedSize="1600 × 700px"
               />
-              <div>
-                <label className="block text-sm font-medium text-zinc-700 mb-1">Body (Markdown)</label>
-                <p className="text-xs text-zinc-500 mb-1">{BODY_MARKDOWN_HELP}</p>
-                <textarea
-                  value={(data.body as string) ?? ''}
-                  onChange={(e) => setData({ ...data, body: e.target.value })}
-                  rows={12}
-                  className="w-full rounded border border-zinc-300 px-3 py-2 text-sm font-mono"
-                  placeholder="Add main page content in Markdown…"
-                />
-              </div>
+              <MarkdownEditor
+                label="Body"
+                value={(data.body as string) ?? ''}
+                onChange={(body) => setData({ ...data, body })}
+                help={BODY_MARKDOWN_HELP}
+                placeholder="Add main page content…"
+                rows={14}
+              />
             </div>
           </AdminPanel>
 
