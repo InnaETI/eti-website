@@ -68,15 +68,11 @@ export default async function BlogDetailPage({
         </div>
 
         <div className="mt-10 rounded-[1.75rem] bg-[linear-gradient(135deg,#11274d_0%,#1d4e96_42%,#224380_100%)] p-6 text-white">
-          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/65">Need a sharper read on this?</p>
-          <h2 className="mt-3 font-display text-3xl font-semibold tracking-[-0.04em]">
-            Bring the decision into a working session.
+          <h2 className="font-display text-3xl font-semibold tracking-[-0.04em]">
+            Contact ETI to explore this topic further
           </h2>
-          <p className="mt-4 max-w-2xl text-sm leading-7 text-white/75">
-            ETI helps leadership teams translate high-level analysis into specific choices, sequencing, and execution paths.
-          </p>
           <Link href="/contact-us" className="site-button site-button-primary mt-6">
-            Talk with ETI
+            Contact ETI
           </Link>
         </div>
       </div>

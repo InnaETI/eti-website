@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { getAllPosts } from '@/lib/blog';
 
 const RECENT_COUNT = 5;
+const DEFAULT_LIST_IMAGE = '/wp-content/uploads/2017/08/eti__identity__logo_.svg';
 
 function formatDate(value: string): string {
   if (!value) return '';
@@ -10,8 +11,6 @@ function formatDate(value: string): string {
   if (Number.isNaN(d.getTime())) return value;
   return d.toLocaleDateString('en-US', {
     year: 'numeric',
-    month: 'long',
-    day: 'numeric',
   });
 }
 
@@ -52,7 +51,7 @@ export default async function BlogIndexPage({
               Analysis, field lessons, and healthcare technology perspective.
             </h1>
             <p className="mt-5 max-w-2xl text-base leading-8 text-[var(--color-ink-muted)]">
-              Browse ETI writing on healthcare IT, operating model decisions, and the practical tradeoffs behind transformation work.
+              Browse ETI insights on healthcare IT, advancements of AI for operating model decisions, and the practical tradeoffs behind transformation work.
             </p>
             {query ? (
               <p className="mt-5 text-sm font-medium text-[var(--color-brand-blue)]">
@@ -91,7 +90,8 @@ export default async function BlogIndexPage({
             {filteredPosts.map((post) => {
               const dateText = formatDate(post.date);
               const meta = [dateText, post.author].filter(Boolean).join(' • ');
-              const useContain = isContainedThumbnail(post.image);
+              const thumbnail = post.image || DEFAULT_LIST_IMAGE;
+              const useContain = isContainedThumbnail(thumbnail);
               return (
                 <li key={post.slug}>
                   <Link
@@ -100,12 +100,12 @@ export default async function BlogIndexPage({
                   >
                     <div
                       className={
-                        post.image
+                        thumbnail
                           ? 'grid gap-5 sm:grid-cols-[128px_minmax(0,1fr)] sm:items-start sm:gap-6'
                           : undefined
                       }
                     >
-                      {post.image ? (
+                      {thumbnail ? (
                         <div
                           className={`relative h-[92px] w-[128px] overflow-hidden rounded-[1.35rem] border border-[var(--color-border)] ${
                             useContain
@@ -114,7 +114,7 @@ export default async function BlogIndexPage({
                           }`}
                         >
                           <Image
-                            src={post.image}
+                            src={thumbnail}
                             alt=""
                             fill
                             sizes="128px"
