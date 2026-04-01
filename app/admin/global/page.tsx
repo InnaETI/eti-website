@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { ImageField } from '../components/ImageField';
 import { AdminPageHeader } from '../components/AdminPageHeader';
 import { AdminPanel } from '../components/AdminPanel';
+import { AdminBackendNotice } from '../components/AdminBackendNotice';
 
 type GlobalData = {
   siteName: string;
@@ -114,6 +115,7 @@ export default function AdminGlobalPage() {
           </button>
         }
       />
+      <AdminBackendNotice />
       {message && (
         <p className={`mb-4 text-sm ${message.type === 'ok' ? 'text-green-600' : 'text-red-600'}`}>
           {message.text}
@@ -177,11 +179,15 @@ export default function AdminGlobalPage() {
               label="Header logo URL"
               value={data.logoUrl}
               onChange={(logoUrl) => setData({ ...data, logoUrl })}
+              help="Shown in the public header."
+              recommendedSize="Around 360 × 120px with transparency"
             />
             <ImageField
               label="Footer logo URL"
               value={data.footerLogoUrl}
               onChange={(footerLogoUrl) => setData({ ...data, footerLogoUrl })}
+              help="Shown in the footer. Use the horizontal ETI lockup."
+              recommendedSize="Around 520 × 120px with transparency"
             />
           </div>
         </AdminPanel>

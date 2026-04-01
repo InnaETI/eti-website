@@ -5,6 +5,7 @@ import { ImageField } from '../components/ImageField';
 import { PreviewLink } from '../components/PreviewLink';
 import { AdminPageHeader } from '../components/AdminPageHeader';
 import { AdminPanel } from '../components/AdminPanel';
+import { AdminBackendNotice } from '../components/AdminBackendNotice';
 
 type Pillar = { title: string; image: string; copy: string; linkText: string; href: string };
 type ServiceItem = { icon: string; title: string };
@@ -125,6 +126,7 @@ export default function AdminHomePage() {
           </>
         }
       />
+      <AdminBackendNotice />
       {message && (
         <p className={`mb-4 text-sm ${message.type === 'ok' ? 'text-green-600' : 'text-red-600'}`}>
           {message.text}
@@ -137,6 +139,8 @@ export default function AdminHomePage() {
             label="Hero banner image"
             value={data.heroBanner ?? ''}
             onChange={(heroBanner) => setData({ ...data, heroBanner })}
+            help="This is the main homepage background behind the ETI positioning statement."
+            recommendedSize="1800 × 960px"
           />
         </AdminPanel>
 

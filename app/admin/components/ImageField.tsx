@@ -1,20 +1,48 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 type ImageFieldProps = {
   label: string;
   value: string;
   onChange: (path: string) => void;
   help?: string;
+  recommendedSize?: string;
 };
 
-export function ImageField({ label, value, onChange, help }: ImageFieldProps) {
+export function ImageField({ label, value, onChange, help, recommendedSize }: ImageFieldProps) {
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState('');
   const [showUrl, setShowUrl] = useState(false);
   const [urlInput, setUrlInput] = useState('');
+  const [dimensions, setDimensions] = useState<string>('');
   const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    if (!value) {
+      setDimensions('');
+      return;
+    }
+
+    const image = new window.Image();
+    image.onload = () => {
+      if (!cancelled) {
+        setDimensions(`${image.naturalWidth} × ${image.naturalHeight}px`);
+      }
+    };
+    image.onerror = () => {
+      if (!cancelled) {
+        setDimensions('');
+      }
+    };
+    image.src = value;
+
+    return () => {
+      cancelled = true;
+    };
+  }, [value]);
 
   async function handleFile(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
@@ -57,12 +85,18 @@ export function ImageField({ label, value, onChange, help }: ImageFieldProps) {
             <img
               src={value}
               alt=""
-              className="h-20 w-auto rounded border border-zinc-200 object-cover"
+              className="h-24 w-auto max-w-[220px] rounded-xl border border-zinc-200 bg-zinc-50 object-contain p-2"
               onError={() => setError('Image failed to load')}
             />
-            <span className="text-xs text-zinc-500 break-all max-w-[320px] font-mono" title={value}>
-              {value}
-            </span>
+            <div className="space-y-1">
+              <span className="block max-w-[360px] break-all font-mono text-xs text-zinc-500" title={value}>
+                {value}
+              </span>
+              <div className="flex flex-wrap gap-x-3 gap-y-1 text-xs text-zinc-500">
+                {dimensions ? <span>Preview size: {dimensions}</span> : null}
+                {recommendedSize ? <span>Recommended: {recommendedSize}</span> : null}
+              </div>
+            </div>
             <div className="flex gap-2 mt-1">
               <input
                 ref={inputRef}
@@ -79,6 +113,14 @@ export function ImageField({ label, value, onChange, help }: ImageFieldProps) {
               >
                 {uploading ? 'Uploading…' : 'Replace'}
               </button>
+              <a
+                href={value}
+                target="_blank"
+                rel="noreferrer"
+                className="rounded border border-zinc-300 bg-white px-3 py-1.5 text-sm text-zinc-700 hover:bg-zinc-50"
+              >
+                Open
+              </a>
               <button
                 type="button"
                 onClick={() => onChange('')}
@@ -130,6 +172,7 @@ export function ImageField({ label, value, onChange, help }: ImageFieldProps) {
                 </button>
               </div>
             ) : null}
+            {recommendedSize ? <p className="text-xs text-zinc-500">Recommended: {recommendedSize}</p> : null}
           </div>
         )}
       </div>

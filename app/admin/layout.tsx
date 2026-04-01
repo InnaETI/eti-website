@@ -7,6 +7,7 @@ import { LogoutButton } from './LogoutButton';
 
 const NAV_ITEMS = [
   { href: '/admin', label: 'Overview' },
+  { href: '/admin/media', label: 'Media' },
   { href: '/admin/global', label: 'Global' },
   { href: '/admin/home', label: 'Home' },
   { href: '/admin/pages', label: 'Pages' },

@@ -1,13 +1,22 @@
 import Link from 'next/link';
-import { getAllBlogPostSummaries, getAllPageSummaries, getGlobalContent, getHomeContent } from '@/lib/content';
+import {
+  getAllBlogPostSummariesFromStore,
+  getAllPageSummariesFromStore,
+  getGlobalContentFromStore,
+  getHomeContentFromStore,
+  getStorageBackendInfo,
+} from '@/lib/content-store';
 import { AdminPageHeader } from './components/AdminPageHeader';
 import { AdminPanel } from './components/AdminPanel';
 
-export default function AdminDashboardPage() {
-  const pages = getAllPageSummaries();
-  const posts = getAllBlogPostSummaries();
-  const global = getGlobalContent();
-  const home = getHomeContent();
+export default async function AdminDashboardPage() {
+  const [pages, posts, global, home] = await Promise.all([
+    getAllPageSummariesFromStore(),
+    getAllBlogPostSummariesFromStore(),
+    getGlobalContentFromStore(),
+    getHomeContentFromStore(),
+  ]);
+  const backend = getStorageBackendInfo();
   const navCount = global?.nav?.length ?? 0;
   const footerCount = global?.footerLinks?.length ?? 0;
   const metricsCount = Array.isArray(home?.metrics) ? home.metrics.length : 0;
@@ -53,6 +62,11 @@ export default function AdminDashboardPage() {
           >
             <div className="grid gap-4 md:grid-cols-2">
               {[
+                {
+                  href: '/admin/media',
+                  title: 'Media',
+                  description: 'Hero backgrounds, brand logos, and the main visual assets used across the site.',
+                },
                 {
                   href: '/admin/global',
                   title: 'Global settings',
@@ -133,12 +147,17 @@ export default function AdminDashboardPage() {
 
           <AdminPanel
             title="Publishing notes"
-            description="Edits save directly into the repository content files. Use staging/Vercel after content updates if you want those changes live."
+            description="The admin follows the active content backend. Use staging by default and only promote to production deliberately."
           >
             <ul className="space-y-3 text-sm leading-6 text-zinc-600">
+              <li>
+                <span className="font-medium text-zinc-950">Current backend:</span> {backend.label}
+                {backend.repo && backend.branch ? ` (${backend.repo} → ${backend.branch})` : null}
+              </li>
               <li>Use <span className="font-medium text-zinc-950">Global settings</span> for nav, footer, logos, and contact information.</li>
               <li>Use <span className="font-medium text-zinc-950">Pages</span> for evergreen pages and <span className="font-medium text-zinc-950">Blog</span> for articles.</li>
               <li>Homepage sections are intentionally grouped in one place to reduce accidental cross-page edits.</li>
+              <li>{backend.message}</li>
             </ul>
           </AdminPanel>
         </div>
