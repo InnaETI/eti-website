@@ -28,8 +28,11 @@ export type StorageBackendInfo = {
   label: string;
   repo?: string;
   branch?: string;
+  productionBranch?: string;
   canPublishToProduction: boolean;
   message: string;
+  stagingUrl?: string;
+  productionUrl?: string;
 };
 
 type GitHubConfig = {
@@ -37,6 +40,7 @@ type GitHubConfig = {
   owner: string;
   repo: string;
   branch: string;
+  productionBranch: string;
 };
 
 const CONTENT_BACKEND = process.env.CONTENT_BACKEND?.toLowerCase();
@@ -48,22 +52,27 @@ function getGitHubConfig(): GitHubConfig | null {
   const owner = process.env.GITHUB_REPO_OWNER;
   const repo = process.env.GITHUB_REPO_NAME;
   const branch = process.env.GITHUB_STAGING_BRANCH || 'staging';
+  const productionBranch = process.env.GITHUB_PRODUCTION_BRANCH || 'main';
 
   if (!token || !owner || !repo) {
     return null;
   }
 
-  return { token, owner, repo, branch };
+  return { token, owner, repo, branch, productionBranch };
 }
 
 export function getStorageBackendInfo(): StorageBackendInfo {
   const github = getGitHubConfig();
+  const stagingUrl = process.env.NEXT_PUBLIC_STAGING_SITE_URL || 'https://eti-website.vercel.app';
+  const productionUrl = process.env.NEXT_PUBLIC_PRODUCTION_SITE_URL;
 
   if (!github) {
     return {
       mode: 'local',
       label: 'Local file mode',
       canPublishToProduction: false,
+      stagingUrl,
+      productionUrl,
       message:
         CONTENT_BACKEND === 'github'
           ? 'GitHub mode was requested but required GitHub environment variables are missing, so the admin is using the local repository files instead.'
@@ -76,10 +85,33 @@ export function getStorageBackendInfo(): StorageBackendInfo {
     label: 'GitHub staging mode',
     repo: `${github.owner}/${github.repo}`,
     branch: github.branch,
+    productionBranch: github.productionBranch,
     canPublishToProduction: true,
+    stagingUrl,
+    productionUrl,
     message:
       'Edits save directly to the configured GitHub staging branch. Review the site there before promoting to production.',
   };
+}
+
+export async function promoteStagingToProduction() {
+  const github = getGitHubConfig();
+  if (!github) {
+    throw new Error('GitHub-backed publishing is not configured.');
+  }
+
+  const url = `https://api.github.com/repos/${github.owner}/${github.repo}/merges`;
+  return githubFetchJson<{ sha: string; message: string }>(url, github, {
+    method: 'POST',
+    body: JSON.stringify({
+      base: github.productionBranch,
+      head: github.branch,
+      commit_message: `Promote ${github.branch} to ${github.productionBranch}`,
+    }),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
 }
 
 function getContentsUrl(repoPath: string, config: GitHubConfig) {

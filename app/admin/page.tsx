@@ -63,6 +63,11 @@ export default async function AdminDashboardPage() {
             <div className="grid gap-4 md:grid-cols-2">
               {[
                 {
+                  href: '/admin/publishing',
+                  title: 'Publishing',
+                  description: 'See the active backend mode, review staging, and promote approved staging changes to production.',
+                },
+                {
                   href: '/admin/media',
                   title: 'Media',
                   description: 'Hero backgrounds, brand logos, and the main visual assets used across the site.',
