@@ -19,12 +19,39 @@ function SendIcon({ className }: { className?: string }) {
 
 export function ContactForm() {
   const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle');
+  const [errorMessage, setErrorMessage] = useState('');
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+
     setStatus('sending');
-    await new Promise((r) => setTimeout(r, 800));
-    setStatus('sent');
+    setErrorMessage('');
+
+    try {
+      const response = await fetch('/api/contact/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: formData.get('name'),
+          email: formData.get('email'),
+          organization: formData.get('organization'),
+          message: formData.get('message'),
+        }),
+      });
+
+      if (!response.ok) {
+        const data = (await response.json().catch(() => null)) as { error?: string } | null;
+        throw new Error(data?.error || 'Unable to send your message right now.');
+      }
+
+      form.reset();
+      setStatus('sent');
+    } catch (error) {
+      setStatus('error');
+      setErrorMessage(error instanceof Error ? error.message : 'Unable to send your message right now.');
+    }
   }
 
   const inputClass =
@@ -102,7 +129,7 @@ export function ContactForm() {
       )}
       {status === 'error' && (
         <p className="text-sm text-red-600" role="alert">
-          Something went wrong. Please try again or email us directly.
+          {errorMessage || 'Something went wrong. Please try again or email us directly.'}
         </p>
       )}
       <PrimaryButton
@@ -114,7 +141,7 @@ export function ContactForm() {
         {status !== 'sending' && status !== 'sent' ? <SendIcon className="h-[1.1em] w-[1.1em]" /> : null}
       </PrimaryButton>
       <p className="text-xs leading-5 text-[var(--color-ink-muted)]">
-        This form is a demo in this build; connect it to your inbox or CRM when ready.
+        Messages from this form are sent to info@emergingti.com.
       </p>
     </form>
   );
