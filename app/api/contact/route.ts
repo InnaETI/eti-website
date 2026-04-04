@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { Resend } from 'resend';
+import nodemailer from 'nodemailer';
 
 type ContactPayload = {
   name?: string;
@@ -12,13 +12,30 @@ function isValidEmail(value: string) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
 }
 
-function getResendClient() {
-  const apiKey = process.env.RESEND_API_KEY;
-  return apiKey ? new Resend(apiKey) : null;
+function getMailerConfig() {
+  const host = process.env.SMTP_HOST || 'smtp.gmail.com';
+  const port = Number(process.env.SMTP_PORT || '587');
+  const user = process.env.SMTP_USER || '';
+  const pass = process.env.SMTP_PASS || '';
+
+  if (!user || !pass) {
+    return null;
+  }
+
+  return {
+    host,
+    port,
+    secure: port === 465,
+    requireTLS: port !== 465,
+    auth: {
+      user,
+      pass,
+    },
+  };
 }
 
 function getFromAddress() {
-  return process.env.CONTACT_FROM_EMAIL || process.env.RESEND_FROM_EMAIL || '';
+  return process.env.CONTACT_FROM_EMAIL || process.env.SMTP_USER || '';
 }
 
 export async function POST(request: Request) {
@@ -43,13 +60,13 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'Enter a valid email address.' }, { status: 400 });
   }
 
-  const resend = getResendClient();
+  const mailerConfig = getMailerConfig();
   const to = process.env.CONTACT_TO_EMAIL || 'info@emergingti.com';
   const from = getFromAddress();
 
-  if (!resend || !from) {
+  if (!mailerConfig || !from) {
     if (process.env.NODE_ENV !== 'production') {
-      console.log('Contact form email captured locally (Resend not configured):', {
+      console.log('Contact form email captured locally (SMTP not configured):', {
         to,
         from: from || 'missing CONTACT_FROM_EMAIL',
         replyTo: email,
@@ -62,8 +79,7 @@ export async function POST(request: Request) {
 
     return NextResponse.json(
       {
-        error:
-          'Contact email is not configured yet. Add RESEND_API_KEY and CONTACT_FROM_EMAIL to enable delivery.',
+        error: 'Contact email is not configured yet. Add SMTP_USER, SMTP_PASS, and CONTACT_FROM_EMAIL.',
       },
       { status: 503 }
     );
@@ -89,7 +105,8 @@ export async function POST(request: Request) {
   `;
 
   try {
-    const result = await resend.emails.send({
+    const transporter = nodemailer.createTransport(mailerConfig);
+    const result = await transporter.sendMail({
       from,
       to,
       replyTo: email,
@@ -97,13 +114,7 @@ export async function POST(request: Request) {
       text,
       html,
     });
-
-    if (result.error) {
-      console.error('Contact email failed', result.error);
-      return NextResponse.json({ error: 'Unable to send your message right now.' }, { status: 500 });
-    }
-
-    return NextResponse.json({ ok: true, id: result.data?.id || null });
+    return NextResponse.json({ ok: true, id: result.messageId || null });
   } catch (error) {
     console.error('Contact email failed', error);
     return NextResponse.json({ error: 'Unable to send your message right now.' }, { status: 500 });
