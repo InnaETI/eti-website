@@ -13,10 +13,10 @@ function isValidEmail(value: string) {
 }
 
 function getMailerConfig() {
-  const host = process.env.SMTP_HOST || 'smtp.gmail.com';
-  const port = Number(process.env.SMTP_PORT || '587');
-  const user = process.env.SMTP_USER || '';
-  const pass = process.env.SMTP_PASS || '';
+  const host = (process.env.SMTP_HOST || 'smtp.gmail.com').trim();
+  const port = Number((process.env.SMTP_PORT || '587').trim());
+  const user = (process.env.SMTP_USER || '').trim();
+  const pass = (process.env.SMTP_PASS || '').trim();
 
   if (!user || !pass) {
     return null;
@@ -35,7 +35,7 @@ function getMailerConfig() {
 }
 
 function getFromAddress() {
-  return process.env.CONTACT_FROM_EMAIL || process.env.SMTP_USER || '';
+  return (process.env.CONTACT_FROM_EMAIL || process.env.SMTP_USER || '').trim();
 }
 
 export async function POST(request: Request) {
@@ -61,7 +61,7 @@ export async function POST(request: Request) {
   }
 
   const mailerConfig = getMailerConfig();
-  const to = process.env.CONTACT_TO_EMAIL || 'info@emergingti.com';
+  const to = (process.env.CONTACT_TO_EMAIL || 'info@emergingti.com').trim();
   const from = getFromAddress();
 
   if (!mailerConfig || !from) {
@@ -117,6 +117,22 @@ export async function POST(request: Request) {
     return NextResponse.json({ ok: true, id: result.messageId || null });
   } catch (error) {
     console.error('Contact email failed', error);
-    return NextResponse.json({ error: 'Unable to send your message right now.' }, { status: 500 });
+    if (typeof error === 'object' && error && 'code' in error && error.code === 'EAUTH') {
+      return NextResponse.json(
+        {
+          error:
+            'Email delivery is temporarily misconfigured. Please email info@emergingti.com directly while we finish fixing the website mail settings.',
+        },
+        { status: 500 }
+      );
+    }
+
+    return NextResponse.json(
+      {
+        error:
+          'Unable to send your message right now. Please email info@emergingti.com directly and we will respond as soon as possible.',
+      },
+      { status: 500 }
+    );
   }
 }
