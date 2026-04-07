@@ -16,7 +16,8 @@ export const metadata: Metadata = {
 };
 
 const WEBSITE_URL = 'https://www.emergingti.com/';
-const HERO_IMAGE_URL = '/wp-content/uploads/2020/05/shutterstock-banner_1692360436.jpg';
+const HERO_IMAGE_URL = '/images/advancing-healthcare-it-hero.jpg';
+const DETAIL_BANNER_IMAGE_URL = '/wp-content/uploads/2020/05/shutterstock-banner_1692360436.jpg';
 const LOGO_URL = '/wp-content/uploads/2017/08/logo-transparent-horizontal-80-237-dark.png';
 
 const TRUST_PANEL = [
@@ -110,8 +111,21 @@ export default function AdvancingHealthcareItPage() {
     <div className="min-h-screen bg-[#f3f6fa] text-[var(--color-ink)]">
       <Header />
       <main>
-        <section className="border-b border-[rgba(17,39,77,0.08)] bg-[#17345E] text-white">
-          <div className="container-content py-10 sm:py-12 lg:py-14">
+        <section className="relative overflow-hidden border-b border-[rgba(17,39,77,0.08)] bg-[#17345E] text-white">
+          <div className="absolute inset-0">
+            <Image
+              src={HERO_IMAGE_URL}
+              alt="Tablet, pen, and healthcare reporting dashboard"
+              fill
+              priority
+              sizes="100vw"
+              className="object-cover object-center"
+              unoptimized
+            />
+            <div className="absolute inset-0 bg-[linear-gradient(100deg,rgba(10,22,46,0.94)_0%,rgba(17,39,77,0.78)_42%,rgba(17,39,77,0.58)_72%,rgba(17,39,77,0.74)_100%)]" />
+          </div>
+
+          <div className="relative z-10 container-content py-10 sm:py-12 lg:py-14">
             <Link href={WEBSITE_URL} aria-label="Visit ETI website" className="inline-flex items-center">
               <Image
                 src={LOGO_URL}
@@ -143,7 +157,7 @@ export default function AdvancingHealthcareItPage() {
                 </div>
               </div>
 
-              <aside className="overflow-hidden rounded-[1.5rem] border border-[rgba(17,39,77,0.12)] bg-white text-[var(--color-ink)] shadow-[0_24px_70px_rgba(4,15,34,0.24)]">
+              <aside className="overflow-hidden rounded-[1.5rem] border border-white/15 bg-[rgba(248,251,255,0.96)] text-[var(--color-ink)] shadow-[0_24px_70px_rgba(4,15,34,0.28)] backdrop-blur-[8px]">
                 <div className="bg-[linear-gradient(135deg,#11274d_0%,#214f98_100%)] px-5 py-4 text-white sm:px-6">
                   <p className="text-[0.72rem] font-semibold uppercase tracking-[0.2em] text-white/70">
                     ETI at a glance
@@ -153,7 +167,7 @@ export default function AdvancingHealthcareItPage() {
                     executive visibility.
                   </p>
                 </div>
-                <div className="px-5 py-2.5 sm:px-6">
+                <div className="bg-[#f8fbff] px-5 py-2.5 sm:px-6">
                   {TRUST_PANEL.map((group, index) => (
                     <div
                       key={group.heading}
@@ -261,7 +275,7 @@ export default function AdvancingHealthcareItPage() {
           <div className="overflow-hidden rounded-[1.75rem] border border-[rgba(17,39,77,0.1)] shadow-[0_20px_60px_rgba(17,39,77,0.08)]">
             <div className="relative h-[210px] sm:h-[250px] lg:h-[300px]">
               <Image
-                src={HERO_IMAGE_URL}
+                src={DETAIL_BANNER_IMAGE_URL}
                 alt="ETI leadership team banner"
                 fill
                 sizes="(max-width: 1320px) 100vw, 1320px"
