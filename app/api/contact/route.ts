@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { lookup } from 'node:dns/promises';
 import nodemailer from 'nodemailer';
 
 type ContactPayload = {
@@ -12,7 +13,7 @@ function isValidEmail(value: string) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
 }
 
-function getMailerConfig() {
+async function getMailerConfig() {
   const host = (process.env.SMTP_HOST || 'smtp.gmail.com').trim();
   const port = Number((process.env.SMTP_PORT || '587').trim());
   const user = (process.env.SMTP_USER || '').trim();
@@ -22,15 +23,28 @@ function getMailerConfig() {
     return null;
   }
 
+  let resolvedHost = host;
+
+  try {
+    const result = await lookup(host, { family: 4 });
+    resolvedHost = result.address;
+  } catch (error) {
+    console.warn(`Failed to resolve ${host} to IPv4, falling back to hostname`, error);
+  }
+
   return {
-    host,
+    host: resolvedHost,
     port,
     secure: port === 465,
     requireTLS: port !== 465,
+    connectionTimeout: 10_000,
+    greetingTimeout: 10_000,
+    socketTimeout: 20_000,
     auth: {
       user,
       pass,
     },
+    tls: resolvedHost === host ? undefined : { servername: host },
   };
 }
 
@@ -60,7 +74,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'Enter a valid email address.' }, { status: 400 });
   }
 
-  const mailerConfig = getMailerConfig();
+  const mailerConfig = await getMailerConfig();
   const to = (process.env.CONTACT_TO_EMAIL || 'info@emergingti.com').trim();
   const from = getFromAddress();
 
