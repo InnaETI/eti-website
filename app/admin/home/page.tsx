@@ -3,6 +3,9 @@
 import { useEffect, useState } from 'react';
 import { ImageField } from '../components/ImageField';
 import { PreviewLink } from '../components/PreviewLink';
+import { AdminPageHeader } from '../components/AdminPageHeader';
+import { AdminPanel } from '../components/AdminPanel';
+import { AdminBackendNotice } from '../components/AdminBackendNotice';
 
 type Pillar = { title: string; image: string; copy: string; linkText: string; href: string };
 type ServiceItem = { icon: string; title: string };
@@ -11,6 +14,21 @@ type NewsSection = { heading: string; links: NewsLink[] };
 
 type HomeData = {
   heroBanner?: string;
+  hero?: {
+    eyebrow?: string;
+    title?: string;
+    subtitle?: string;
+    primaryLabel?: string;
+    primaryHref?: string;
+    secondaryLabel?: string;
+    secondaryHref?: string;
+    badgeTitle?: string;
+    badgeBody?: string;
+    badgePoints?: string[];
+  };
+  metrics?: Array<{ value: string; label: string; detail?: string }>;
+  featuredClients?: Array<{ name: string; outcome: string; summary: string }>;
+  sections?: unknown[];
   pillars?: Pillar[];
   services?: { intro: string; viewMoreHref: string; viewMoreText: string; items: ServiceItem[] };
   clients?: { intro: string; viewMoreHref: string; viewMoreText: string };
@@ -29,6 +47,21 @@ const defaultHome: HomeData = {
   about: { title: '', copy: '' },
   joinTeam: { title: '', copy: '', buttonText: '', href: '' },
   news: { title: 'News', sections: [] },
+  hero: {
+    eyebrow: '',
+    title: '',
+    subtitle: '',
+    primaryLabel: '',
+    primaryHref: '',
+    secondaryLabel: '',
+    secondaryHref: '',
+    badgeTitle: '',
+    badgeBody: '',
+    badgePoints: [],
+  },
+  metrics: [],
+  featuredClients: [],
+  sections: [],
 };
 
 export default function AdminHomePage() {
@@ -36,6 +69,7 @@ export default function AdminHomePage() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState<{ type: 'ok' | 'error'; text: string } | null>(null);
+  const [showAdvanced, setShowAdvanced] = useState(false);
 
   useEffect(() => {
     fetch('/api/admin/content?type=home')
@@ -68,41 +102,258 @@ export default function AdminHomePage() {
   const about = data.about ?? defaultHome.about!;
   const joinTeam = data.joinTeam ?? defaultHome.joinTeam!;
   const news = data.news ?? defaultHome.news!;
+  const hero = data.hero ?? defaultHome.hero!;
+  const metrics = data.metrics ?? defaultHome.metrics!;
+  const featuredClients = data.featuredClients ?? defaultHome.featuredClients!;
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-6">
-        <div className="flex items-center gap-4">
-          <h1 className="text-2xl font-semibold text-zinc-900">Home page</h1>
-          <PreviewLink href="/" />
-        </div>
-        <button
-          type="button"
-          onClick={save}
-          disabled={saving}
-          className="rounded bg-zinc-900 px-4 py-2 text-sm font-medium text-white hover:bg-zinc-800 disabled:opacity-50"
-        >
-          {saving ? 'Saving…' : 'Save'}
-        </button>
-      </div>
+      <AdminPageHeader
+        eyebrow="Homepage"
+        title="Homepage content"
+        description="Control the ETI homepage hero, metrics, featured client proof points, pillars, and supporting sections from one workspace."
+        actions={
+          <>
+            <PreviewLink href="/" />
+            <button
+              type="button"
+              onClick={save}
+              disabled={saving}
+              className="rounded-full bg-[#1f3b68] px-4 py-2 text-sm font-medium text-white transition hover:bg-[#17345e] disabled:opacity-50"
+            >
+              {saving ? 'Saving…' : 'Save changes'}
+            </button>
+          </>
+        }
+      />
+      <AdminBackendNotice />
       {message && (
         <p className={`mb-4 text-sm ${message.type === 'ok' ? 'text-green-600' : 'text-red-600'}`}>
           {message.text}
         </p>
       )}
 
-      <div className="space-y-6 max-w-2xl">
-        <section className="rounded border border-zinc-200 bg-white p-4">
-          <h2 className="font-medium text-zinc-900 mb-3">Hero</h2>
+      <div className="space-y-6 max-w-4xl">
+        <AdminPanel title="Hero image" description="Update the homepage background image without touching the rest of the hero copy.">
           <ImageField
             label="Hero banner image"
             value={data.heroBanner ?? ''}
             onChange={(heroBanner) => setData({ ...data, heroBanner })}
+            help="This is the main homepage background behind the ETI positioning statement."
+            recommendedSize="1800 × 960px"
           />
-        </section>
+        </AdminPanel>
 
-        <section className="rounded border border-zinc-200 bg-white p-4">
-          <h2 className="font-medium text-zinc-900 mb-3">Pillars (Strategy / Methodology / Execution)</h2>
+        <AdminPanel title="Hero content">
+          <div className="space-y-3">
+            <input
+              type="text"
+              value={hero.eyebrow ?? ''}
+              onChange={(e) => setData({ ...data, hero: { ...hero, eyebrow: e.target.value } })}
+              placeholder="Eyebrow"
+              className="w-full rounded border border-zinc-300 px-3 py-2 text-sm"
+            />
+            <textarea
+              value={hero.title ?? ''}
+              onChange={(e) => setData({ ...data, hero: { ...hero, title: e.target.value } })}
+              placeholder="Hero title"
+              rows={3}
+              className="w-full rounded border border-zinc-300 px-3 py-2 text-sm"
+            />
+            <textarea
+              value={hero.subtitle ?? ''}
+              onChange={(e) => setData({ ...data, hero: { ...hero, subtitle: e.target.value } })}
+              placeholder="Hero subtitle"
+              rows={3}
+              className="w-full rounded border border-zinc-300 px-3 py-2 text-sm"
+            />
+            <div className="grid gap-2 sm:grid-cols-2">
+              <input
+                type="text"
+                value={hero.primaryLabel ?? ''}
+                onChange={(e) => setData({ ...data, hero: { ...hero, primaryLabel: e.target.value } })}
+                placeholder="Primary CTA label"
+                className="rounded border border-zinc-300 px-3 py-2 text-sm"
+              />
+              <input
+                type="text"
+                value={hero.primaryHref ?? ''}
+                onChange={(e) => setData({ ...data, hero: { ...hero, primaryHref: e.target.value } })}
+                placeholder="Primary CTA href"
+                className="rounded border border-zinc-300 px-3 py-2 text-sm"
+              />
+            </div>
+            <div className="grid gap-2 sm:grid-cols-2">
+              <input
+                type="text"
+                value={hero.secondaryLabel ?? ''}
+                onChange={(e) => setData({ ...data, hero: { ...hero, secondaryLabel: e.target.value } })}
+                placeholder="Secondary CTA label"
+                className="rounded border border-zinc-300 px-3 py-2 text-sm"
+              />
+              <input
+                type="text"
+                value={hero.secondaryHref ?? ''}
+                onChange={(e) => setData({ ...data, hero: { ...hero, secondaryHref: e.target.value } })}
+                placeholder="Secondary CTA href"
+                className="rounded border border-zinc-300 px-3 py-2 text-sm"
+              />
+            </div>
+            <input
+              type="text"
+              value={hero.badgeTitle ?? ''}
+              onChange={(e) => setData({ ...data, hero: { ...hero, badgeTitle: e.target.value } })}
+              placeholder="Right-side badge title"
+              className="w-full rounded border border-zinc-300 px-3 py-2 text-sm"
+            />
+            <textarea
+              value={hero.badgeBody ?? ''}
+              onChange={(e) => setData({ ...data, hero: { ...hero, badgeBody: e.target.value } })}
+              placeholder="Right-side badge body"
+              rows={2}
+              className="w-full rounded border border-zinc-300 px-3 py-2 text-sm"
+            />
+            <textarea
+              value={(hero.badgePoints ?? []).join('\n')}
+              onChange={(e) =>
+                setData({
+                  ...data,
+                  hero: {
+                    ...hero,
+                    badgePoints: e.target.value
+                      .split('\n')
+                      .map((value) => value.trim())
+                      .filter(Boolean),
+                  },
+                })
+              }
+              placeholder="Badge points, one per line"
+              rows={4}
+              className="w-full rounded border border-zinc-300 px-3 py-2 text-sm"
+            />
+          </div>
+        </AdminPanel>
+
+        <AdminPanel title="Metrics" description="Short proof points shown high on the homepage.">
+          <div className="space-y-3">
+            {metrics.map((metric, index) => (
+              <div key={`${metric.value}-${index}`} className="rounded border border-zinc-100 p-3 space-y-2">
+                <div className="grid gap-2 sm:grid-cols-2">
+                  <input
+                    type="text"
+                    value={metric.value}
+                    onChange={(e) => {
+                      const next = [...metrics];
+                      next[index] = { ...metric, value: e.target.value };
+                      setData({ ...data, metrics: next });
+                    }}
+                    placeholder="Value"
+                    className="rounded border border-zinc-300 px-3 py-2 text-sm"
+                  />
+                  <input
+                    type="text"
+                    value={metric.label}
+                    onChange={(e) => {
+                      const next = [...metrics];
+                      next[index] = { ...metric, label: e.target.value };
+                      setData({ ...data, metrics: next });
+                    }}
+                    placeholder="Label"
+                    className="rounded border border-zinc-300 px-3 py-2 text-sm"
+                  />
+                </div>
+                <textarea
+                  value={metric.detail ?? ''}
+                  onChange={(e) => {
+                    const next = [...metrics];
+                    next[index] = { ...metric, detail: e.target.value };
+                    setData({ ...data, metrics: next });
+                  }}
+                  placeholder="Detail"
+                  rows={2}
+                  className="w-full rounded border border-zinc-300 px-3 py-2 text-sm"
+                />
+                <button
+                  type="button"
+                  onClick={() => setData({ ...data, metrics: metrics.filter((_, i) => i !== index) })}
+                  className="text-sm text-red-600 hover:underline"
+                >
+                  Remove
+                </button>
+              </div>
+            ))}
+            <button
+              type="button"
+              onClick={() => setData({ ...data, metrics: [...metrics, { value: '', label: '', detail: '' }] })}
+              className="text-sm text-zinc-600 hover:underline"
+            >
+              + Add metric
+            </button>
+          </div>
+        </AdminPanel>
+
+        <AdminPanel title="Featured clients">
+          <div className="space-y-3">
+            {featuredClients.map((client, index) => (
+              <div key={`${client.name}-${index}`} className="rounded border border-zinc-100 p-3 space-y-2">
+                <input
+                  type="text"
+                  value={client.name}
+                  onChange={(e) => {
+                    const next = [...featuredClients];
+                    next[index] = { ...client, name: e.target.value };
+                    setData({ ...data, featuredClients: next });
+                  }}
+                  placeholder="Client name"
+                  className="w-full rounded border border-zinc-300 px-3 py-2 text-sm"
+                />
+                <input
+                  type="text"
+                  value={client.outcome}
+                  onChange={(e) => {
+                    const next = [...featuredClients];
+                    next[index] = { ...client, outcome: e.target.value };
+                    setData({ ...data, featuredClients: next });
+                  }}
+                  placeholder="Outcome headline"
+                  className="w-full rounded border border-zinc-300 px-3 py-2 text-sm"
+                />
+                <textarea
+                  value={client.summary}
+                  onChange={(e) => {
+                    const next = [...featuredClients];
+                    next[index] = { ...client, summary: e.target.value };
+                    setData({ ...data, featuredClients: next });
+                  }}
+                  placeholder="Summary"
+                  rows={3}
+                  className="w-full rounded border border-zinc-300 px-3 py-2 text-sm"
+                />
+                <button
+                  type="button"
+                  onClick={() => setData({ ...data, featuredClients: featuredClients.filter((_, i) => i !== index) })}
+                  className="text-sm text-red-600 hover:underline"
+                >
+                  Remove
+                </button>
+              </div>
+            ))}
+            <button
+              type="button"
+              onClick={() =>
+                setData({
+                  ...data,
+                  featuredClients: [...featuredClients, { name: '', outcome: '', summary: '' }],
+                })
+              }
+              className="text-sm text-zinc-600 hover:underline"
+            >
+              + Add client
+            </button>
+          </div>
+        </AdminPanel>
+
+        <AdminPanel title="Pillars (Strategy / Methodology / Execution)">
           <div className="space-y-4">
             {pillars.map((p, i) => (
               <div key={i} className="rounded border border-zinc-100 p-3 space-y-3">
@@ -180,10 +431,39 @@ export default function AdminHomePage() {
               + Add pillar
             </button>
           </div>
-        </section>
+        </AdminPanel>
 
-        <section className="rounded border border-zinc-200 bg-white p-4">
-          <h2 className="font-medium text-zinc-900 mb-3">Services</h2>
+        <AdminPanel title="Advanced JSON" description="Use this only when you need to edit homepage fields that are not yet surfaced in the structured form.">
+          <button
+            type="button"
+            onClick={() => setShowAdvanced(!showAdvanced)}
+            className="text-sm font-medium text-zinc-700 hover:text-zinc-900"
+          >
+            {showAdvanced ? '▼' : '▶'} Advanced: Edit raw home data (JSON)
+          </button>
+          {showAdvanced ? (
+            <>
+              <p className="mt-2 mb-2 text-xs text-zinc-500">
+                Use this for future homepage sections and layout blocks that are not yet exposed in the form UI.
+              </p>
+              <textarea
+                value={JSON.stringify(data, null, 2)}
+                onChange={(e) => {
+                  try {
+                    setData(JSON.parse(e.target.value || '{}') as HomeData);
+                  } catch {
+                    // keep previous value on invalid JSON
+                  }
+                }}
+                rows={18}
+                className="w-full rounded border border-zinc-300 px-3 py-2 text-sm font-mono"
+                spellCheck={false}
+              />
+            </>
+          ) : null}
+        </AdminPanel>
+
+        <AdminPanel title="Services">
           <div className="space-y-3">
             <div>
               <label className="block text-sm font-medium text-zinc-700 mb-1">Intro</label>
@@ -256,10 +536,9 @@ export default function AdminHomePage() {
               </button>
             </div>
           </div>
-        </section>
+        </AdminPanel>
 
-        <section className="rounded border border-zinc-200 bg-white p-4">
-          <h2 className="font-medium text-zinc-900 mb-3">Clients</h2>
+        <AdminPanel title="Clients">
           <div className="space-y-3">
             <div>
               <label className="block text-sm font-medium text-zinc-700 mb-1">Intro</label>
@@ -287,10 +566,9 @@ export default function AdminHomePage() {
               />
             </div>
           </div>
-        </section>
+        </AdminPanel>
 
-        <section className="rounded border border-zinc-200 bg-white p-4">
-          <h2 className="font-medium text-zinc-900 mb-3">CTA</h2>
+        <AdminPanel title="CTA">
           <div className="space-y-2">
             <input
               type="text"
@@ -323,10 +601,9 @@ export default function AdminHomePage() {
               />
             </div>
           </div>
-        </section>
+        </AdminPanel>
 
-        <section className="rounded border border-zinc-200 bg-white p-4">
-          <h2 className="font-medium text-zinc-900 mb-3">About</h2>
+        <AdminPanel title="About">
           <input
             type="text"
             value={about.title}
@@ -341,10 +618,9 @@ export default function AdminHomePage() {
             rows={4}
             className="w-full rounded border border-zinc-300 px-3 py-2 text-sm"
           />
-        </section>
+        </AdminPanel>
 
-        <section className="rounded border border-zinc-200 bg-white p-4">
-          <h2 className="font-medium text-zinc-900 mb-3">Join team</h2>
+        <AdminPanel title="Join team">
           <input
             type="text"
             value={joinTeam.title}
@@ -375,10 +651,9 @@ export default function AdminHomePage() {
               className="rounded border border-zinc-300 px-3 py-2 text-sm"
             />
           </div>
-        </section>
+        </AdminPanel>
 
-        <section className="rounded border border-zinc-200 bg-white p-4">
-          <h2 className="font-medium text-zinc-900 mb-3">News</h2>
+        <AdminPanel title="News">
           <input
             type="text"
             value={news.title}
@@ -467,7 +742,7 @@ export default function AdminHomePage() {
           >
             + Add news section
           </button>
-        </section>
+        </AdminPanel>
       </div>
     </div>
   );

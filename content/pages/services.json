@@ -1,14 +1,28 @@
 {
-  "title": "Our Services",
+  "title": "Services",
   "bannerImage": "/wp-content/uploads/2017/08/methodology-2.jpg",
-  "intro": "As your business evolves and expands, the demand for both technical and business proficiency becomes increasingly paramount. At ETI, we offer a diverse spectrum of professional services, from technical prowess to business acumen and resources, enabling your organization to navigate the intricate landscape of growth seamlessly. Our services are tailored to cater to your evolving technology needs, ensuring that your systems and IT talent elevate their performance, efficiency, and expertise in lockstep with your ambitions. With ETI as your steadfast partner, you gain access to a reliable and knowledgeable ally, equipped with robust capabilities, to propel your business to the next level of excellence. We bring a wealth of expertise and knowledge to empower our clients on their journey to success.",
+  "servicesOverview": {
+    "title": "ETI Services Overview",
+    "intro": "ETI provides consulting and delivery services that help organizations modernize, scale, and perform. We work with healthcare organizations, private equity backed businesses, and growth focused companies that need experienced leadership, strong execution, and measurable results.",
+    "columns": [
+      "We work across technology, operations, product, data, security, AI, and enterprise platforms, supporting organizations where business priorities, system constraints, and delivery demands intersect. ETI can engage at the enterprise, program, platform, or workflow level, depending on whether the need is clearer direction, stronger operating discipline, better coordination across teams, or more practical support around important work.",
+      "We provide strategy leadership, implementation oversight, solution architecture and build support, operational improvement, and hands-on support through critical change. Our methods help organizations retain business know-how, preserve internal IP, and future-proof platforms so enterprise value can keep compounding over time."
+    ]
+  },
+  "intro": "ETI helps companies scale, modernize, and perform at a higher level. We combine technical expertise, business acumen, and hands on execution to improve systems, strengthen operations, and deliver measurable results. Clients bring in ETI when they need a trusted partner who can evaluate, re-architect, lead, build, and get the job done.",
   "services": [
     {
       "title": "Agile",
       "iconUrl": "/wp-content/uploads/2015/11/clock.svg",
-      "items": ["Agile Transformations", "Lean Agile Management", "Cross-Functional Team Leadership"],
-      "linkText": "Distributed Workforce Solutions",
-      "linkHref": "/distributed-workforce-solutions"
+      "items": [
+        "Agile Transformations",
+        "Lean Agile Management",
+        "Cross-Functional Team Leadership",
+        {
+          "label": "Distributed Workforce",
+          "href": "/distributed-workforce-solutions"
+        }
+      ]
     },
     {
       "title": "Digital Transformation",
@@ -26,10 +40,21 @@
       "items": ["AI BOT Services", "Azure Healthcare BOT Integration", "Skills BOT Development", "AI Document Intelligence", "MLOps (Full ML Model LifeCycle)"]
     }
   ],
+  "valueDeliver": {
+    "title": "Value We Deliver",
+    "items": [
+      "Technology strategy aligned to business priorities",
+      "Stronger execution across critical initiatives",
+      "Modernized systems and operating environments",
+      "Improved operational efficiency and performance",
+      "Better visibility through data and analytics",
+      "Greater readiness for scale, integration, and growth"
+    ]
+  },
   "cta": {
     "title": "Let's Talk about your project",
     "subtitle": "Please inquire how ETI can provide you with the expertise you desire.",
     "buttonText": "Brainstorm with our Experts",
-    "href": "/rfp-wizard"
+    "href": "/contact-us"
   }
 }

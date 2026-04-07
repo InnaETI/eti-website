@@ -1,5 +1,39 @@
 {
-  "heroBanner": "/wp-content/uploads/2020/05/shutterstock-banner_1692360436.jpg",
+  "howItWorksBackground": "/images/section-2-how-eti-works-bg.jpg",
+  "heroBanner": "/images/background-image-for-eti.png",
+  "hero": {
+    "eyebrow": "Emerging Technologies, Inc.",
+    "title": "Technology decisions that shape performance.",
+    "subtitle": "Our mission is to help companies become more efficient, profitable, and future-proof through the continuous implementation of modern technologies and proven methodologies. ETI helps leadership teams align business priorities, technology decisions, and execution plans in complex environments.",
+    "primaryLabel": "Request a conversation",
+    "primaryHref": "/contact-us",
+    "secondaryLabel": "Explore capabilities",
+    "secondaryHref": "/services",
+    "badgeTitle": "Where ETI leads",
+    "badgeBody": "We step in when leadership priorities, delivery pressure, budget constraints, and technical complexity start pulling in different directions.",
+    "badgePoints": [
+      "Executive pre-delivery alignment",
+      "Technology strategy tied to operational priorities",
+      "Hands-on guidance from planning to execution"
+    ]
+  },
+  "metrics": [
+    {
+      "value": "Strategy",
+      "label": "Set the direction",
+      "detail": "Clarify priorities, budget logic, platform options, and the real decision surface."
+    },
+    {
+      "value": "Methodology",
+      "label": "Build the operating model",
+      "detail": "Create a practical path for teams, governance, and delivery rather than a slide-deck plan."
+    },
+    {
+      "value": "Execution",
+      "label": "Carry the work through",
+      "detail": "Stay close to delivery so the original business intent survives implementation pressure."
+    }
+  ],
   "pillars": [
     {
       "title": "Strategy",
@@ -24,9 +58,9 @@
     }
   ],
   "services": {
-    "intro": "ETI offers a wide variety of professional services ranging from technical to business expertise and resources. As your business grows and scales, your technology needs expand at a rapid pace. Your systems and your IT talent needs to increase in performance, efficiency and expertise. You need a strong, dependable and knowledgeable partner with strong and varied capabilities in order to excel to the next level. Emerging Technologies, Inc. brings such expertise and knowledge to its clients.",
+    "intro": "ETI brings executive advisory, delivery discipline, and hands-on technology guidance to organizations navigating strategic change.",
     "viewMoreHref": "/services",
-    "viewMoreText": "View More",
+    "viewMoreText": "View capabilities",
     "items": [
       { "icon": "/wp-content/uploads/2015/11/clock.svg", "title": "Agile" },
       { "icon": "/wp-content/uploads/2015/11/man.svg", "title": "Digital Transformation" },
@@ -35,26 +69,48 @@
     ]
   },
   "clients": {
-    "intro": "Our valued clients epitomize determination, motivation, and an unwavering drive towards achievement. They possess a crystal-clear vision of the elements essential for their business prosperity. In collaboration with ETI, they entrust us to bring this vision to fruition. Acting as an integral part of their team, we wholeheartedly share in their enthusiasm, passion, and innovative spirit. Our close partnerships extend across diverse industries and regions within the United States.",
+    "sectionLabel": "Selected work",
+    "sectionHeadline": "Technology work tied to business outcomes.",
+    "intro": "ETI supports organizations where technology decisions shape growth, operations, and execution. These examples show how we help leadership teams move important initiatives forward with clearer direction and measurable value.",
     "viewMoreHref": "/clients",
-    "viewMoreText": "view more"
+    "viewMoreText": "View selected work"
   },
+  "featuredClients": [
+    {
+      "name": "Oak Street Health",
+      "outcome": "Outreach and supplemental coverage platform built for scale.",
+      "summary": "ETI supported a custom technology ecosystem that helped power multi-market growth and long term enterprise value."
+    },
+    {
+      "name": "Integrated Surgical Solutions",
+      "outcome": "Technology foundation for national growth.",
+      "summary": "ETI helped align systems, execution, and internal processes as the business expanded and advanced toward a major strategic milestone."
+    },
+    {
+      "name": "Healthcare Payment Specialists",
+      "outcome": "Platform improvement tied to reimbursement operations.",
+      "summary": "ETI assessed and improved the platform to strengthen automation, workflows, and operational performance in a complex healthcare environment."
+    }
+  ],
   "cta": {
     "title": "Schedule a call with ETI Leader",
     "subtitle": "to discuss your business situation and desired horizons",
     "buttonText": "Brainstorm with an Expert",
-    "href": "/rfp-wizard"
+    "href": "/contact-us"
   },
   "about": {
     "title": "About Emerging Technologies",
-    "copy": "Emerging Technologies, Inc. (ETI) consulting services offer a holistic approach to transforming organizations, from fostering user collaboration and Agile practices to implementing DevOps methodologies, ensuring quality assurance, and delivering accurate project estimates. We specialize in aligning project goals with budgets, optimizing resource management, and enhancing team efficiency through proactive project management. Our tailored change management strategies facilitate seamless transitions and maximize adoption. With our comprehensive solutions, we empower businesses to overcome challenges, achieve user-centric development, streamline operations, and achieve successful project outcomes."
+    "copy": "Emerging Technologies, Inc. (ETI) brings a practical blend of IT and business expertise to complex transformation work. We help organizations strengthen collaboration, adopt agile and DevOps practices, improve quality and delivery planning, and manage change in a way teams can absorb. Our focus is to align goals, budgets, and execution so clients can modernize operations, improve adoption, and create durable business value."
   },
-  "joinTeam": {
-    "title": "Join Our Team",
-    "copy": "Our Team of experts represents the spirit and vision of the company. We are self-motivated, committed and dedicated to limitless growth of our clients. Our resources have determination to succeed and enable our clients to grow and expand their business. We strive to build workforce that is team-oriented, talented, well-rounded, and always ready to go extra mile for our clients. If you share our vision and see technology as a means to mutual success we encourage you to reach and see you and ETI is a great match.",
-    "buttonText": "Join our Team",
-    "href": "/career"
-  },
+  "sections": [
+    {
+      "type": "quote",
+      "eyebrow": "Operating principle",
+      "quote": "Transformation work fails when strategy, team realities, and execution sequencing are treated as separate problems.",
+      "attribution": "ETI point of view",
+      "backgroundImage": "/images/section-2-how-eti-works-bg.jpg"
+    }
+  ],
   "news": {
     "title": "News",
     "sections": [

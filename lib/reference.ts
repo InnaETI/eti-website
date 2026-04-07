@@ -13,15 +13,12 @@ const INTERNAL_PATHS = [
   '/services/',
   '/clients/',
   '/team/',
-  '/careers/',
   '/blog/',
   '/contact-us/',
   '/privacy-policy/',
-  '/rfp-wizard/',
   '/strategy/',
   '/methodology/',
   '/execution/',
-  '/career/',
   '/distributed-workforce-solutions',
 ];
 

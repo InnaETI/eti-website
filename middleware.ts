@@ -50,18 +50,27 @@ async function verifyAdminCookieEdge(cookieValue: string, secret: string): Promi
 
 export async function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
-  if (!isAdminPath(pathname)) return NextResponse.next();
-  if (isLoginPath(pathname)) return NextResponse.next();
+  const requestHeaders = new Headers(request.headers);
+  requestHeaders.set('x-current-path', pathname);
+
+  const nextResponse = NextResponse.next({
+    request: {
+      headers: requestHeaders,
+    },
+  });
+
+  if (!isAdminPath(pathname)) return nextResponse;
+  if (isLoginPath(pathname)) return nextResponse;
 
   const raw = process.env.ADMIN_PASSWORD ?? '';
   const secret = raw.trim();
   if (!secret || secret.length < 8) {
-    return NextResponse.next();
+    return nextResponse;
   }
 
   const cookieValue = request.cookies.get(ADMIN_SESSION)?.value;
   const valid = await verifyAdminCookieEdge(cookieValue ?? '', secret);
-  if (valid) return NextResponse.next();
+  if (valid) return nextResponse;
 
   const from = encodeURIComponent(pathname || '/admin');
   const loginUrl = new URL(`/admin/login/?from=${from}`, request.url);
@@ -69,5 +78,7 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/admin', '/admin/:path*'],
+  matcher: [
+    '/((?!_next/static|_next/image|favicon.ico|robots.txt|sitemap.xml|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico|css|js|map|txt|woff|woff2)$).*)',
+  ],
 };

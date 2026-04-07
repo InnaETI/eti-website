@@ -1,0 +1,8 @@
+{
+  "name": "ETI Website",
+  "environments": {
+    "dev": "http://localhost:3010",
+    "staging": "https://eti-website.vercel.app/",
+    "production": "https://www.emergingti.com/"
+  }
+}

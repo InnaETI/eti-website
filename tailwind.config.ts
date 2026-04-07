@@ -13,6 +13,10 @@ const config: Config = {
           blue: 'var(--color-brand-blue)',
           orange: 'var(--color-brand-orange)',
         },
+        canvas: {
+          DEFAULT: 'var(--color-canvas)',
+          warm: 'var(--color-canvas-warm)',
+        },
         surface: {
           DEFAULT: 'var(--color-surface)',
           elevated: 'var(--color-surface-elevated)',
@@ -25,10 +29,9 @@ const config: Config = {
         },
       },
       fontFamily: {
-        sans: ['var(--font-open-sans)', 'system-ui', 'sans-serif'],
-        raleway: ['var(--font-raleway)', 'sans-serif'],
-        lora: ['var(--font-lora)', 'serif'],
-        display: ['var(--font-raleway)', 'sans-serif'],
+        sans: ['var(--font-body)', 'system-ui', 'sans-serif'],
+        display: ['var(--font-display)', 'system-ui', 'sans-serif'],
+        accent: ['var(--font-accent)', 'serif'],
       },
       spacing: {
         '18': '4.5rem',

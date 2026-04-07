@@ -4,8 +4,8 @@
   "shortName": "ETI",
   "tagline": "Executive IT and AI Advisory",
   "description": "ETI delivers strategy, methodology, and execution for technology transformation. We partner with leadership to align technology with business goals.",
-  "contactEmail": "",
-  "contactPhone": "",
+  "contactEmail": "info@emergingti.com",
+  "contactPhone": "847-498-0946",
   "social": {
     "facebook": "https://www.facebook.com/EmergingTI/",
     "linkedin": "https://www.linkedin.com/company/323460/"
@@ -15,16 +15,14 @@
     { "href": "/services", "label": "Services" },
     { "href": "/clients", "label": "Clients" },
     { "href": "/team", "label": "Team" },
-    { "href": "/careers", "label": "Careers" },
-    { "href": "/blog", "label": "Blog" },
-    { "href": "/contact-us", "label": "Contact Us" }
+    { "href": "/blog", "label": "Insights" }
   ],
   "footerLinks": [
     { "href": "/about-us", "label": "About Us" },
     { "href": "/services", "label": "Services" },
     { "href": "/clients", "label": "Clients" },
     { "href": "/team", "label": "Team" },
-    { "href": "/careers", "label": "Careers" },
+    { "href": "/blog", "label": "Insights" },
     { "href": "/contact-us", "label": "Contact Us" },
     { "href": "/privacy-policy", "label": "Privacy" }
   ],

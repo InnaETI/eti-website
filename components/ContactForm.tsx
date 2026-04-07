@@ -3,26 +3,69 @@
 import { useState } from 'react';
 import { PrimaryButton } from '@/components/Button';
 
+function SendIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
+      <path
+        d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
 export function ContactForm() {
   const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle');
+  const [errorMessage, setErrorMessage] = useState('');
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+
     setStatus('sending');
-    // Placeholder: in production, POST to an API or form service
-    await new Promise((r) => setTimeout(r, 800));
-    setStatus('sent');
+    setErrorMessage('');
+
+    try {
+      const response = await fetch('/api/contact/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: formData.get('name'),
+          email: formData.get('email'),
+          organization: formData.get('organization'),
+          message: formData.get('message'),
+        }),
+      });
+
+      if (!response.ok) {
+        const data = (await response.json().catch(() => null)) as { error?: string } | null;
+        throw new Error(data?.error || 'Unable to send your message right now.');
+      }
+
+      form.reset();
+      setStatus('sent');
+    } catch (error) {
+      setStatus('error');
+      setErrorMessage(error instanceof Error ? error.message : 'Unable to send your message right now.');
+    }
   }
+
+  const inputClass =
+    'mt-1.5 block w-full rounded-2xl border border-[var(--color-border)] bg-white px-4 py-3 text-[var(--color-ink)] placeholder:text-[var(--color-ink-muted)] focus:border-[var(--color-brand-orange)] focus:outline-none focus:ring-2 focus:ring-[rgba(226,121,66,0.16)]';
 
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex flex-col gap-6"
+      className="content-card flex flex-col gap-5 rounded-[2rem] border border-[rgba(255,255,255,0.7)] p-6 sm:p-8 lg:p-9"
       noValidate
       aria-label="Contact form"
     >
       <div>
-        <label htmlFor="contact-name" className="block text-sm font-medium text-[var(--color-ink)]">
+        <label htmlFor="contact-name" className="block text-sm font-medium text-[var(--color-ink-muted)]">
           Name
         </label>
         <input
@@ -31,13 +74,13 @@ export function ContactForm() {
           name="name"
           required
           autoComplete="name"
-          className="mt-1 block w-full rounded-lg border border-[var(--color-border)] bg-[var(--color-surface-elevated)] px-4 py-2.5 text-[var(--color-ink)] placeholder:text-[var(--color-ink-muted)] focus:border-[var(--color-brand-orange)] focus:outline-none focus:ring-1 focus:ring-[var(--color-brand-orange)]"
+          className={inputClass}
           placeholder="Your name"
           disabled={status === 'sending' || status === 'sent'}
         />
       </div>
       <div>
-        <label htmlFor="contact-email" className="block text-sm font-medium text-[var(--color-ink)]">
+        <label htmlFor="contact-email" className="block text-sm font-medium text-[var(--color-ink-muted)]">
           Email
         </label>
         <input
@@ -46,55 +89,60 @@ export function ContactForm() {
           name="email"
           required
           autoComplete="email"
-          className="mt-1 block w-full rounded-lg border border-[var(--color-border)] bg-[var(--color-surface-elevated)] px-4 py-2.5 text-[var(--color-ink)] placeholder:text-[var(--color-ink-muted)] focus:border-[var(--color-brand-orange)] focus:outline-none focus:ring-1 focus:ring-[var(--color-brand-orange)]"
+          className={inputClass}
           placeholder="you@company.com"
           disabled={status === 'sending' || status === 'sent'}
         />
       </div>
       <div>
-        <label htmlFor="contact-phone" className="block text-sm font-medium text-[var(--color-ink)]">
-          Phone <span className="text-[var(--color-ink-muted)]">(optional)</span>
+        <label htmlFor="contact-organization" className="block text-sm font-medium text-[var(--color-ink-muted)]">
+          Organization
         </label>
         <input
-          id="contact-phone"
-          type="tel"
-          name="phone"
-          autoComplete="tel"
-          className="mt-1 block w-full rounded-lg border border-[var(--color-border)] bg-[var(--color-surface-elevated)] px-4 py-2.5 text-[var(--color-ink)] placeholder:text-[var(--color-ink-muted)] focus:border-[var(--color-brand-orange)] focus:outline-none focus:ring-1 focus:ring-[var(--color-brand-orange)]"
-          placeholder="+1 (555) 000-0000"
+          id="contact-organization"
+          type="text"
+          name="organization"
+          autoComplete="organization"
+          className={inputClass}
+          placeholder="Your organization"
           disabled={status === 'sending' || status === 'sent'}
         />
       </div>
       <div>
-        <label htmlFor="contact-message" className="block text-sm font-medium text-[var(--color-ink)]">
-          Message
+        <label htmlFor="contact-message" className="block text-sm font-medium text-[var(--color-ink-muted)]">
+          How can ETI help?
         </label>
         <textarea
           id="contact-message"
           name="message"
-          rows={4}
+          rows={5}
           required
-          className="mt-1 block w-full rounded-lg border border-[var(--color-border)] bg-[var(--color-surface-elevated)] px-4 py-2.5 text-[var(--color-ink)] placeholder:text-[var(--color-ink-muted)] focus:border-[var(--color-brand-orange)] focus:outline-none focus:ring-1 focus:ring-[var(--color-brand-orange)]"
-          placeholder="Tell us about your situation and what you're looking for."
+          className={`${inputClass} resize-y min-h-[8rem]`}
+          placeholder="Tell us about your initiative…"
           disabled={status === 'sending' || status === 'sent'}
         />
       </div>
       {status === 'sent' && (
-        <p className="text-sm text-[var(--color-brand-orange)]" role="status">
-          Thank you. We'll be in touch shortly.
+        <p className="text-sm font-medium text-[var(--color-brand-orange)]" role="status">
+          Thank you. We&apos;ll be in touch shortly.
         </p>
       )}
       {status === 'error' && (
-        <p className="text-sm text-red-400" role="alert">
-          Something went wrong. Please try again or email us directly.
+        <p className="text-sm text-red-600" role="alert">
+          {errorMessage || 'Something went wrong. Please try again or email us directly.'}
         </p>
       )}
       <PrimaryButton
         type="submit"
         disabled={status === 'sending' || status === 'sent'}
+        className="mt-1 w-full justify-center gap-2"
       >
         {status === 'sending' ? 'Sending…' : status === 'sent' ? 'Sent' : 'Send message'}
+        {status !== 'sending' && status !== 'sent' ? <SendIcon className="h-[1.1em] w-[1.1em]" /> : null}
       </PrimaryButton>
+      <p className="text-xs leading-5 text-[var(--color-ink-muted)]">
+        Messages from this form are sent to info@emergingti.com.
+      </p>
     </form>
   );
 }
