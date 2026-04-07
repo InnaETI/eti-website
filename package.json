@@ -17,6 +17,7 @@
     "fetch-wordpress": "node scripts/fetch-wordpress.mjs"
   },
   "dependencies": {
+    "@floating-ui/dom": "^1.7.6",
     "@tiptap/extension-link": "^3.22.0",
     "@tiptap/extension-placeholder": "^3.22.0",
     "@tiptap/react": "^3.22.0",
