@@ -4,6 +4,11 @@ import './globals.css';
 export const metadata: Metadata = {
   title: 'ETI',
   description: 'Emerging Technologies, Inc.',
+  icons: {
+    icon: '/reference-assets/transparent-300-logo.ico',
+    shortcut: '/reference-assets/transparent-300-logo.ico',
+    apple: '/logo.png',
+  },
 };
 
 /**
