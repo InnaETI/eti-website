@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { PAGE_HERO_EYEBROW_CLASS } from '@/components/PageHero';
 import type { PageContent } from '@/lib/content';
 
 type ClientStory = {
@@ -189,11 +190,6 @@ function FeaturedCaseStudy({ story, reverse = false }: { story: ClientStory; rev
           ))}
         </ul>
 
-        {story.techLine ? (
-          <p className="mt-7 border-t border-[rgba(17,39,77,0.08)] pt-5 text-sm leading-7 text-[var(--color-ink-muted)]">
-            <span className="font-semibold text-[var(--color-brand-blue-deep)]">Technology:</span> {story.techLine.replace(/^Technology footprint:\s*/, '')}
-          </p>
-        ) : null}
       </div>
     </article>
   );
@@ -201,8 +197,8 @@ function FeaturedCaseStudy({ story, reverse = false }: { story: ClientStory; rev
 
 function SupportingCard({ story }: { story: ClientStory }) {
   return (
-    <article className="flex h-full flex-col rounded-[1.8rem] border border-[var(--color-border)] bg-white/92 px-6 py-7 shadow-[0_18px_50px_rgba(17,39,77,0.06)]">
-      <div className="flex min-h-[132px] items-center justify-start">
+    <article className="grid h-full grid-rows-[124px_auto_auto_1fr] rounded-[1.8rem] border border-[var(--color-border)] bg-white/92 px-6 py-7 shadow-[0_18px_50px_rgba(17,39,77,0.06)]">
+      <div className="flex h-[124px] items-start justify-start pt-1">
         <Image
           src={story.logo}
           alt={story.logoAlt}
@@ -222,23 +218,20 @@ function SupportingCard({ story }: { story: ClientStory }) {
       <p className="mt-5 text-[0.74rem] font-semibold uppercase tracking-[0.16em] text-[var(--color-brand-orange)]">
         {story.sector}
       </p>
-      <h3 className="mt-3 font-display text-[1.55rem] font-semibold leading-[1.08] tracking-[-0.04em] text-[var(--color-brand-blue-deep)]">
+      <h3 className="mt-3 min-h-[3.4rem] font-display text-[1.55rem] font-semibold leading-[1.08] tracking-[-0.04em] text-[var(--color-brand-blue-deep)]">
         {story.name}
       </h3>
-      <p className="mt-4 text-sm leading-7 text-[var(--color-ink-muted)]">{story.summary}</p>
-      <ul className="mt-5 space-y-3">
-        {story.bullets.map((item) => (
-          <li key={item} className="flex gap-3 text-sm leading-7 text-[var(--color-ink-muted)]">
-            <span className="mt-2 h-2 w-2 shrink-0 rounded-full bg-[var(--color-brand-orange)]" />
-            <span>{item}</span>
-          </li>
-        ))}
-      </ul>
-      {story.techLine ? (
-        <p className="mt-auto pt-5 text-[0.82rem] leading-6 text-[var(--color-ink-muted)]">
-          <span className="font-semibold text-[var(--color-brand-blue-deep)]">Technology:</span> {story.techLine.replace(/^Tech:\s*/, '')}
-        </p>
-      ) : null}
+      <div className="mt-4 flex flex-col">
+        <p className="min-h-[5.5rem] text-sm leading-7 text-[var(--color-ink-muted)]">{story.summary}</p>
+        <ul className="mt-5 space-y-3">
+          {story.bullets.map((item) => (
+            <li key={item} className="flex gap-3 text-sm leading-7 text-[var(--color-ink-muted)]">
+              <span className="mt-2 h-2 w-2 shrink-0 rounded-full bg-[var(--color-brand-orange)]" />
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
     </article>
   );
 }
@@ -262,7 +255,9 @@ export default function ClientsPage({ page }: ClientsPageProps) {
         />
         <div className="mx-auto w-full max-w-[1320px] px-5 py-14 lg:px-10 lg:py-16">
           <div className="relative z-10 max-w-3xl">
-            <span className="eyebrow text-white before:bg-white/45">Client Work</span>
+            <span className={`inline-flex items-center ${PAGE_HERO_EYEBROW_CLASS} text-white`}>
+              Client Work
+            </span>
             <h1 className="mt-5 max-w-3xl font-display text-4xl font-semibold leading-[1.02] tracking-[-0.04em] text-white sm:text-5xl lg:text-[4rem]">
               Client impact through strategy, execution, and technology transformation
             </h1>
@@ -347,7 +342,7 @@ export default function ClientsPage({ page }: ClientsPageProps) {
                   </div>
                 </div>
 
-                <p className="mt-6 font-accent text-[1.18rem] leading-8 text-[var(--color-brand-blue-deep)]">
+                <p className="mt-6 text-[1.02rem] font-medium leading-8 text-[var(--color-brand-blue-deep)]">
                   “{testimonial.quote}”
                 </p>
               </article>
