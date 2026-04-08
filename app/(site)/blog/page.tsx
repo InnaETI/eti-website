@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { PAGE_HERO_DESCRIPTION_CLASS } from '@/components/PageHero';
 import { getAllPosts } from '@/lib/blog';
 
 const RECENT_COUNT = 5;
@@ -42,25 +43,34 @@ export default async function BlogIndexPage({
   const recentPosts = allPosts.slice(0, RECENT_COUNT);
 
   return (
-    <div className="mx-auto w-full max-w-[1240px] px-5 pb-8 pt-10 lg:px-8 lg:pb-12 lg:pt-14">
-      <section className="overflow-hidden rounded-[2rem] border border-white/60 bg-[radial-gradient(circle_at_top_left,_rgba(49,104,196,0.22),_transparent_34%),linear-gradient(160deg,#f8fbff_0%,#edf3fa_48%,#f7f3ee_100%)] px-6 py-10 shadow-[0_24px_80px_rgba(17,39,77,0.12)] sm:px-8 sm:py-12">
-        <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_340px]">
-          <div>
-            <span className="eyebrow">Insights</span>
-            <h1 className="section-title mt-5 max-w-3xl text-[var(--color-brand-blue-deep)]">
+    <>
+      <section className="relative overflow-hidden border-b border-white/55">
+        <div className="absolute inset-0">
+          <Image
+            src="/images/insights-hero.jpg"
+            alt=""
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover object-center"
+          />
+          <div className="absolute inset-0 bg-[linear-gradient(100deg,rgba(10,22,46,0.82)_0%,rgba(18,42,82,0.68)_38%,rgba(20,52,103,0.54)_62%,rgba(12,28,58,0.72)_100%)]" />
+        </div>
+
+        <div className="relative mx-auto grid w-full max-w-[1240px] items-start gap-8 px-5 py-10 lg:grid-cols-[minmax(0,1fr)_320px] lg:px-8 lg:py-12">
+          <div className="max-w-[56rem] text-white">
+            <span className="inline-flex items-center font-display text-[clamp(1.02rem,1.45vw,1.22rem)] font-semibold uppercase tracking-[0.14em] text-white">
+              Insights
+            </span>
+            <h1 className="mt-4 max-w-[24ch] font-display text-[clamp(1.8rem,3vw,2.7rem)] font-semibold leading-[1.05] tracking-[-0.04em] text-white [text-shadow:0_0_1px_rgba(0,0,0,0.7),0_0_24px_rgba(0,0,0,0.32),0_2px_6px_rgba(0,0,0,0.45)]">
               Analysis, field lessons, and healthcare technology perspective.
             </h1>
-            <p className="mt-5 max-w-2xl text-base leading-8 text-[var(--color-ink-muted)]">
+            <p className={`${PAGE_HERO_DESCRIPTION_CLASS} max-w-[52rem] text-white/88 [text-shadow:0_0_20px_rgba(0,0,0,0.28),0_1px_3px_rgba(0,0,0,0.4)]`}>
               Browse ETI insights on healthcare IT, advancements of AI for operating model decisions, and the practical tradeoffs behind transformation work.
             </p>
-            {query ? (
-              <p className="mt-5 text-sm font-medium text-[var(--color-brand-blue)]">
-                Results for &quot;{query}&quot;
-              </p>
-            ) : null}
           </div>
 
-          <div className="content-card rounded-[1.75rem] p-5">
+          <div className="content-card w-full max-w-[320px] justify-self-start rounded-[1.75rem] p-5 lg:justify-self-end lg:self-start">
             <h2 className="font-display text-2xl font-semibold tracking-[-0.03em] text-[var(--color-brand-blue-deep)]">
               Search the archive
             </h2>
@@ -84,8 +94,13 @@ export default async function BlogIndexPage({
         </div>
       </section>
 
-      <div className="mt-8 grid gap-6 lg:grid-cols-[minmax(0,1fr)_320px]">
+      <div className="mx-auto mt-8 grid w-full max-w-[1240px] gap-6 px-5 pb-8 lg:grid-cols-[minmax(0,1fr)_320px] lg:px-8 lg:pb-12">
         <section aria-label="Blog posts">
+          {query ? (
+            <p className="mb-4 text-sm font-medium text-[var(--color-brand-blue)]">
+              Results for &quot;{query}&quot;
+            </p>
+          ) : null}
           <ul className="grid gap-4" aria-label="Blog posts">
             {filteredPosts.map((post) => {
               const dateText = formatDate(post.date);
@@ -185,6 +200,6 @@ export default async function BlogIndexPage({
           </div>
         </aside>
       </div>
-    </div>
+    </>
   );
 }

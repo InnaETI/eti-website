@@ -1,6 +1,11 @@
 import type { ReactNode } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import {
+  PAGE_HERO_DESCRIPTION_CLASS,
+  PAGE_HERO_EYEBROW_CLASS,
+  PAGE_HERO_TITLE_CLASS,
+} from '@/components/PageHero';
 import type { PageContent } from '@/lib/content';
 
 type Mission = {
@@ -115,13 +120,15 @@ function AboutPage({ page }: { page: AboutPageContent }) {
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.2),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(226,121,66,0.14),transparent_24%)]" />
         </div>
 
-        <div className="relative mx-auto max-w-[1280px] px-5 py-24 sm:px-8 sm:py-28 lg:px-10 lg:py-36">
-          <div className="mx-auto max-w-[920px] text-center text-white">
-            <p className="text-sm font-semibold uppercase tracking-[0.24em] text-white/76">About ETI</p>
-            <h1 className="mt-5 font-display text-[clamp(2.5rem,5.6vw,5rem)] font-semibold leading-[1.02] tracking-[-0.055em]">
+        <div className="relative mx-auto max-w-[1280px] px-5 py-18 sm:px-8 sm:py-20 lg:px-10 lg:py-24">
+          <div className="max-w-[920px] text-left text-white">
+            <p className={`${PAGE_HERO_EYEBROW_CLASS} text-white/85 [text-shadow:0_0_18px_rgba(0,0,0,0.55),0_1px_2px_rgba(0,0,0,0.65)]`}>
+              About ETI
+            </p>
+            <h1 className={`mt-5 max-w-[14ch] ${PAGE_HERO_TITLE_CLASS} [text-shadow:0_0_1px_rgba(0,0,0,0.9),0_0_24px_rgba(0,0,0,0.55),0_0_48px_rgba(0,0,0,0.35),0_2px_6px_rgba(0,0,0,0.55)]`}>
               Technology leadership and execution that create enterprise value
             </h1>
-            <p className="mx-auto mt-6 max-w-[780px] text-[clamp(1.05rem,2.1vw,1.55rem)] leading-[1.65] text-white/86">
+            <p className={`${PAGE_HERO_DESCRIPTION_CLASS} max-w-[48rem] text-white/92 [text-shadow:0_0_20px_rgba(0,0,0,0.5),0_1px_3px_rgba(0,0,0,0.6)]`}>
               Emerging Technologies, Inc. helps companies strengthen operations, scale platforms,
               integrate acquisitions, and turn technology investments into measurable business
               value.
