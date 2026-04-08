@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { PAGE_HERO_EYEBROW_CLASS, PAGE_HERO_TITLE_CLASS } from '@/components/PageHero';
 
 type Leader = {
   id: string;
@@ -102,10 +103,10 @@ function TeamPage() {
 
         <div className="relative mx-auto max-w-[1160px] px-5 py-20 sm:px-8 lg:px-10 lg:py-24">
           <div className="max-w-[44rem]">
-            <p className="font-display text-[clamp(1.05rem,1.55vw,1.35rem)] font-semibold uppercase tracking-[0.14em] text-white drop-shadow-[0_2px_12px_rgba(10,20,38,0.35)]">
+            <p className={`${PAGE_HERO_EYEBROW_CLASS} text-white [text-shadow:0_0_18px_rgba(0,0,0,0.55),0_1px_2px_rgba(0,0,0,0.65)]`}>
               Leadership and Team
             </p>
-            <h1 className="mt-4 font-display text-[clamp(2.2rem,5vw,4.25rem)] font-semibold leading-[0.97] tracking-[-0.05em] text-white">
+            <h1 className={`mt-5 ${PAGE_HERO_TITLE_CLASS} text-white [text-shadow:0_0_1px_rgba(0,0,0,0.9),0_0_24px_rgba(0,0,0,0.55),0_0_48px_rgba(0,0,0,0.35),0_2px_6px_rgba(0,0,0,0.55)]`}>
               Experienced leadership with practical execution discipline.
             </h1>
           </div>

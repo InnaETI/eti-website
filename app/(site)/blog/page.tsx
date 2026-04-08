@@ -1,5 +1,10 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import {
+  PAGE_HERO_DESCRIPTION_CLASS,
+  PAGE_HERO_EYEBROW_CLASS,
+  PAGE_HERO_TITLE_CLASS,
+} from '@/components/PageHero';
 import { getAllPosts } from '@/lib/blog';
 
 const RECENT_COUNT = 5;
@@ -46,11 +51,11 @@ export default async function BlogIndexPage({
       <section className="overflow-hidden rounded-[2rem] border border-white/60 bg-[radial-gradient(circle_at_top_left,_rgba(49,104,196,0.22),_transparent_34%),linear-gradient(160deg,#f8fbff_0%,#edf3fa_48%,#f7f3ee_100%)] px-6 py-10 shadow-[0_24px_80px_rgba(17,39,77,0.12)] sm:px-8 sm:py-12">
         <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_340px]">
           <div>
-            <span className="eyebrow">Insights</span>
-            <h1 className="section-title mt-5 max-w-3xl text-[var(--color-brand-blue-deep)]">
+            <span className={`${PAGE_HERO_EYEBROW_CLASS} text-[var(--color-ink-muted)]`}>Insights</span>
+            <h1 className={`mt-5 max-w-3xl ${PAGE_HERO_TITLE_CLASS} text-[var(--color-brand-blue-deep)]`}>
               Analysis, field lessons, and healthcare technology perspective.
             </h1>
-            <p className="mt-5 max-w-2xl text-base leading-8 text-[var(--color-ink-muted)]">
+            <p className={`${PAGE_HERO_DESCRIPTION_CLASS} text-[var(--color-ink-muted)]`}>
               Browse ETI insights on healthcare IT, advancements of AI for operating model decisions, and the practical tradeoffs behind transformation work.
             </p>
             {query ? (

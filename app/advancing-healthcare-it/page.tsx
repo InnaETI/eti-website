@@ -1,6 +1,11 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
+import {
+  PAGE_HERO_DESCRIPTION_CLASS,
+  PAGE_HERO_EYEBROW_CLASS,
+  PAGE_HERO_TITLE_CLASS,
+} from '@/components/PageHero';
 import { canonicalUrl } from '@/lib/site';
 
 export const metadata: Metadata = {
@@ -140,11 +145,13 @@ export default function AdvancingHealthcareItPage() {
 
           <div className="mt-7 grid gap-8 lg:grid-cols-[minmax(0,1fr)_390px] lg:items-start lg:gap-8 xl:grid-cols-[minmax(0,1fr)_410px]">
             <div className="max-w-[44rem]">
-              <span className="eyebrow !text-white" style={{ color: 'rgba(255,255,255,0.86)' }}>Healthcare technology leadership</span>
-              <h1 className="mt-6 font-display text-[clamp(2.35rem,5vw,4.2rem)] font-semibold leading-[1.01] tracking-[-0.05em] text-white">
+              <span className={`${PAGE_HERO_EYEBROW_CLASS} text-white/85 [text-shadow:0_0_18px_rgba(0,0,0,0.55),0_1px_2px_rgba(0,0,0,0.65)]`}>
+                Healthcare technology leadership
+              </span>
+              <h1 className={`mt-5 ${PAGE_HERO_TITLE_CLASS} text-white [text-shadow:0_0_1px_rgba(0,0,0,0.9),0_0_24px_rgba(0,0,0,0.55),0_0_48px_rgba(0,0,0,0.35),0_2px_6px_rgba(0,0,0,0.55)]`}>
                 Enterprise technology leadership for complex healthcare initiatives
               </h1>
-              <p className="mt-5 max-w-[38rem] text-[1.02rem] leading-8 text-white/82 sm:text-[1.08rem]">
+              <p className={`${PAGE_HERO_DESCRIPTION_CLASS} max-w-[38rem] text-white/92 [text-shadow:0_0_20px_rgba(0,0,0,0.5),0_1px_3px_rgba(0,0,0,0.6)]`}>
                 ETI helps healthcare organizations structure the work, strengthen operations, modernize systems, and
                 deliver high stakes initiatives with clear ownership, practical tools, and steady execution.
               </p>
