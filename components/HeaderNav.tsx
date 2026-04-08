@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import type { MouseEvent } from 'react';
 
 type NavItem = {
   href: string;
@@ -24,7 +24,7 @@ function isActiveLink(pathname: string, href: string) {
 function navLinkClass(active: boolean) {
   return `border-b-2 px-0 py-2 text-[1.06rem] font-semibold transition ${
     active
-      ? 'border-[var(--color-brand-orange)] font-bold text-[var(--color-brand-blue-deep)]'
+      ? 'border-[var(--color-brand-orange)] font-bold text-[var(--color-brand-orange)]'
       : 'border-transparent text-[var(--color-ink-muted)] hover:border-[rgba(17,39,77,0.12)] hover:text-[var(--color-brand-blue-deep)]'
   }`;
 }
@@ -33,6 +33,13 @@ function mobileNavLinkClass(active: boolean) {
   return `rounded-2xl px-4 py-3 text-sm font-semibold transition ${
     active ? 'bg-white font-bold text-[var(--color-brand-blue-deep)]' : 'text-[var(--color-ink)] hover:bg-white'
   }`;
+}
+
+function closeMobileMenu(event: MouseEvent<HTMLAnchorElement>) {
+  const details = event.currentTarget.closest('details');
+  if (details instanceof HTMLDetailsElement) {
+    details.open = false;
+  }
 }
 
 export function HeaderNav({
@@ -45,13 +52,7 @@ export function HeaderNav({
   mobile?: boolean;
 }) {
   const pathname = usePathname();
-  const [currentPath, setCurrentPath] = useState(() => normalizePath(initialPath));
-
-  useEffect(() => {
-    if (pathname) {
-      setCurrentPath(normalizePath(pathname));
-    }
-  }, [pathname]);
+  const currentPath = normalizePath(pathname || initialPath);
 
   return navItems.map((item) => {
     const active = isActiveLink(currentPath, item.href);
@@ -61,6 +62,7 @@ export function HeaderNav({
         href={item.href}
         aria-current={active ? 'page' : undefined}
         className={mobile ? mobileNavLinkClass(active) : navLinkClass(active)}
+        onClick={mobile ? closeMobileMenu : undefined}
       >
         {item.label}
       </Link>
