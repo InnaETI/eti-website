@@ -1,11 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import {
-  PAGE_HERO_DESCRIPTION_CLASS,
-  PAGE_HERO_EYEBROW_CLASS,
-  PAGE_HERO_TITLE_CLASS,
-  PageHero,
-} from '@/components/PageHero';
+import { PAGE_HERO_DESCRIPTION_CLASS } from '@/components/PageHero';
 import { getAllPosts } from '@/lib/blog';
 
 const RECENT_COUNT = 5;
@@ -49,34 +44,55 @@ export default async function BlogIndexPage({
 
   return (
     <>
-      <PageHero
-        eyebrow="Insights"
-        title="Analysis, field lessons, and healthcare technology perspective."
-        description="Browse ETI insights on healthcare IT, advancements of AI for operating model decisions, and the practical tradeoffs behind transformation work."
-        thin
-      >
-        <div className="content-card w-full max-w-[320px] justify-self-start rounded-[1.75rem] p-5 lg:justify-self-end lg:self-start">
-          <h2 className="font-display text-2xl font-semibold tracking-[-0.03em] text-[var(--color-brand-blue-deep)]">
-            Search the archive
-          </h2>
-          <form className="mt-5 space-y-3" action="/blog" method="get">
-            <label className="sr-only" htmlFor="blog-search-input">
-              Search blog
-            </label>
-            <input
-              id="blog-search-input"
-              name="q"
-              type="search"
-              defaultValue={query}
-              placeholder="Search articles"
-              className="w-full rounded-2xl border border-[var(--color-border)] bg-white px-4 py-3 text-sm text-[var(--color-ink)] outline-none transition focus:border-[var(--color-brand-orange)]"
-            />
-            <button type="submit" className="site-button site-button-primary w-full">
-              Search
-            </button>
-          </form>
+      <section className="relative overflow-hidden border-b border-white/55">
+        <div className="absolute inset-0">
+          <Image
+            src="/images/insights-hero.jpg"
+            alt=""
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover object-center"
+          />
+          <div className="absolute inset-0 bg-[linear-gradient(100deg,rgba(10,22,46,0.82)_0%,rgba(18,42,82,0.68)_38%,rgba(20,52,103,0.54)_62%,rgba(12,28,58,0.72)_100%)]" />
         </div>
-      </PageHero>
+
+        <div className="relative mx-auto grid w-full max-w-[1240px] items-start gap-8 px-5 py-10 lg:grid-cols-[minmax(0,1fr)_320px] lg:px-8 lg:py-12">
+          <div className="max-w-[56rem] text-white">
+            <span className="inline-flex items-center font-display text-[clamp(1.02rem,1.45vw,1.22rem)] font-semibold uppercase tracking-[0.14em] text-white">
+              Insights
+            </span>
+            <h1 className="mt-4 max-w-[24ch] font-display text-[clamp(1.8rem,3vw,2.7rem)] font-semibold leading-[1.05] tracking-[-0.04em] text-white [text-shadow:0_0_1px_rgba(0,0,0,0.7),0_0_24px_rgba(0,0,0,0.32),0_2px_6px_rgba(0,0,0,0.45)]">
+              Analysis, field lessons, and healthcare technology perspective.
+            </h1>
+            <p className={`${PAGE_HERO_DESCRIPTION_CLASS} max-w-[52rem] text-white/88 [text-shadow:0_0_20px_rgba(0,0,0,0.28),0_1px_3px_rgba(0,0,0,0.4)]`}>
+              Browse ETI insights on healthcare IT, advancements of AI for operating model decisions, and the practical tradeoffs behind transformation work.
+            </p>
+          </div>
+
+          <div className="content-card w-full max-w-[320px] justify-self-start rounded-[1.75rem] p-5 lg:justify-self-end lg:self-start">
+            <h2 className="font-display text-2xl font-semibold tracking-[-0.03em] text-[var(--color-brand-blue-deep)]">
+              Search the archive
+            </h2>
+            <form className="mt-5 space-y-3" action="/blog" method="get">
+              <label className="sr-only" htmlFor="blog-search-input">
+                Search blog
+              </label>
+              <input
+                id="blog-search-input"
+                name="q"
+                type="search"
+                defaultValue={query}
+                placeholder="Search articles"
+                className="w-full rounded-2xl border border-[var(--color-border)] bg-white px-4 py-3 text-sm text-[var(--color-ink)] outline-none transition focus:border-[var(--color-brand-orange)]"
+              />
+              <button type="submit" className="site-button site-button-primary w-full">
+                Search
+              </button>
+            </form>
+          </div>
+        </div>
+      </section>
 
       <div className="mx-auto mt-8 grid w-full max-w-[1240px] gap-6 px-5 pb-8 lg:grid-cols-[minmax(0,1fr)_320px] lg:px-8 lg:pb-12">
         <section aria-label="Blog posts">

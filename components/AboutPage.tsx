@@ -120,7 +120,7 @@ function AboutPage({ page }: { page: AboutPageContent }) {
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.2),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(226,121,66,0.14),transparent_24%)]" />
         </div>
 
-        <div className="relative mx-auto max-w-[1280px] px-5 py-24 sm:px-8 sm:py-28 lg:px-10 lg:py-36">
+        <div className="relative mx-auto max-w-[1280px] px-5 py-18 sm:px-8 sm:py-20 lg:px-10 lg:py-24">
           <div className="max-w-[920px] text-left text-white">
             <p className={`${PAGE_HERO_EYEBROW_CLASS} text-white/85 [text-shadow:0_0_18px_rgba(0,0,0,0.55),0_1px_2px_rgba(0,0,0,0.65)]`}>
               About ETI

@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { PAGE_HERO_EYEBROW_CLASS } from '@/components/PageHero';
 import type { PageContent } from '@/lib/content';
 
 type ClientStory = {
@@ -10,7 +11,6 @@ type ClientStory = {
   summary: string;
   outcome: string;
   role: string[];
-  techLine?: string;
 };
 
 type Testimonial = {
@@ -41,7 +41,6 @@ const featuredStories: ClientStory[] = [
       'Helped deepen health plan integration and operational alignment.',
       'The growth path included a major TPG investment and a subsequent Evolent acquisition.',
     ],
-    techLine: 'Azure, .NET, SQL Server, Angular, React, Power BI',
   },
   {
     name: 'Oak Street Health',
@@ -56,7 +55,6 @@ const featuredStories: ClientStory[] = [
       'Modernized outreach systems tied to a grassroots growth model.',
       'Improved conversion from prospects to patients through better operational tooling.',
     ],
-    techLine: '.NET Core, SQL Server, Angular, REST APIs, CI/Jenkins',
   },
 ];
 
@@ -73,7 +71,6 @@ const supportingStories: ClientStory[] = [
       'Performed a full Stingray platform assessment.',
       'Identified and implemented automation and process improvements.',
     ],
-    techLine: '.NET, SQL Server, JavaScript/CSS, ASP.NET MVC',
   },
   {
     name: 'ExplORer Surgical',
@@ -100,7 +97,6 @@ const supportingStories: ClientStory[] = [
       'Supported a lower-cost live group fitness experience.',
       'Helped the business scale remote delivery for sessions and classes.',
     ],
-    techLine: 'SQL Server, AWS, ASP.NET MVC, microservices',
   },
   {
     name: 'StratusVue',
@@ -171,48 +167,43 @@ function FeaturedStory({ story }: { story: ClientStory }) {
         </h3>
         <p className="mt-5 max-w-3xl text-[1.02rem] leading-8 text-[var(--color-ink-muted)]">{story.summary}</p>
 
-        <div className="mt-7 grid gap-5 lg:grid-cols-[1fr_auto] lg:items-start">
-          <ul className="space-y-4">
-            {story.role.map((item) => (
-              <li key={item} className="flex gap-4 text-[0.98rem] leading-7 text-[var(--color-ink-muted)]">
-                <span className="mt-3 h-2.5 w-2.5 shrink-0 rounded-full bg-[var(--color-brand-orange)]" />
-                <span>{item}</span>
-              </li>
-            ))}
-          </ul>
-          {story.techLine ? (
-            <div className="rounded-[1.1rem] border border-[rgba(17,39,77,0.08)] bg-[rgba(17,39,77,0.025)] px-4 py-3 text-sm leading-6 text-[var(--color-ink-muted)] lg:max-w-[18rem]">
-              <span className="font-semibold text-[var(--color-brand-blue-deep)]">Technology</span>
-              <p className="mt-1">{story.techLine}</p>
-            </div>
-          ) : null}
-        </div>
+        <ul className="mt-7 space-y-4">
+          {story.role.map((item) => (
+            <li key={item} className="flex gap-4 text-[0.98rem] leading-7 text-[var(--color-ink-muted)]">
+              <span className="mt-3 h-2.5 w-2.5 shrink-0 rounded-full bg-[var(--color-brand-orange)]" />
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
       </div>
     </article>
   );
 }
 
 function SupportingStory({ story }: { story: ClientStory }) {
+  const logoClass =
+    story.name === 'Healthcare Payment Specialists'
+      ? 'max-h-[110px] max-w-[205px]'
+      : story.name === 'Trainerly'
+        ? 'max-h-[145px] max-w-[300px]'
+        : story.name === 'ExplORer Surgical'
+          ? 'max-h-[188px] max-w-[390px]'
+          : 'max-h-[156px] max-w-[330px]';
+  const logoOffsetClass = story.name === 'ExplORer Surgical' ? '-translate-y-5' : '';
+
   return (
     <article className="flex h-full flex-col rounded-[1.7rem] border border-[var(--color-border)] bg-white/90 px-6 py-6 shadow-[0_18px_50px_rgba(17,39,77,0.05)]">
-      <div className="flex min-h-[124px] items-center justify-start">
+      <div className="flex h-[168px] items-start justify-start">
         <Image
           src={story.logo}
           alt={story.logoAlt}
           width={240}
           height={140}
-          className={`h-auto w-auto object-contain ${
-            story.name === 'Healthcare Payment Specialists'
-              ? 'max-h-[110px] max-w-[205px]'
-              : story.name === 'Trainerly'
-                ? 'max-h-[145px] max-w-[300px]'
-                : story.name === 'ExplORer Surgical'
-                  ? 'max-h-[188px] max-w-[390px]'
-                  : 'max-h-[156px] max-w-[330px]'
-          }`}
+          className={`h-auto w-auto object-contain object-left-top ${logoClass} ${logoOffsetClass}`}
         />
       </div>
-      <p className="mt-4 text-[0.72rem] font-semibold uppercase tracking-[0.16em] text-[var(--color-brand-orange)]">
+      <div className="mt-2 flex flex-1 flex-col">
+      <p className="text-[0.72rem] font-semibold uppercase tracking-[0.16em] text-[var(--color-brand-orange)]">
         {story.sector}
       </p>
       <h3 className="mt-3 font-display text-[1.55rem] font-semibold tracking-[-0.04em] text-[var(--color-brand-blue-deep)]">
@@ -228,11 +219,7 @@ function SupportingStory({ story }: { story: ClientStory }) {
           </li>
         ))}
       </ul>
-      {story.techLine ? (
-        <p className="mt-auto pt-5 text-[0.82rem] leading-6 text-[var(--color-ink-muted)]">
-          <span className="font-semibold text-[var(--color-brand-blue-deep)]">Technology:</span> {story.techLine}
-        </p>
-      ) : null}
+      </div>
     </article>
   );
 }
@@ -240,7 +227,7 @@ function SupportingStory({ story }: { story: ClientStory }) {
 export default function ClientsLabPage({ page }: ClientsLabPageProps) {
   const intro =
     page.intro ||
-    'We partner with organizations across healthcare, services, and technology to modernize systems, improve operations, and create measurable business outcomes.';
+    'We partner with organizations across healthcare, financial services, and technology to modernize systems, improve operations, grow intrinsic value and create measurable business outcomes.';
   const heroStyle = page.bannerImage
     ? {
         backgroundImage: `linear-gradient(135deg, rgba(7, 19, 40, 0.78), rgba(18, 61, 126, 0.54)), url('${page.bannerImage}')`,
@@ -263,7 +250,9 @@ export default function ClientsLabPage({ page }: ClientsLabPageProps) {
         />
         <div className="mx-auto w-full max-w-[1320px] px-5 py-14 lg:px-10 lg:py-16">
           <div className="relative z-10 max-w-4xl">
-            <span className="eyebrow text-white before:bg-white/45">Clients</span>
+            <span className={`inline-flex items-center ${PAGE_HERO_EYEBROW_CLASS} text-white`}>
+              Clients
+            </span>
             <h1 className="mt-5 font-display text-4xl font-semibold leading-[1.02] tracking-[-0.045em] text-white sm:text-5xl lg:text-[4.2rem]">
               Client impact through strategy, execution, and technology transformation
             </h1>
@@ -275,16 +264,13 @@ export default function ClientsLabPage({ page }: ClientsLabPageProps) {
       </section>
 
       <section className="mx-auto mt-12 w-full max-w-[1320px] px-5 lg:px-10">
-        <div className="grid gap-8 border-b border-[var(--color-border)] pb-10 lg:grid-cols-[minmax(0,1.2fr)_420px] lg:items-start">
+        <div className="grid gap-8 border-b border-[var(--color-border)] pb-10">
           <div>
             <span className="eyebrow">Featured Work</span>
             <h2 className="mt-5 max-w-3xl font-display text-[1.95rem] font-semibold leading-[1.08] tracking-[-0.035em] text-[var(--color-brand-blue-deep)] sm:text-[2.25rem]">
               Selected engagements where ETI’s role, pace, and business impact are easiest to see.
             </h2>
           </div>
-          <p className="max-w-xl text-base leading-8 text-[var(--color-ink-muted)]">
-            This direction emphasizes ETI as a transformation partner: fewer interface elements, stronger story hierarchy, and clearer proof of outcome.
-          </p>
         </div>
       </section>
 
@@ -351,7 +337,7 @@ export default function ClientsLabPage({ page }: ClientsLabPageProps) {
                     ) : null}
                   </div>
                 </div>
-                <p className="mt-6 font-accent text-[1.16rem] leading-8 text-[var(--color-brand-blue-deep)]">
+                <p className="mt-6 text-[1.06rem] font-medium leading-8 text-[var(--color-brand-blue-deep)]">
                   “{testimonial.quote}”
                 </p>
               </article>
@@ -365,10 +351,10 @@ export default function ClientsLabPage({ page }: ClientsLabPageProps) {
           <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end">
             <div>
               <span className="eyebrow text-white before:bg-white/45">Next Step</span>
-              <h2 className="mt-5 max-w-3xl font-display text-[2.4rem] font-semibold tracking-[-0.045em] text-white sm:text-[2.9rem]">
+              <h2 className="mt-5 font-display text-[2.4rem] font-semibold tracking-[-0.045em] text-white sm:text-[2.9rem] lg:whitespace-nowrap">
                 Need a partner who can lead and execute?
               </h2>
-              <p className="mt-4 max-w-2xl text-base leading-8 text-white/76">
+              <p className="mt-4 text-base leading-8 text-white/76 lg:whitespace-nowrap">
                 ETI helps organizations modernize systems, improve operations, and deliver results when the work matters.
               </p>
             </div>
