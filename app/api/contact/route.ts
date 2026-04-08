@@ -38,13 +38,40 @@ function getFromAddress() {
   return (process.env.CONTACT_FROM_EMAIL || process.env.SMTP_USER || '').trim();
 }
 
+function getCorsHeaders(origin: string | null) {
+  const allowedOrigins = new Set([
+    'https://www.emergingti.com',
+    'https://emergingti.com',
+    'https://eti-website.vercel.app',
+  ]);
+
+  if (!origin || !allowedOrigins.has(origin)) {
+    return {} as Record<string, string>;
+  }
+
+  return {
+    'Access-Control-Allow-Origin': origin,
+    'Access-Control-Allow-Methods': 'POST, OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type',
+    Vary: 'Origin',
+  } satisfies Record<string, string>;
+}
+
+export async function OPTIONS(request: Request) {
+  return new NextResponse(null, {
+    status: 204,
+    headers: getCorsHeaders(request.headers.get('origin')),
+  });
+}
+
 export async function POST(request: Request) {
+  const corsHeaders = getCorsHeaders(request.headers.get('origin'));
   let payload: ContactPayload;
 
   try {
     payload = await request.json();
   } catch {
-    return NextResponse.json({ error: 'Invalid request payload.' }, { status: 400 });
+    return NextResponse.json({ error: 'Invalid request payload.' }, { status: 400, headers: corsHeaders });
   }
 
   const name = (payload.name || '').trim();
@@ -53,11 +80,14 @@ export async function POST(request: Request) {
   const message = (payload.message || '').trim();
 
   if (!name || !email || !message) {
-    return NextResponse.json({ error: 'Name, email, and message are required.' }, { status: 400 });
+    return NextResponse.json(
+      { error: 'Name, email, and message are required.' },
+      { status: 400, headers: corsHeaders }
+    );
   }
 
   if (!isValidEmail(email)) {
-    return NextResponse.json({ error: 'Enter a valid email address.' }, { status: 400 });
+    return NextResponse.json({ error: 'Enter a valid email address.' }, { status: 400, headers: corsHeaders });
   }
 
   const mailerConfig = getMailerConfig();
@@ -81,7 +111,7 @@ export async function POST(request: Request) {
       {
         error: 'Contact email is not configured yet. Add SMTP_USER, SMTP_PASS, and CONTACT_FROM_EMAIL.',
       },
-      { status: 503 }
+      { status: 503, headers: corsHeaders }
     );
   }
 
@@ -114,7 +144,7 @@ export async function POST(request: Request) {
       text,
       html,
     });
-    return NextResponse.json({ ok: true, id: result.messageId || null });
+    return NextResponse.json({ ok: true, id: result.messageId || null }, { headers: corsHeaders });
   } catch (error) {
     console.error('Contact email failed', error);
     if (typeof error === 'object' && error && 'code' in error && error.code === 'EAUTH') {
@@ -123,7 +153,7 @@ export async function POST(request: Request) {
           error:
             'Email delivery is temporarily misconfigured. Please email info@emergingti.com directly while we finish fixing the website mail settings.',
         },
-        { status: 500 }
+        { status: 500, headers: corsHeaders }
       );
     }
 
@@ -132,7 +162,7 @@ export async function POST(request: Request) {
         error:
           'Unable to send your message right now. Please email info@emergingti.com directly and we will respond as soon as possible.',
       },
-      { status: 500 }
+      { status: 500, headers: corsHeaders }
     );
   }
 }
