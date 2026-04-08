@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import type { MouseEvent } from 'react';
 
 type NavItem = {
   href: string;
@@ -45,13 +45,14 @@ export function HeaderNav({
   mobile?: boolean;
 }) {
   const pathname = usePathname();
-  const [currentPath, setCurrentPath] = useState(() => normalizePath(initialPath));
+  const currentPath = normalizePath(pathname || initialPath);
 
-  useEffect(() => {
-    if (pathname) {
-      setCurrentPath(normalizePath(pathname));
+  function closeMobileMenu(event: MouseEvent<HTMLAnchorElement>) {
+    const details = event.currentTarget.closest('details');
+    if (details instanceof HTMLDetailsElement) {
+      details.open = false;
     }
-  }, [pathname]);
+  }
 
   return navItems.map((item) => {
     const active = isActiveLink(currentPath, item.href);
@@ -61,6 +62,7 @@ export function HeaderNav({
         href={item.href}
         aria-current={active ? 'page' : undefined}
         className={mobile ? mobileNavLinkClass(active) : navLinkClass(active)}
+        onClick={mobile ? closeMobileMenu : undefined}
       >
         {item.label}
       </Link>
