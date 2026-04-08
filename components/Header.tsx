@@ -4,6 +4,7 @@ import { headers } from 'next/headers';
 import { getGlobalContent } from '@/lib/content';
 import { NAV_LINKS } from '@/lib/nav';
 import { HeaderNav } from '@/components/HeaderNav';
+import { MobileMenuCloseLink } from '@/components/MobileMenuCloseLink';
 
 type NavItem = {
   href: string;
@@ -58,9 +59,9 @@ export async function Header() {
           <div className="absolute right-0 top-[calc(100%+0.75rem)] z-50 w-[min(20rem,calc(100vw-2.5rem))] rounded-[1.5rem] border border-white/60 bg-[#f5f8fc] p-4 shadow-[0_18px_60px_rgba(17,39,77,0.12)]">
             <nav className="flex flex-col gap-2">
               <HeaderNav navItems={navItems} initialPath={currentPath} mobile />
-              <Link href={ctaHref} className="site-button site-button-primary mt-2 justify-center">
+              <MobileMenuCloseLink href={ctaHref} className="site-button site-button-primary mt-2 justify-center">
                 Contact Us
-              </Link>
+              </MobileMenuCloseLink>
             </nav>
           </div>
         </details>
