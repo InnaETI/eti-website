@@ -1,5 +1,12 @@
 import type { ReactNode } from 'react';
 
+export const PAGE_HERO_EYEBROW_CLASS =
+  'font-display text-[clamp(1.02rem,1.45vw,1.22rem)] font-semibold uppercase tracking-[0.14em]';
+export const PAGE_HERO_TITLE_CLASS =
+  'font-display text-[clamp(2.5rem,5.2vw,4.75rem)] font-semibold leading-[1.02] tracking-[-0.05em]';
+export const PAGE_HERO_DESCRIPTION_CLASS =
+  'mt-6 max-w-2xl text-[clamp(1rem,1.35vw,1.12rem)] leading-8';
+
 type PageHeroProps = {
   eyebrow?: string;
   title: string;
@@ -51,7 +58,7 @@ export function PageHero({
           <div className={`max-w-3xl ${backgroundImage ? 'text-white' : 'text-[var(--color-ink)]'}`}>
             {eyebrow ? (
               <p
-                className={`mb-5 text-xs font-semibold uppercase tracking-[0.22em] ${
+                className={`mb-5 ${PAGE_HERO_EYEBROW_CLASS} ${
                   backgroundImage
                     ? 'text-white/85 [text-shadow:0_0_18px_rgba(0,0,0,0.55),0_1px_2px_rgba(0,0,0,0.65)]'
                     : 'text-[var(--color-ink-muted)]'
@@ -61,7 +68,7 @@ export function PageHero({
               </p>
             ) : null}
             <h1
-              className={`max-w-3xl font-display text-4xl font-semibold leading-[1.02] tracking-[-0.04em] sm:text-5xl lg:text-7xl ${
+              className={`max-w-3xl ${PAGE_HERO_TITLE_CLASS} ${
                 backgroundImage
                   ? // Halo + slight edge so type separates from busy photo — no box behind copy
                     '[text-shadow:0_0_1px_rgba(0,0,0,0.9),0_0_24px_rgba(0,0,0,0.55),0_0_48px_rgba(0,0,0,0.35),0_2px_6px_rgba(0,0,0,0.55)]'
@@ -72,7 +79,7 @@ export function PageHero({
             </h1>
             {description ? (
               <p
-                className={`mt-6 max-w-2xl text-base leading-7 sm:text-lg ${
+                className={`${PAGE_HERO_DESCRIPTION_CLASS} ${
                   backgroundImage
                     ? 'text-white/92 [text-shadow:0_0_20px_rgba(0,0,0,0.5),0_1px_3px_rgba(0,0,0,0.6)]'
                     : 'text-[var(--color-ink-muted)]'
