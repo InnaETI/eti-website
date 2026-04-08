@@ -187,7 +187,7 @@ export default function HomePage() {
   return (
     <>
       {/* Hero — matches design mockup: light canvas, mesh right, two-column, floating card */}
-      <section className="relative min-h-[min(88vh,920px)] overflow-hidden bg-[#f4f6f9]">
+      <section className="relative overflow-hidden bg-[#f4f6f9]">
           {/* Full-bleed hero background */}
           <div className="pointer-events-none absolute inset-0 z-0 bg-[#f4f6f9]" aria-hidden />
           <div
@@ -195,7 +195,7 @@ export default function HomePage() {
             aria-hidden
           />
 
-          <div className="relative z-10 mx-auto flex min-h-[min(88vh,920px)] w-full max-w-[1320px] items-center px-5 py-16 lg:px-10 lg:py-24">
+          <div className="relative z-10 mx-auto w-full max-w-[1320px] px-5 py-14 lg:px-10 lg:py-16 xl:py-20">
             <div className="grid w-full gap-9 lg:grid-cols-[minmax(0,1.08fr)_minmax(300px,420px)] lg:items-center lg:gap-10 xl:gap-11">
               <div className="max-w-[min(42rem,100%)]">
                 <span className="eyebrow text-[var(--color-brand-blue-deep)]">

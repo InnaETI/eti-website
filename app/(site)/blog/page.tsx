@@ -4,6 +4,7 @@ import {
   PAGE_HERO_DESCRIPTION_CLASS,
   PAGE_HERO_EYEBROW_CLASS,
   PAGE_HERO_TITLE_CLASS,
+  PageHero,
 } from '@/components/PageHero';
 import { getAllPosts } from '@/lib/blog';
 
@@ -47,50 +48,43 @@ export default async function BlogIndexPage({
   const recentPosts = allPosts.slice(0, RECENT_COUNT);
 
   return (
-    <div className="mx-auto w-full max-w-[1240px] px-5 pb-8 pt-10 lg:px-8 lg:pb-12 lg:pt-14">
-      <section className="overflow-hidden rounded-[2rem] border border-white/60 bg-[radial-gradient(circle_at_top_left,_rgba(49,104,196,0.22),_transparent_34%),linear-gradient(160deg,#f8fbff_0%,#edf3fa_48%,#f7f3ee_100%)] px-6 py-10 shadow-[0_24px_80px_rgba(17,39,77,0.12)] sm:px-8 sm:py-12">
-        <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_340px]">
-          <div>
-            <span className={`${PAGE_HERO_EYEBROW_CLASS} text-[var(--color-ink-muted)]`}>Insights</span>
-            <h1 className={`mt-5 max-w-3xl ${PAGE_HERO_TITLE_CLASS} text-[var(--color-brand-blue-deep)]`}>
-              Analysis, field lessons, and healthcare technology perspective.
-            </h1>
-            <p className={`${PAGE_HERO_DESCRIPTION_CLASS} text-[var(--color-ink-muted)]`}>
-              Browse ETI insights on healthcare IT, advancements of AI for operating model decisions, and the practical tradeoffs behind transformation work.
-            </p>
-            {query ? (
-              <p className="mt-5 text-sm font-medium text-[var(--color-brand-blue)]">
-                Results for &quot;{query}&quot;
-              </p>
-            ) : null}
-          </div>
-
-          <div className="content-card rounded-[1.75rem] p-5">
-            <h2 className="font-display text-2xl font-semibold tracking-[-0.03em] text-[var(--color-brand-blue-deep)]">
-              Search the archive
-            </h2>
-            <form className="mt-5 space-y-3" action="/blog" method="get">
-              <label className="sr-only" htmlFor="blog-search-input">
-                Search blog
-              </label>
-              <input
-                id="blog-search-input"
-                name="q"
-                type="search"
-                defaultValue={query}
-                placeholder="Search articles"
-                className="w-full rounded-2xl border border-[var(--color-border)] bg-white px-4 py-3 text-sm text-[var(--color-ink)] outline-none transition focus:border-[var(--color-brand-orange)]"
-              />
-              <button type="submit" className="site-button site-button-primary w-full">
-                Search
-              </button>
-            </form>
-          </div>
+    <>
+      <PageHero
+        eyebrow="Insights"
+        title="Analysis, field lessons, and healthcare technology perspective."
+        description="Browse ETI insights on healthcare IT, advancements of AI for operating model decisions, and the practical tradeoffs behind transformation work."
+        thin
+      >
+        <div className="content-card w-full max-w-[320px] justify-self-start rounded-[1.75rem] p-5 lg:justify-self-end lg:self-start">
+          <h2 className="font-display text-2xl font-semibold tracking-[-0.03em] text-[var(--color-brand-blue-deep)]">
+            Search the archive
+          </h2>
+          <form className="mt-5 space-y-3" action="/blog" method="get">
+            <label className="sr-only" htmlFor="blog-search-input">
+              Search blog
+            </label>
+            <input
+              id="blog-search-input"
+              name="q"
+              type="search"
+              defaultValue={query}
+              placeholder="Search articles"
+              className="w-full rounded-2xl border border-[var(--color-border)] bg-white px-4 py-3 text-sm text-[var(--color-ink)] outline-none transition focus:border-[var(--color-brand-orange)]"
+            />
+            <button type="submit" className="site-button site-button-primary w-full">
+              Search
+            </button>
+          </form>
         </div>
-      </section>
+      </PageHero>
 
-      <div className="mt-8 grid gap-6 lg:grid-cols-[minmax(0,1fr)_320px]">
+      <div className="mx-auto mt-8 grid w-full max-w-[1240px] gap-6 px-5 pb-8 lg:grid-cols-[minmax(0,1fr)_320px] lg:px-8 lg:pb-12">
         <section aria-label="Blog posts">
+          {query ? (
+            <p className="mb-4 text-sm font-medium text-[var(--color-brand-blue)]">
+              Results for &quot;{query}&quot;
+            </p>
+          ) : null}
           <ul className="grid gap-4" aria-label="Blog posts">
             {filteredPosts.map((post) => {
               const dateText = formatDate(post.date);
@@ -190,6 +184,6 @@ export default async function BlogIndexPage({
           </div>
         </aside>
       </div>
-    </div>
+    </>
   );
 }
