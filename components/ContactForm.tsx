@@ -21,6 +21,20 @@ export function ContactForm() {
   const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
 
+  function getContactEndpoint() {
+    if (typeof window === 'undefined') {
+      return '/api/contact/';
+    }
+
+    const host = window.location.hostname.toLowerCase();
+
+    if (host === 'www.emergingti.com' || host === 'emergingti.com') {
+      return 'https://eti-website.vercel.app/api/contact/';
+    }
+
+    return '/api/contact/';
+  }
+
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const form = e.currentTarget;
@@ -30,7 +44,7 @@ export function ContactForm() {
     setErrorMessage('');
 
     try {
-      const response = await fetch('/api/contact/', {
+      const response = await fetch(getContactEndpoint(), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
