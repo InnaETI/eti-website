@@ -1,6 +1,11 @@
 # *
 User-agent: *
 Allow: /
+Disallow: /admin
+Disallow: /admin/*
+Disallow: /api/*
+Disallow: /clients-lab
+Disallow: /about
 
 # Host
 Host: https://www.emergingti.com

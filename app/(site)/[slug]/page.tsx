@@ -6,7 +6,7 @@ import { ContactForm } from '@/components/ContactForm';
 import { RichText } from '@/components/RichText';
 import { getAllPageSlugs, getGlobalContent, getPageContent, type PageContent } from '@/lib/content';
 import { getPageAliases, resolvePageSlug } from '@/lib/public-pages';
-import { SITE, canonicalUrl } from '@/lib/site';
+import { SITE } from '@/lib/site';
 import { ContentBlocks, type ContentBlock } from '@/components/ContentBlocks';
 import TeamPage from '@/components/TeamPage';
 import AboutPage from '@/components/AboutPage';
@@ -14,11 +14,12 @@ import ClientsPage from '@/components/ClientsPage';
 import ClientsLabPage from '@/components/ClientsLabPage';
 import { ServicesOverviewSection } from '@/components/ServicesOverviewSection';
 import { ServicesValueDeliverSection } from '@/components/ServicesValueDeliverSection';
+import { buildBreadcrumbSchema, buildPageMetadata, getStaticSeo, jsonLd } from '@/lib/seo';
 
 type ServiceItem = {
   title?: string;
   iconUrl?: string;
-  items?: Array<string | { label: string; href?: string }>;
+  items?: Array<string | { label: string; href?: string; description?: string }>;
   linkText?: string;
   linkHref?: string;
 };
@@ -89,29 +90,22 @@ export async function generateMetadata({
   const { slug } = await params;
   const resolved = resolvePageSlug(slug);
   const page = getResolvedPage(slug);
+  const actualPath = `/${slug}`;
+  const routeSeo = getStaticSeo(actualPath) ?? getStaticSeo(`/${resolved}`);
 
   if (!page) {
     return {};
   }
 
-  if (resolved === 'team') {
-    return {
-      title: page.title || 'Team',
-      description:
-        'ETI brings executive leadership, delivery discipline, and practical technology judgment to complex initiatives.',
-      alternates: {
-        canonical: canonicalUrl(`/${slug}`),
-      },
-    };
-  }
-
-  return {
-    title: page.title,
-    description: page.subheading || page.intro || SITE.description,
-    alternates: {
-      canonical: canonicalUrl(`/${slug}`),
-    },
-  };
+  return buildPageMetadata({
+    title: routeSeo?.title || page.title,
+    description: routeSeo?.description || page.subheading || page.intro || SITE.description,
+    path: actualPath,
+    canonicalPath: routeSeo?.canonicalPath,
+    image: routeSeo?.image || page.bannerImage,
+    noindex: routeSeo?.noindex,
+    keywords: routeSeo?.keywords,
+  });
 }
 
 function renderMission(mission: Mission | undefined, secondaryImage?: string) {
@@ -155,39 +149,88 @@ function renderServices(services: ServiceItem[] | undefined) {
         <h2 className="mt-5 font-display text-3xl font-semibold tracking-[-0.04em] text-[var(--color-brand-blue-deep)]">
           Structured around execution, not only ideas.
         </h2>
+        <p className="mt-4 max-w-3xl text-base leading-8 text-[var(--color-ink-muted)]">
+          Click a capability to see the kind of work ETI can lead, support, or deliver in that area.
+        </p>
         <div className="mt-8 grid gap-4 lg:grid-cols-2">
           {services.map((service) => (
-            <article key={service.title} className="rounded-[1.75rem] border border-[var(--color-border)] bg-white/82 p-5">
+            <article
+              key={service.title}
+              className="rounded-[1.75rem] border border-[var(--color-border)] bg-white/82 p-5"
+            >
               <h3 className="font-display text-2xl font-semibold tracking-[-0.03em] text-[var(--color-brand-blue-deep)]">
                 {service.title}
               </h3>
               {service.items?.length ? (
-                <ul className="mt-4 space-y-2 text-sm leading-7 text-[var(--color-ink-muted)]">
-                  {service.items.map((item) => (
-                    <li
-                      key={typeof item === 'string' ? item : `${item.label}-${item.href ?? ''}`}
-                      className="flex gap-3"
-                    >
-                      <span className="mt-2 h-2 w-2 rounded-full bg-[var(--color-brand-orange)]" />
-                      {typeof item === 'string' ? (
-                        <span>{item}</span>
-                      ) : item.href ? (
-                        <a
-                          href={item.href}
-                          className="font-medium text-[var(--color-brand-blue)] underline-offset-4 transition hover:text-[var(--color-brand-blue-deep)] hover:underline"
+                <div className="mt-5 grid gap-3 sm:grid-cols-2">
+                  {service.items.map((item, index) => {
+                    const label = typeof item === 'string' ? item : item.label;
+                    const href = typeof item === 'string' ? undefined : item.href;
+                    const description = typeof item === 'string' ? undefined : item.description;
+                    const itemKey = `${service.title}-${label}-${index}`;
+                    const interactive = Boolean(href || description);
+
+                    if (!interactive) {
+                      return (
+                        <div
+                          key={itemKey}
+                          className="rounded-[1.2rem] border border-[var(--color-border)] bg-white px-4 py-3 text-sm font-semibold leading-6 text-[var(--color-brand-blue-deep)] sm:min-h-[88px]"
                         >
-                          {item.label}
-                        </a>
-                      ) : (
-                        <span>{item.label}</span>
-                      )}
-                    </li>
-                  ))}
-                </ul>
+                          {label}
+                        </div>
+                      );
+                    }
+
+                    return (
+                      <details
+                        key={itemKey}
+                        className="group rounded-[1.2rem] border border-[var(--color-border)] bg-white transition open:border-[var(--color-brand-blue)] open:bg-[rgba(33,79,152,0.04)]"
+                      >
+                        <summary className="flex min-h-[88px] cursor-pointer list-none items-start justify-between gap-4 px-4 py-3 text-left text-sm font-semibold leading-6 text-[var(--color-brand-blue-deep)]">
+                          <span>{label}</span>
+                          <span
+                            aria-hidden
+                            className="mt-0.5 text-lg leading-none text-[var(--color-brand-orange)] transition group-open:rotate-45"
+                          >
+                            +
+                          </span>
+                        </summary>
+                        <div className="border-t border-[rgba(33,79,152,0.10)] px-4 py-3 text-sm leading-7 text-[var(--color-ink-muted)]">
+                          {description ? <p>{description}</p> : null}
+                          {href ? (
+                            <a
+                              href={href}
+                              className="mt-2 inline-flex font-medium text-[var(--color-brand-blue)] underline-offset-4 transition hover:text-[var(--color-brand-blue-deep)] hover:underline"
+                            >
+                              Learn more
+                            </a>
+                          ) : null}
+                        </div>
+                      </details>
+                    );
+                  })}
+                </div>
               ) : null}
             </article>
           ))}
         </div>
+      </div>
+    </section>
+  );
+}
+
+function renderServicesJourneyGraphic() {
+  return (
+    <section className="mx-auto mt-8 w-full max-w-[1240px] px-5 lg:px-8">
+      <div className="content-card overflow-hidden rounded-[2rem] p-3 sm:p-4">
+        <Image
+          src="/images/services-journey-infographic.png"
+          alt="ETI service journey from strategy and leadership through build and implementation to operate and improve."
+          width={1672}
+          height={941}
+          className="h-auto w-full rounded-[1.5rem] object-contain"
+          priority={false}
+        />
       </div>
     </section>
   );
@@ -383,17 +426,49 @@ export default async function PublicPage({
   const isClients = resolved === 'clients';
   const isClientsLab = resolved === 'clients-lab';
   const isServices = resolved === 'services';
+  const actualPath = `/${slug}`;
+  const routeSeo = getStaticSeo(actualPath) ?? getStaticSeo(`/${resolved}`);
+  const breadcrumbSchema =
+    routeSeo?.noindex
+      ? null
+      : buildBreadcrumbSchema([
+          { name: 'Home', path: '/' },
+          { name: page.title, path: routeSeo?.canonicalPath ?? actualPath },
+        ]);
 
   return isTeam ? (
-    <TeamPage />
+    <>
+      {breadcrumbSchema ? (
+        <script type="application/ld+json" dangerouslySetInnerHTML={jsonLd(breadcrumbSchema)} />
+      ) : null}
+      <TeamPage />
+    </>
   ) : isAbout ? (
-    <AboutPage page={page} />
+    <>
+      {breadcrumbSchema ? (
+        <script type="application/ld+json" dangerouslySetInnerHTML={jsonLd(breadcrumbSchema)} />
+      ) : null}
+      <AboutPage page={page} />
+    </>
   ) : isClients ? (
-    <ClientsLabPage page={page} />
+    <>
+      {breadcrumbSchema ? (
+        <script type="application/ld+json" dangerouslySetInnerHTML={jsonLd(breadcrumbSchema)} />
+      ) : null}
+      <ClientsLabPage page={page} />
+    </>
   ) : isClientsLab ? (
-    <ClientsLabPage page={page} />
+    <>
+      {breadcrumbSchema ? (
+        <script type="application/ld+json" dangerouslySetInnerHTML={jsonLd(breadcrumbSchema)} />
+      ) : null}
+      <ClientsLabPage page={page} />
+    </>
   ) : (
     <>
+      {breadcrumbSchema ? (
+        <script type="application/ld+json" dangerouslySetInnerHTML={jsonLd(breadcrumbSchema)} />
+      ) : null}
       <PageHero
         eyebrow={isContact ? undefined : SITE.legalName}
         title={page.title}
@@ -435,11 +510,12 @@ export default async function PublicPage({
         </section>
       ) : null}
 
+      {isServices ? renderServicesJourneyGraphic() : null}
+      {renderMission(page.mission, page.secondaryImage)}
+      {renderServices(page.services)}
       {isServices && page.valueDeliver?.items?.length ? (
         <ServicesValueDeliverSection title={page.valueDeliver.title} items={page.valueDeliver.items} />
       ) : null}
-      {renderMission(page.mission, page.secondaryImage)}
-      {renderServices(page.services)}
       {renderTestimonials(page.testimonials)}
       {page.sections?.length ? <ContentBlocks blocks={page.sections} /> : null}
       {isContact ? renderContact(page, globalContent?.contactEmail, globalContent?.contactPhone) : null}

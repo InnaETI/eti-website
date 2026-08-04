@@ -1,9 +1,13 @@
+import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { PrimaryButton, SecondaryButton } from '@/components/Button';
 import { getGlobalContent, getHomeContent, getPageContent } from '@/lib/content';
 import { getLatestPosts } from '@/lib/blog';
 import { ContentBlocks, type ContentBlock } from '@/components/ContentBlocks';
+import { buildPageMetadata, getStaticSeo } from '@/lib/seo';
+
+export const metadata: Metadata = buildPageMetadata(getStaticSeo('/')!);
 
 type HomePillar = {
   title?: string;

@@ -11,7 +11,7 @@ export function ServicesOverviewSection({ title, intro, columns }: ServicesOverv
   if (!columns?.length) return null;
 
   return (
-    <section className="border-b border-[var(--color-border)] bg-[#f5f7f9] px-5 py-14 sm:py-16 lg:px-10 lg:py-[4.5rem]">
+    <section className="bg-[#f5f7f9] px-5 py-14 sm:py-16 lg:px-10 lg:py-[4.5rem]">
       <div className="mx-auto max-w-[1200px]">
         <h2 className="font-display text-[clamp(1.85rem,3.5vw,2.75rem)] font-semibold leading-[1.08] tracking-[-0.04em] text-[var(--color-brand-blue-deep)]">
           {title}

@@ -15,29 +15,110 @@
       "title": "Agile",
       "iconUrl": "/wp-content/uploads/2015/11/clock.svg",
       "items": [
-        "Agile Transformations",
-        "Lean Agile Management",
-        "Cross-Functional Team Leadership",
+        {
+          "label": "Agile Transformations",
+          "description": "ETI helps organizations shift delivery models, planning rhythms, and team operating habits so transformation work becomes practical, measurable, and sustainable."
+        },
+        {
+          "label": "Lean Agile Management",
+          "description": "We tighten prioritization, reduce delivery drag, and help leaders manage portfolios with better visibility into flow, tradeoffs, and outcomes."
+        },
+        {
+          "label": "Cross-Functional Team Leadership",
+          "description": "ETI aligns business, product, operations, and technology teams around shared goals, clearer ownership, and faster execution across important initiatives."
+        },
         {
           "label": "Distributed Workforce",
-          "href": "/distributed-workforce-solutions"
+          "href": "/distributed-workforce-solutions",
+          "description": "We design delivery models, communication structures, and coordination practices that help distributed teams operate effectively without losing accountability or speed."
         }
       ]
     },
     {
       "title": "Digital Transformation",
       "iconUrl": "/wp-content/uploads/2015/11/man.svg",
-      "items": ["Business Process Reengineering", "Lean Product Development", "Accelerated Business Performance"]
+      "items": [
+        {
+          "label": "Business Process Reengineering",
+          "description": "ETI redesigns workflows, responsibilities, and system touchpoints so operational friction is reduced and high-value work moves faster."
+        },
+        {
+          "label": "Lean Product Development",
+          "description": "We help teams focus product investment on the most valuable capabilities first, balancing speed, adoption, and long-term maintainability."
+        },
+        {
+          "label": "Accelerated Business Performance",
+          "description": "Our work connects systems, teams, and decision-making so organizations can improve output, reduce waste, and reach performance goals sooner."
+        }
+      ]
     },
     {
       "title": "Healthcare",
       "iconUrl": "/wp-content/uploads/2015/12/rocket.svg",
-      "items": ["Patient-Centric Solutions", "Regulatory Compliance", "Data-Driven Decision Support", "Clinical Workflow Automation", "Predictive Healthcare Analytics", "Revenue Cycle Optimization", "Interoperability with EMRs and EHRs", "Clinical Quality Improvement", "Chronic Disease Management"]
+      "items": [
+        {
+          "label": "Patient-Centric Solutions",
+          "description": "ETI helps organizations shape technology and workflows around the real needs of patients, care teams, and service delivery environments."
+        },
+        {
+          "label": "Regulatory Compliance",
+          "description": "We support compliant system design and operating discipline so healthcare organizations can manage risk while still moving important work forward."
+        },
+        {
+          "label": "Data-Driven Decision Support",
+          "description": "We build reporting, data structures, and operating insight that help leaders make faster and better-informed clinical and business decisions."
+        },
+        {
+          "label": "Clinical Workflow Automation",
+          "description": "ETI identifies repeatable work in clinical and administrative processes, then helps automate it without disrupting care delivery."
+        },
+        {
+          "label": "Predictive Healthcare Analytics",
+          "description": "We help organizations use data patterns to anticipate utilization, risk, and operational needs so teams can act earlier and more effectively."
+        },
+        {
+          "label": "Revenue Cycle Optimization",
+          "description": "Our teams improve revenue operations by addressing bottlenecks across intake, coding, billing, reconciliation, and performance reporting."
+        },
+        {
+          "label": "Interoperability with EMRs and EHRs",
+          "description": "ETI supports integration planning and execution so systems exchange the right information reliably across care, operations, and reporting workflows."
+        },
+        {
+          "label": "Clinical Quality Improvement",
+          "description": "We connect process design, data visibility, and execution support to help improve care quality, consistency, and measurable outcomes."
+        },
+        {
+          "label": "Chronic Disease Management",
+          "description": "ETI helps structure technology and workflow support around longitudinal care programs that require coordination, monitoring, and patient follow-through."
+        }
+      ]
     },
     {
       "title": "AI Transformation",
       "iconUrl": "/wp-content/uploads/2015/11/target.svg",
-      "items": ["AI BOT Services", "Azure Healthcare BOT Integration", "Skills BOT Development", "AI Document Intelligence", "MLOps (Full ML Model LifeCycle)"]
+      "items": [
+        {
+          "label": "AI BOT Services",
+          "description": "We help teams identify useful assistant and automation use cases, then design BOT services that fit business workflows and governance needs."
+        },
+        {
+          "label": "Azure Healthcare BOT Integration",
+          "description": "ETI supports Azure-based healthcare BOT integration where security, enterprise architecture, and clinical or operational context all matter."
+        },
+        {
+          "label": "Skills BOT Development",
+          "description": "We build targeted BOT capabilities that handle specific tasks, content flows, or user interactions without turning into unfocused general-purpose tools."
+        },
+        {
+          "label": "AI Document Intelligence",
+          "description": "Our teams use AI-assisted extraction and classification to make complex document handling more scalable, accurate, and operationally useful."
+        },
+        {
+          "label": "MLOps (Full ML Model LifeCycle)",
+          "description": "ETI helps establish the operating controls needed to move models from experimentation into governed deployment, monitoring, and improvement."
+        }
+      ]
     }
   ],
   "valueDeliver": {

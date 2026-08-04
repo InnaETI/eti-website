@@ -5,13 +5,12 @@ import { useParams } from 'next/navigation';
 import { AdminBackendNotice } from '../../components/AdminBackendNotice';
 import { ImageField } from '../../components/ImageField';
 import { MarkdownEditor } from '../../components/MarkdownEditor';
-import { MarkdownPreview } from '../../components/MarkdownPreview';
 import { PreviewLink } from '../../components/PreviewLink';
 import { AdminPageHeader } from '../../components/AdminPageHeader';
 import { AdminPanel } from '../../components/AdminPanel';
 
 const BODY_MARKDOWN_HELP =
-  'Use the toolbar for headings, bold, italic, links, quotes, and lists. Markdown is still stored behind the scenes so blog rendering remains unchanged.';
+  'Edit visually with headings, bold, italic, links, and lists. Content is still stored in the site’s existing format behind the scenes.';
 
 type BlogData = {
   slug: string;
@@ -26,6 +25,7 @@ export default function AdminBlogEditorPage() {
   const params = useParams();
   const slug = typeof params.slug === 'string' ? params.slug : '';
   const [data, setData] = useState<BlogData>({ slug: '', title: '', date: '', excerpt: '', body: '' });
+  const [loadedData, setLoadedData] = useState<BlogData>({ slug: '', title: '', date: '', excerpt: '', body: '' });
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState<{ type: 'ok' | 'error'; text: string } | null>(null);
@@ -34,14 +34,18 @@ export default function AdminBlogEditorPage() {
     if (!slug) return;
     fetch(`/api/admin/content?type=blog&slug=${encodeURIComponent(slug)}`)
       .then((r) => r.json())
-      .then((json) => setData({
-        slug: json.slug ?? slug,
-        title: json.title ?? '',
-        date: json.date ?? '',
-        excerpt: json.excerpt ?? '',
-        body: json.body ?? '',
-        image: json.image,
-      }))
+      .then((json) => {
+        const next = {
+          slug: json.slug ?? slug,
+          title: json.title ?? '',
+          date: json.date ?? '',
+          excerpt: json.excerpt ?? '',
+          body: json.body ?? '',
+          image: json.image,
+        };
+        setData(next);
+        setLoadedData(next);
+      })
       .finally(() => setLoading(false));
   }, [slug]);
 
@@ -58,6 +62,7 @@ export default function AdminBlogEditorPage() {
         if (r.ok) setMessage({ type: 'ok', text: 'Saved.' });
         else return r.json().then((d) => { setMessage({ type: 'error', text: d.error ?? 'Save failed' }); });
       })
+      .then(() => setLoadedData(payload))
       .finally(() => setSaving(false));
   }
 
@@ -65,16 +70,28 @@ export default function AdminBlogEditorPage() {
   if (loading) return <p className="text-zinc-500">Loading…</p>;
 
   const publicPath = `/blog/${data.slug || slug}`;
+  const hasUnsavedChanges = JSON.stringify(data) !== JSON.stringify(loadedData);
 
   return (
     <div>
       <AdminPageHeader
         eyebrow="Blog editor"
         title={`Edit post: ${data.title || slug}`}
-        description="Manage article metadata, summaries, images, and markdown content for the ETI blog."
+        description="Manage article metadata, summaries, images, and body content for the ETI blog."
         actions={
           <>
             <PreviewLink href={publicPath} />
+            <button
+              type="button"
+              onClick={() => {
+                setData(loadedData);
+                setMessage(null);
+              }}
+              disabled={!hasUnsavedChanges || saving}
+              className="rounded-full border border-zinc-300 px-4 py-2 text-sm font-medium text-zinc-700 transition hover:border-zinc-400 hover:text-zinc-950 disabled:cursor-not-allowed disabled:opacity-50"
+            >
+              Reset changes
+            </button>
             <button
               type="button"
               onClick={save}
@@ -92,8 +109,9 @@ export default function AdminBlogEditorPage() {
           {message.text}
         </p>
       )}
+      {hasUnsavedChanges ? <p className="mb-4 text-sm text-amber-700">You have unsaved changes in this editor.</p> : null}
 
-      <div className="grid gap-6 lg:grid-cols-2 max-w-5xl">
+      <div className="max-w-5xl">
         <div className="space-y-4">
           <AdminPanel title="Post fields">
             <div className="space-y-3">
@@ -148,19 +166,8 @@ export default function AdminBlogEditorPage() {
                 onChange={(body) => setData({ ...data, body })}
                 help={BODY_MARKDOWN_HELP}
                 placeholder="Add post content…"
-                rows={16}
+                rows={18}
               />
-            </div>
-          </AdminPanel>
-        </div>
-
-        <div className="lg:sticky lg:top-8 lg:self-start">
-          <AdminPanel title="Body preview">
-            <p className="text-xs text-zinc-500 mb-2">
-              How the Body (Markdown) content will look on the post.
-            </p>
-            <div className="min-h-[200px] rounded border border-zinc-100 bg-zinc-50 p-4">
-              <MarkdownPreview source={data.body} />
             </div>
           </AdminPanel>
         </div>

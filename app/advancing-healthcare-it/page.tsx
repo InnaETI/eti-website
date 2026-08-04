@@ -6,15 +6,9 @@ import {
   PAGE_HERO_EYEBROW_CLASS,
   PAGE_HERO_TITLE_CLASS,
 } from '@/components/PageHero';
-import { canonicalUrl } from '@/lib/site';
+import { buildBreadcrumbSchema, buildPageMetadata, getStaticSeo, jsonLd } from '@/lib/seo';
 
-export const metadata: Metadata = {
-  title: 'Advancing Healthcare IT',
-  description: 'Enterprise technology leadership for complex healthcare initiatives from ETI.',
-  alternates: {
-    canonical: canonicalUrl('/advancing-healthcare-it'),
-  },
-};
+export const metadata: Metadata = buildPageMetadata(getStaticSeo('/advancing-healthcare-it')!);
 
 const WEBSITE_URL = 'https://www.emergingti.com/';
 const LOGO_URL = '/wp-content/uploads/2017/08/logo-transparent-horizontal-80-237-dark.png';
@@ -119,8 +113,14 @@ function WebsiteCta({ className = '' }: { className?: string }) {
 }
 
 export default function AdvancingHealthcareItPage() {
+  const breadcrumbSchema = buildBreadcrumbSchema([
+    { name: 'Home', path: '/' },
+    { name: 'Advancing Healthcare IT', path: '/advancing-healthcare-it' },
+  ]);
+
   return (
     <div className="bg-[#f3f6fa] text-[var(--color-ink)]">
+      <script type="application/ld+json" dangerouslySetInnerHTML={jsonLd(breadcrumbSchema)} />
       <section className="relative overflow-hidden border-b border-[rgba(17,39,77,0.08)] bg-[var(--color-brand-blue-deep)] text-white">
         <div className="absolute inset-0">
           <Image

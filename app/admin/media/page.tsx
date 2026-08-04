@@ -68,6 +68,7 @@ export default function AdminMediaPage() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState<{ type: 'ok' | 'error'; text: string } | null>(null);
+  const [uploads, setUploads] = useState<Array<{ name: string; path: string; size: number; modified: string }>>([]);
 
   useEffect(() => {
     let active = true;
@@ -76,6 +77,7 @@ export default function AdminMediaPage() {
       const responses = await Promise.all([
         fetch('/api/admin/content?type=global').then((r) => r.json()),
         fetch('/api/admin/content?type=home').then((r) => r.json()),
+        fetch('/api/admin/media-library').then((r) => (r.ok ? r.json() : { items: [] })),
         ...HERO_TARGETS.map((target) =>
           fetch(`/api/admin/content?type=page&slug=${encodeURIComponent(target.slug)}`).then((r) => r.json())
         ),
@@ -83,7 +85,7 @@ export default function AdminMediaPage() {
 
       if (!active) return;
 
-      const [globalJson, homeJson, ...pageJson] = responses;
+      const [globalJson, homeJson, uploadsJson, ...pageJson] = responses;
       setGlobalData({
         logoUrl: globalJson.logoUrl ?? '',
         footerLogoUrl: globalJson.footerLogoUrl ?? '',
@@ -91,6 +93,7 @@ export default function AdminMediaPage() {
       setHomeData({
         heroBanner: homeJson.heroBanner ?? '',
       });
+      setUploads(uploadsJson.items ?? []);
 
       const nextPages: Record<string, PageData> = {};
       HERO_TARGETS.forEach((target, index) => {
@@ -115,6 +118,15 @@ export default function AdminMediaPage() {
     const pageImages = HERO_TARGETS.filter((target) => pageData[target.slug]?.bannerImage).length;
     return [globalData.logoUrl, globalData.footerLogoUrl, homeData.heroBanner].filter(Boolean).length + pageImages;
   }, [globalData, homeData, pageData]);
+  const curatedAssets = [
+    { label: 'Header logo', path: globalData.logoUrl ?? '' },
+    { label: 'Footer logo', path: globalData.footerLogoUrl ?? '' },
+    { label: 'Homepage hero', path: homeData.heroBanner ?? '' },
+    ...HERO_TARGETS.map((target) => ({
+      label: target.title,
+      path: pageData[target.slug]?.bannerImage ?? '',
+    })),
+  ].filter((asset) => asset.path);
 
   async function saveAll() {
     setSaving(true);
@@ -308,6 +320,52 @@ export default function AdminMediaPage() {
                 <li>Contact Us hero</li>
                 <li>Clients hero</li>
               </ul>
+            </div>
+          </AdminPanel>
+
+          <AdminPanel title="Current asset library" description="Quick access to the images the site is already using or that were uploaded through the admin.">
+            <div className="space-y-4 text-sm text-zinc-600">
+              <div>
+                <p className="mb-2 text-xs font-semibold uppercase tracking-[0.16em] text-zinc-500">Active site assets</p>
+                <div className="space-y-2">
+                  {curatedAssets.map((asset) => (
+                    <div key={`${asset.label}-${asset.path}`} className="rounded-xl border border-zinc-200 bg-zinc-50 px-3 py-2">
+                      <p className="text-xs font-semibold uppercase tracking-[0.14em] text-zinc-500">{asset.label}</p>
+                      <a
+                        href={asset.path}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="mt-1 block break-all font-mono text-xs text-[#1f3b68] hover:underline"
+                      >
+                        {asset.path}
+                      </a>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div>
+                <p className="mb-2 text-xs font-semibold uppercase tracking-[0.16em] text-zinc-500">Uploaded assets</p>
+                {uploads.length ? (
+                  <div className="space-y-2">
+                    {uploads.slice(0, 8).map((asset) => (
+                      <a
+                        key={asset.path}
+                        href={asset.path}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="block rounded-xl border border-zinc-200 bg-white px-3 py-2 hover:border-zinc-300"
+                      >
+                        <p className="break-all font-mono text-xs text-[#1f3b68]">{asset.path}</p>
+                        <p className="mt-1 text-[11px] text-zinc-500">
+                          {new Intl.DateTimeFormat('en-US', { dateStyle: 'medium', timeStyle: 'short' }).format(new Date(asset.modified))}
+                        </p>
+                      </a>
+                    ))}
+                  </div>
+                ) : (
+                  <p className="text-sm text-zinc-500">No uploaded assets found yet.</p>
+                )}
+              </div>
             </div>
           </AdminPanel>
         </div>

@@ -4,9 +4,9 @@ export const SITE = {
   shortName: 'ETI',
   tagline: 'Executive IT and AI Advisory',
   description:
-    'ETI delivers strategy, methodology, and execution for technology transformation. We partner with leadership to align technology with business goals.',
+    'ETI helps healthcare organizations and growth-focused companies align technology strategy, modernization, AI, and execution with measurable business outcomes.',
   url: process.env.NEXT_PUBLIC_SITE_URL || 'https://www.emergingti.com',
-  ogImage: '/og.png',
+  ogImage: '/images/advancing-healthcare-it-hero.jpg',
 } as const;
 
 export function canonicalUrl(path: string): string {

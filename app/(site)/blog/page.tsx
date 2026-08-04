@@ -1,10 +1,14 @@
+import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { PAGE_HERO_DESCRIPTION_CLASS } from '@/components/PageHero';
 import { getAllPosts } from '@/lib/blog';
+import { buildBreadcrumbSchema, buildPageMetadata, getStaticSeo, jsonLd } from '@/lib/seo';
 
 const RECENT_COUNT = 5;
 const DEFAULT_LIST_IMAGE = '/wp-content/uploads/2017/08/eti__identity__logo_.svg';
+
+export const metadata: Metadata = buildPageMetadata(getStaticSeo('/blog')!);
 
 function formatDate(value: string): string {
   if (!value) return '';
@@ -41,9 +45,14 @@ export default async function BlogIndexPage({
       )
     : allPosts;
   const recentPosts = allPosts.slice(0, RECENT_COUNT);
+  const breadcrumbSchema = buildBreadcrumbSchema([
+    { name: 'Home', path: '/' },
+    { name: 'Insights', path: '/blog' },
+  ]);
 
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={jsonLd(breadcrumbSchema)} />
       <section className="relative overflow-hidden border-b border-white/55">
         <div className="absolute inset-0">
           <Image
@@ -130,7 +139,7 @@ export default async function BlogIndexPage({
                         >
                           <Image
                             src={thumbnail}
-                            alt=""
+                            alt={useContain ? 'ETI logo' : `${post.title || post.slug} article image`}
                             fill
                             sizes="128px"
                             unoptimized

@@ -2,9 +2,12 @@ import { AdminPageHeader } from '../components/AdminPageHeader';
 import { AdminPanel } from '../components/AdminPanel';
 import { getStorageBackendInfo } from '@/lib/content-store';
 import { PublishingActions } from '../components/PublishingActions';
+import { getPublishDiffSummary, getRecentPublishCommits } from '@/lib/admin-publishing';
 
 export default function AdminPublishingPage() {
   const backend = getStorageBackendInfo();
+  const diff = getPublishDiffSummary();
+  const commits = getRecentPublishCommits();
 
   return (
     <div>
@@ -43,6 +46,64 @@ export default function AdminPublishingPage() {
         </AdminPanel>
 
         <div className="space-y-6">
+          {backend.mode === 'local' ? (
+            <AdminPanel title="To switch on GitHub-backed staging mode">
+              <ul className="space-y-3 text-sm leading-6 text-zinc-600">
+                <li>Set <span className="font-mono text-zinc-950">CONTENT_BACKEND=github</span>.</li>
+                <li>Add <span className="font-mono text-zinc-950">GITHUB_TOKEN</span>, <span className="font-mono text-zinc-950">GITHUB_REPO_OWNER</span>, and <span className="font-mono text-zinc-950">GITHUB_REPO_NAME</span>.</li>
+                <li>Optionally set <span className="font-mono text-zinc-950">GITHUB_STAGING_BRANCH</span> and <span className="font-mono text-zinc-950">GITHUB_PRODUCTION_BRANCH</span>.</li>
+                <li>Set public links with <span className="font-mono text-zinc-950">NEXT_PUBLIC_STAGING_SITE_URL</span> and <span className="font-mono text-zinc-950">NEXT_PUBLIC_PRODUCTION_SITE_URL</span>.</li>
+              </ul>
+            </AdminPanel>
+          ) : null}
+
+          <AdminPanel title="What staging would promote right now">
+            {diff.available ? (
+              <div className="space-y-4 text-sm text-zinc-600">
+                <p className="font-medium text-zinc-950">{diff.summary}</p>
+                {diff.files.length ? (
+                  <div>
+                    <p className="mb-2 text-xs font-semibold uppercase tracking-[0.16em] text-zinc-500">
+                      Changed content files
+                    </p>
+                    <ul className="space-y-2 rounded-2xl border border-zinc-200 bg-zinc-50/80 px-4 py-4 font-mono text-xs text-zinc-700">
+                      {diff.files.map((file) => (
+                        <li key={file}>{file}</li>
+                      ))}
+                    </ul>
+                  </div>
+                ) : null}
+              </div>
+            ) : (
+              <p className="text-sm leading-6 text-zinc-600">
+                {diff.error || 'Branch diff is not available in this environment.'}
+              </p>
+            )}
+          </AdminPanel>
+
+          <AdminPanel title="Recent content revisions">
+            {commits.length ? (
+              <div className="space-y-3">
+                {commits.map((commit) => (
+                  <div key={`${commit.shortSha}-${commit.subject}`} className="rounded-2xl border border-zinc-200 bg-zinc-50/70 px-4 py-3">
+                    <div className="flex flex-wrap items-center gap-2 text-xs font-semibold uppercase tracking-[0.14em] text-zinc-500">
+                      <span>{commit.shortSha}</span>
+                      <span>•</span>
+                      <span>{commit.date}</span>
+                      <span>•</span>
+                      <span>{commit.author}</span>
+                    </div>
+                    <p className="mt-2 text-sm font-medium text-zinc-950">{commit.subject}</p>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p className="text-sm leading-6 text-zinc-600">
+                No content revision history is available yet in this environment.
+              </p>
+            )}
+          </AdminPanel>
+
           <AdminPanel title="Recommended workflow">
             <ol className="space-y-3 text-sm leading-6 text-zinc-600">
               <li>1. Edit content and save to the staging branch.</li>

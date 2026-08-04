@@ -3,16 +3,9 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { PageHero } from '@/components/PageHero';
 import { ServicesOverviewSection } from '@/components/ServicesOverviewSection';
-import { canonicalUrl } from '@/lib/site';
+import { buildBreadcrumbSchema, buildPageMetadata, getStaticSeo, jsonLd } from '@/lib/seo';
 
-export const metadata: Metadata = {
-  title: 'Distributed Workforce Solutions',
-  description:
-    'ETI helps organizations move distributed workforce initiatives from ad hoc remote work to structured execution, visibility, and sustainable operating discipline.',
-  alternates: {
-    canonical: canonicalUrl('/distributed-workforce-solutions'),
-  },
-};
+export const metadata: Metadata = buildPageMetadata(getStaticSeo('/distributed-workforce-solutions')!);
 
 const concerns = [
   'Are employees actually working during business hours?',
@@ -88,8 +81,14 @@ const benefits = [
 ] as const;
 
 export default function DistributedWorkforceSolutionsPage() {
+  const breadcrumbSchema = buildBreadcrumbSchema([
+    { name: 'Home', path: '/' },
+    { name: 'Distributed Workforce Solutions', path: '/distributed-workforce-solutions' },
+  ]);
+
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={jsonLd(breadcrumbSchema)} />
       <PageHero
         eyebrow="Services"
         title="Distributed Workforce Solutions"

@@ -12,6 +12,14 @@ type PageEntry = {
   subheading?: string;
 };
 
+const PAGE_COVERAGE: Record<string, 'Full' | 'Partial'> = {
+  home: 'Full',
+  services: 'Partial',
+  about: 'Partial',
+  'about-us': 'Partial',
+  clients: 'Partial',
+};
+
 export default function AdminPagesListPage() {
   const router = useRouter();
   const [entries, setEntries] = useState<PageEntry[]>([]);
@@ -198,9 +206,22 @@ export default function AdminPagesListPage() {
                     <h2 className="text-lg font-semibold text-zinc-950">{entry.title}</h2>
                     <p className="mt-1 text-sm text-zinc-500">/{entry.slug}</p>
                   </div>
-                  <span className="rounded-full bg-[#eef4fa] px-3 py-1 text-xs font-medium text-[#1f3b68]">
-                    Edit
-                  </span>
+                  <div className="flex flex-col items-end gap-2">
+                    <span className="rounded-full bg-[#eef4fa] px-3 py-1 text-xs font-medium text-[#1f3b68]">
+                      Edit
+                    </span>
+                    {PAGE_COVERAGE[entry.slug] ? (
+                      <span
+                        className={`rounded-full px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.14em] ${
+                          PAGE_COVERAGE[entry.slug] === 'Full'
+                            ? 'bg-emerald-50 text-emerald-700'
+                            : 'bg-amber-50 text-amber-700'
+                        }`}
+                      >
+                        {PAGE_COVERAGE[entry.slug]} coverage
+                      </span>
+                    ) : null}
+                  </div>
                 </div>
                 <p className="mt-4 text-sm leading-6 text-zinc-600">
                   {entry.subheading || 'Core public page content and hero settings.'}
